@@ -5,7 +5,7 @@ class CustomButton extends StatelessWidget {
   final String title;
   final Color color;
   final String pushTo;
-  CustomButton(
+  const CustomButton(
       {super.key,
       required this.title,
       required this.color,
@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ElevatedButton(
         onPressed: () {
           // Navigate to HomePage using named route
@@ -45,7 +45,7 @@ class CustomOutlineButton extends StatelessWidget {
   final Color color;
   final String pushTo;
 
-  CustomOutlineButton(
+  const CustomOutlineButton(
       {super.key,
       required this.title,
       required this.color,
@@ -54,7 +54,7 @@ class CustomOutlineButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: OutlinedButton(
         onPressed: () {
           // Navigate to HomePage using named route
