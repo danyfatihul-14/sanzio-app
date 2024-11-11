@@ -17,7 +17,7 @@ class RegisterPage extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Image.asset(
                     'assets/background.png',
@@ -26,7 +26,7 @@ class RegisterPage extends StatelessWidget {
                 ),
                 // Content on top of the background
                 Container(
-                  margin: EdgeInsets.only(top: 80.0),
+                  margin: const EdgeInsets.only(top: 80.0),
                   width: double.infinity,
                   child: Column(
                     children: [
@@ -98,7 +98,7 @@ class RegisterPage extends StatelessWidget {
 
             // Divider with "Or"
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 children: [
                   const Expanded(
