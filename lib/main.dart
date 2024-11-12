@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:raffaelosanzio/pages/history.dart';
-import 'package:raffaelosanzio/pages/mychart.dart';
+import 'pages/login.dart';
+import 'pages/register.dart';
+import 'pages/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +11,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HistoryPage(),
+      title: 'Raffaelo Sanzio',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      initialRoute: '/home', // Start with the login page
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+        '/home': (context) => const HomePage(),
+      },
     );
   }
 }
