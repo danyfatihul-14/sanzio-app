@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:raffaelosanzio/widget/bottom_navbar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -110,107 +110,8 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        child: Container(
-          width: 50, // Adjust size as needed
-          height: 50,
-          decoration: BoxDecoration(
-            // shape: BoxShape.circle,
-            borderRadius: BorderRadius.circular(12),
-            gradient: const LinearGradient(
-              colors: [
-                Color(0xFFA5D1FE),
-                Color(0xFFCDB4DB)
-              ], // Adjust gradient colors
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.white,
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3), // Shadow position
-              ),
-            ],
-          ),
-          child: const Stack(
-            alignment: Alignment.center,
-            children: [
-              Icon(IconsaxPlusBroken.user,
-                  size: 24, color: Colors.white), // Main icon
-              Positioned(
-                bottom: 5,
-                right: 4.5,
-                child: Icon(IconsaxPlusBroken.maximize_2,
-                    size: 40, color: Colors.white), // Overlay icon
-              ),
-            ],
-          ),
-        ),
-        onPressed: () {},
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: const Color(0xFF4F72BD),
-          unselectedItemColor: const Color(0xFF8AA1D3),
-          items: [
-            const BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusBold.home_2),
-              label: "Home",
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusLinear.heart),
-              label: "FYP",
-            ),
-            BottomNavigationBarItem(
-              icon: Container(
-                width: 50, // Adjust size as needed
-                height: 50,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFFA5D1FE),
-                      Color(0xFFCDB4DB)
-                    ], // Adjust gradient colors
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3), // Shadow position
-                    ),
-                  ],
-                ),
-                child: const Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Icon(IconsaxPlusBroken.user,
-                        size: 24, color: Colors.white), // Main icon
-                    Positioned(
-                      bottom: 5,
-                      right: 4.5,
-                      child: Icon(IconsaxPlusBroken.maximize_2,
-                          size: 40, color: Colors.white), // Overlay icon
-                    ),
-                  ],
-                ),
-              ),
-              label: "Scan",
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusBroken.shopping_cart),
-              label: "Cart",
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusBroken.profile_circle),
-              label: "Profile",
-            ),
-          ]),
+      floatingActionButton: const ScanButton(),
+      bottomNavigationBar: const CustomBottomNavbar(),
     );
   }
 
