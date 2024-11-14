@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
+import 'package:raffaelosanzio/widget/product_item.dart'; // Import widget
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-  // const Color scanGradient = LinearGradient(colors: Color())
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +61,25 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Categories",
+                  Text(
+                    "Categories",
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/allKategori');
+                    },
+                    child: Text(
+                      "See All",
                       style: GoogleFonts.plusJakartaSans(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  Text("See All",
-                      style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14, color: const Color(0xFF4F72BD))),
+                        fontSize: 14,
+                        color: const Color(0xFF4F72BD),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 8.0),
@@ -98,11 +111,10 @@ class HomePage extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 childAspectRatio: 0.75,
                 children: [
-                  productItem("Jacket Bomber", "Rp 150.000",
-                      "assets/Jacket Bomber.png"),
-                  productItem("Daster", "Rp 150.000", "assets/Daster.png"),
-                  productItem("Tank Top", "Rp 100.000", "assets/Tanktop.png"),
-                  productItem("Batik Shirt", "Rp 250.000", "assets/Batik.png"),
+                  productItem(context, "Jacket Bomber", "Rp 150.000", "assets/Jacket Bomber.png"),
+                  productItem(context, "Daster", "Rp 150.000", "assets/Daster.png"),
+                  productItem(context, "Tank Top", "Rp 100.000", "assets/Tanktop.png"),
+                  productItem(context, "Batik Shirt", "Rp 250.000", "assets/Batik.png"),
                 ],
               ),
             ],
@@ -133,43 +145,8 @@ class HomePage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8.0),
-        Text(title),
+        Text(title, style: GoogleFonts.plusJakartaSans(fontSize: 12)),
       ],
-    );
-  }
-
-  Widget productItem(String name, String price, String imagePath) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(child: Image.asset(imagePath, fit: BoxFit.cover)),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(name,
-                style: GoogleFonts.plusJakartaSans(
-                    fontSize: 10, fontWeight: FontWeight.w500)),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(price,
-                style: GoogleFonts.plusJakartaSans(
-                    fontSize: 8, color: Colors.blue)),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                const Icon(Icons.star, color: Colors.orange, size: 16),
-                const SizedBox(width: 4.0),
-                Text("4.8", style: GoogleFonts.plusJakartaSans(fontSize: 8)),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

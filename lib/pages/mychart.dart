@@ -2,21 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shopping Cart',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: ShoppingCartPage(),
+      home: const ShoppingCartPage(),
     );
   }
 }
 
 class ShoppingCartPage extends StatefulWidget {
+  const ShoppingCartPage({super.key});
+
   @override
   _ShoppingCartPageState createState() => _ShoppingCartPageState();
 }
