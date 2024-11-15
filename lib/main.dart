@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'pages/login.dart';
-import 'pages/register.dart';
-import 'pages/home.dart';
+import 'package:raffaelosanzio/pages/editable_address_page.dart';
+import 'package:raffaelosanzio/pages/mychart.dart';
+import 'package:raffaelosanzio/pages/payment.dart';
+import 'package:raffaelosanzio/pages/login.dart';
+import 'package:raffaelosanzio/pages/register.dart';
+import 'package:raffaelosanzio/pages/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,18 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Raffaelo Sanzio',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      initialRoute: '/home', // Start with the login page
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/home': (context) => const HomePage(),
-      },
+      title: 'Shopping Cart',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: ShoppingCartPage(), // Corrected this line
     );
   }
 }
