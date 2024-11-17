@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/pages/payment.dart';
 
 class ShoppingCartPage extends StatefulWidget {
+  const ShoppingCartPage({super.key});
+
   @override
   _ShoppingCartPageState createState() => _ShoppingCartPageState();
 }

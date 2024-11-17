@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:raffaelosanzio/pages/history.dart';
+import 'package:raffaelosanzio/pages/home.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 
 class ScanButton extends StatelessWidget {
@@ -50,33 +52,67 @@ class ScanButton extends StatelessWidget {
   }
 }
 
-class CustomBottomNavbar extends StatelessWidget {
+class CustomBottomNavbar extends StatefulWidget {
   const CustomBottomNavbar({super.key});
 
   @override
+  _CustomBottomNavbarState createState() => _CustomBottomNavbarState();
+}
+
+class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+    HomePage(),
+    Text('FYP'),
+    HistoryPage(),
+    Text('Profile'),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      selectedItemColor: blue600,
-      unselectedItemColor: blue400,
-      items: [
-        const BottomNavigationBarItem(
-          icon: Icon(IconsaxPlusBold.home_2),
-          label: "Home",
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(IconsaxPlusLinear.heart),
-          label: "FYP",
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(IconsaxPlusBroken.shopping_cart),
-          label: "Cart",
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(IconsaxPlusBroken.profile_circle),
-          label: "Profile",
-        ),
-      ],
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _onItemTapped, // Panggil fungsi saat item ditap
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex, // Menyimpan index tab yang aktif
+        selectedItemColor: const Color(0xFF4F72BD), // Warna untuk tab yang aktif
+        unselectedItemColor: Colors.grey, // Warna untuk tab yang tidak aktif
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusBold.home_2),
+            activeIcon: Icon(IconsaxPlusBold.home_2), // Ikon bold untuk aktif
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusLinear.heart),
+            activeIcon: Icon(IconsaxPlusBold.heart), // Ikon bold untuk aktif
+            label: "FYP",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusBroken.bag_timer),
+            activeIcon:
+                Icon(IconsaxPlusBold.bag_timer), // Ikon bold untuk aktif
+            label: "History",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusBroken.profile_circle),
+            activeIcon:
+                Icon(IconsaxPlusBold.profile_circle), // Ikon bold untuk aktif
+            label: "Profile",
+          ),
+        ],
+      ),
+      floatingActionButton: const ScanButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
