@@ -23,7 +23,13 @@ Widget productItem(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(child: Image.asset(imagePath, fit: BoxFit.cover)),
+          Center(
+            // Center the image
+            child: SizedBox(
+              height: 145, // You can adjust the height as needed
+              child: Image.asset(imagePath, fit: BoxFit.cover),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(name,

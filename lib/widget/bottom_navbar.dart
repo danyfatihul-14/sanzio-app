@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:raffaelosanzio/pages/history.dart';
+import 'package:raffaelosanzio/pages/home.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 
 class ScanButton extends StatelessWidget {
@@ -59,60 +61,58 @@ class CustomBottomNavbar extends StatefulWidget {
 
 class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
   int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+    HomePage(),
+    Text('FYP'),
+    HistoryPage(),
+    Text('Profile'),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;  // Update index tab yang dipilih
+      _selectedIndex = index;
     });
-
-    print('Tapped index: $index');  // Log untuk memeriksa index yang dipilih
-
-    switch (index) {
-      case 0: // Home
-        Navigator.pushNamed(context, '/home');  // Gunakan pushNamed untuk navigasi ke Home
-        break;
-      case 1: // FYP
-        Navigator.pushNamed(context, '/fyp');  // Gunakan pushNamed untuk navigasi ke FYP
-        break;
-      case 2: // History
-        Navigator.pushNamed(context, '/history');  // Gunakan pushNamed untuk navigasi ke History
-        break;
-      case 3: // Profile
-        Navigator.pushNamed(context, '/profile');  // Gunakan pushNamed untuk navigasi ke Profile
-        break;
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      onTap: _onItemTapped,  // Panggil fungsi saat item ditap
-      type: BottomNavigationBarType.fixed,
-      currentIndex: _selectedIndex,  // Menyimpan index tab yang aktif
-      selectedItemColor: Colors.blue,  // Warna untuk tab yang aktif
-      unselectedItemColor: Colors.grey,  // Warna untuk tab yang tidak aktif
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(IconsaxPlusBold.home_2),
-          activeIcon: Icon(IconsaxPlusBold.home_2), // Ikon bold untuk aktif
-          label: "Home",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(IconsaxPlusLinear.heart),
-          activeIcon: Icon(IconsaxPlusBold.heart), // Ikon bold untuk aktif
-          label: "FYP",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(IconsaxPlusBroken.bag_timer),
-          activeIcon: Icon(IconsaxPlusBold.bag_timer), // Ikon bold untuk aktif
-          label: "History",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(IconsaxPlusBroken.profile_circle),
-          activeIcon: Icon(IconsaxPlusBold.profile_circle), // Ikon bold untuk aktif
-          label: "Profile",
-        ),
-      ],
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _onItemTapped, // Panggil fungsi saat item ditap
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex, // Menyimpan index tab yang aktif
+        selectedItemColor: const Color(0xFF4F72BD), // Warna untuk tab yang aktif
+        unselectedItemColor: Colors.grey, // Warna untuk tab yang tidak aktif
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusBold.home_2),
+            activeIcon: Icon(IconsaxPlusBold.home_2), // Ikon bold untuk aktif
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusLinear.heart),
+            activeIcon: Icon(IconsaxPlusBold.heart), // Ikon bold untuk aktif
+            label: "FYP",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusBroken.bag_timer),
+            activeIcon:
+                Icon(IconsaxPlusBold.bag_timer), // Ikon bold untuk aktif
+            label: "History",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusBroken.profile_circle),
+            activeIcon:
+                Icon(IconsaxPlusBold.profile_circle), // Ikon bold untuk aktif
+            label: "Profile",
+          ),
+        ],
+      ),
+      floatingActionButton: const ScanButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

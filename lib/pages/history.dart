@@ -41,6 +41,7 @@ class _HistoryPageState extends State<HistoryPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           "History",
           style: GoogleFonts.plusJakartaSans(
@@ -101,9 +102,9 @@ class _HistoryPageState extends State<HistoryPage>
               : OnProcessList(items: onProcessItems),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: const ScanButton(),
-      bottomNavigationBar: const CustomBottomNavbar(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: const ScanButton(),
+      // bottomNavigationBar: const CustomBottomNavbar(),
     );
   }
 }
