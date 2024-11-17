@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/models/item.dart';
 import 'package:raffaelosanzio/pages/payment.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   const ShoppingCartPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ShoppingCartPageState createState() => _ShoppingCartPageState();
 }
 
@@ -16,21 +18,21 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       price: 150000,
       quantity: 1,
       ukuran: "XL",
-      imageUrl: 'assets/Daster.png', // Replace with actual image URL
+      imageUrl: 'assets/Daster.png',
     ),
     Item(
       name: 'T-shirt',
       price: 75000,
       quantity: 2,
       ukuran: "XL",
-      imageUrl: 'assets/T-Shirt.png', // Replace with actual image URL
+      imageUrl: 'assets/T-Shirt.png',
     ),
     Item(
       name: 'Jeans',
       price: 125000,
       quantity: 1,
       ukuran: "XL",
-      imageUrl: 'assets/Batik.png', // Replace with actual image URL
+      imageUrl: 'assets/Batik.png',
     ),
   ];
   // Controllers for the checkout form fields
@@ -90,7 +92,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please fill in your details.")),
+        const SnackBar(content: Text("Please fill in your details.")),
       );
     }
   }
@@ -107,7 +109,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -190,7 +192,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -210,14 +212,14 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 ),
                 Column(
                   children: [
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: checkout,
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             const Color.fromARGB(255, 138, 161, 211),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -227,11 +229,11 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                         children: [
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.card_giftcard,
                                 color: Colors.black,
                               ),
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
                               Text(
                                 "Voucher",
                                 style: GoogleFonts.plusJakartaSans(
@@ -253,31 +255,31 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
                         // Navigate to PaymentScreen
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PaymentPage()),
+                              builder: (context) => const PaymentPage()),
                         );
                       },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 79, 114, 189),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 132),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
                       child: Text(
                         "Checkout",
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 79, 114, 189),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 190),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                     )
@@ -300,6 +302,7 @@ class CartItemWidget extends StatelessWidget {
   final ValueChanged<bool?> onCheckboxChanged;
 
   const CartItemWidget({
+    super.key,
     required this.item,
     required this.onIncrement,
     required this.onDecrement,
@@ -310,7 +313,7 @@ class CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: Row(
@@ -326,13 +329,13 @@ class CartItemWidget extends StatelessWidget {
               child: SizedBox(
                 width: 80,
                 height: 80,
-                child: Image.network(
+                child: Image.asset(
                   item.imageUrl,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -351,7 +354,7 @@ class CartItemWidget extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
+                        icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: onRemove,
                       ),
                     ],
@@ -360,11 +363,12 @@ class CartItemWidget extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          // ignore: avoid_print
                           print("Ukuran dipilih");
                         },
                         child: Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
                             color: Colors.grey[300],
                             borderRadius: BorderRadius.circular(10),
@@ -385,7 +389,7 @@ class CartItemWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -400,7 +404,7 @@ class CartItemWidget extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            icon: Icon(Icons.remove_circle_outline),
+                            icon: const Icon(Icons.remove_circle_outline),
                             color:
                                 item.quantity > 1 ? Colors.blue : Colors.grey,
                             onPressed: item.quantity > 1 ? onDecrement : null,
@@ -414,7 +418,7 @@ class CartItemWidget extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.add_circle_outline),
+                            icon: const Icon(Icons.add_circle_outline),
                             color: Colors.blue,
                             onPressed: onIncrement,
                           ),
@@ -430,22 +434,4 @@ class CartItemWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-class Item {
-  final String name;
-  final int price;
-  int quantity; // Menggunakan 'quantity' untuk jumlah barang
-  String status;
-  final String ukuran;
-  final String imageUrl;
-
-  Item({
-    required this.name,
-    required this.price,
-    required this.ukuran,
-    required this.imageUrl,
-    this.quantity = 1, // Default quantity 1
-    this.status = 'In Cart',
-  });
 }

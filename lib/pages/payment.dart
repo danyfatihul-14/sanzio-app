@@ -4,12 +4,14 @@ import 'package:raffaelosanzio/pages/editable_address_page.dart';
 import 'package:raffaelosanzio/pages/success.dart';
 
 class PaymentPage extends StatelessWidget {
+  const PaymentPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -29,23 +31,22 @@ class PaymentPage extends StatelessWidget {
         child: ListView(
           children: [
             _buildAddressSection(context),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildItemsSection(),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildPaymentMethodSection(),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildSummarySection(),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildPaymentButton(),
           ],
         ),
       ),
     );
   }
-
   Widget _buildAddressSection(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(8),
@@ -57,10 +58,10 @@ class PaymentPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                child: Icon(Icons.location_on,
-                    color: const Color.fromARGB(255, 79, 114, 189)),
+                child: const Icon(Icons.location_on,
+                    color: Color.fromARGB(255, 79, 114, 189)),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Expanded(
                 child: Align(
                   alignment: Alignment.centerLeft,
@@ -85,12 +86,12 @@ class PaymentPage extends StatelessWidget {
                             )),
                   );
                 },
-                child: Icon(Icons.edit,
-                    color: const Color.fromARGB(255, 79, 114, 189)),
+                child: const Icon(Icons.edit,
+                    color: Color.fromARGB(255, 79, 114, 189)),
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Rafaello Sanzio | 0813XXXXXXX',
             style: GoogleFonts.plusJakartaSans(
@@ -107,8 +108,8 @@ class PaymentPage extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          SizedBox(height: 8),
-          Divider(),
+          const SizedBox(height: 8),
+          const Divider(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -127,7 +128,7 @@ class PaymentPage extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           'JNT',
                           style: GoogleFonts.plusJakartaSans(
@@ -151,7 +152,7 @@ class PaymentPage extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           '1 Kg',
                           style: GoogleFonts.plusJakartaSans(
@@ -175,7 +176,7 @@ class PaymentPage extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           '27 Oktober 2024',
                           style: GoogleFonts.plusJakartaSans(
@@ -195,10 +196,9 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildItemsSection() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey[300]!),
         borderRadius: BorderRadius.circular(8),
@@ -206,17 +206,16 @@ class PaymentPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(),
+          const Divider(),
           _buildItemRowWithImage('Jacket Bomber', 'S', 'Yellow',
-              'assets/jacket.png', 150000, 002), // Added quantity
-          SizedBox(height: 15), // Space between items
+              'assets/Jacket.png', 150000, 002), // Added quantity
+          const SizedBox(height: 15), // Space between items
           _buildItemRowWithImage('Jacket Bomber', 'S', 'Yellow',
-              'assets/jacket.png', 150000, 001), // Added quantity
+              'assets/Jacket.png', 150000, 001), // Added quantity
         ],
       ),
     );
   }
-
   Widget _buildItemRowWithImage(String name, String size, String color,
       String imagePath, int price, int quantity) {
     return Row(
@@ -229,21 +228,21 @@ class PaymentPage extends StatelessWidget {
           height: 60,
           fit: BoxFit.cover,
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
               Row(
                 children: [
-                  Text(color, style: TextStyle(fontSize: 12)),
-                  SizedBox(width: 8),
-                  Text(', $size', style: TextStyle(fontSize: 12)),
+                  Text(color, style: const TextStyle(fontSize: 12)),
+                  const SizedBox(width: 8),
+                  Text(', $size', style: const TextStyle(fontSize: 12)),
                 ],
               ),
-              SizedBox(height: 4),
-              Text(' $quantity', style: TextStyle(fontSize: 12)), // Quantity
+              const SizedBox(height: 4),
+              Text(' $quantity', style: const TextStyle(fontSize: 12)), // Quantity
             ],
           ),
         ),
@@ -251,19 +250,18 @@ class PaymentPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              SizedBox(height: 8), // Add space between quantity and price
+              const SizedBox(height: 8), // Add space between quantity and price
               Text('Rp ${price.toString()}',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
             ],
           ),
         ),
       ],
     );
   }
-
   Widget _buildPaymentMethodSection() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(8),
@@ -274,9 +272,9 @@ class PaymentPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.payment,
-                  color: const Color.fromARGB(255, 79, 114, 189)),
-              SizedBox(width: 8),
+              const Icon(Icons.payment,
+                  color: Color.fromARGB(255, 79, 114, 189)),
+              const SizedBox(width: 8),
               Text(
                 'Metode Pembayaran',
                 style: GoogleFonts.plusJakartaSans(
@@ -287,12 +285,12 @@ class PaymentPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(
             children: [
-              Icon(Icons.money,
-                  color: const Color.fromARGB(255, 148, 148, 148)),
-              SizedBox(width: 8),
+              const Icon(Icons.money,
+                  color: Color.fromARGB(255, 148, 148, 148)),
+              const SizedBox(width: 8),
               Text(
                 'COD (Cash On Delivery)',
                 style: GoogleFonts.plusJakartaSans(
@@ -306,10 +304,9 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildSummarySection() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(8),
@@ -321,13 +318,12 @@ class PaymentPage extends StatelessWidget {
           _buildSummaryRow('Subtotal Pengiriman', 'Rp 12.000'),
           _buildSummaryRow('Total Diskon', 'Rp 5.000'),
           _buildSummaryRow('Voucher Diskon', '- Rp 10.000'),
-          Divider(),
+          const Divider(),
           _buildSummaryRow('Total Pembayaran', 'Rp 447.000', isTotal: true),
         ],
       ),
     );
   }
-
   Widget _buildSummaryRow(String title, String amount, {bool isTotal = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -346,14 +342,13 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildPaymentButton() {
     return Builder(
       builder: (BuildContext context) {
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color.fromARGB(255, 79, 114, 189),
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 190),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 133),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -364,7 +359,7 @@ class PaymentPage extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    SuccessPage(), // Ganti dengan halaman yang sesuai
+                    const SuccessPage(), // Ganti dengan halaman yang sesuai
               ),
             );
           },
