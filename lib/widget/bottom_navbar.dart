@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/home.dart';
-import 'package:raffaelosanzio/shared/theme.dart';
 
 class ScanButton extends StatelessWidget {
   const ScanButton({super.key});
@@ -53,22 +52,31 @@ class ScanButton extends StatelessWidget {
 }
 
 class CustomBottomNavbar extends StatefulWidget {
-  const CustomBottomNavbar({super.key});
+  final int selectedIndex;
+  const CustomBottomNavbar({super.key, this.selectedIndex = 0});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CustomBottomNavbarState createState() => _CustomBottomNavbarState();
 }
 
 class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
-  int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    Text('FYP'),
-    HistoryPage(),
-    Text('Profile'),
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selectedIndex; // Menggunakan selectedIndex yang diterima dari parameter
+  }
+
+  List<Widget> widgetOptions = <Widget>[
+    const HomePage(),
+    const Text('FYP'),
+    const HistoryPage(),
+    const Text('Profile'),
   ];
 
-  void _onItemTapped(int index) {
+  void onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -78,15 +86,16 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: _onItemTapped, // Panggil fungsi saat item ditap
+        onTap: onItemTapped, // Panggil fungsi saat item ditap
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex, // Menyimpan index tab yang aktif
-        selectedItemColor: const Color(0xFF4F72BD), // Warna untuk tab yang aktif
+        selectedItemColor:
+            const Color(0xFF4F72BD), // Warna untuk tab yang aktif
         unselectedItemColor: Colors.grey, // Warna untuk tab yang tidak aktif
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(IconsaxPlusBold.home_2),
             activeIcon: Icon(IconsaxPlusBold.home_2), // Ikon bold untuk aktif

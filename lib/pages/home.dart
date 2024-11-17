@@ -1,7 +1,9 @@
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/help/data.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
+import 'package:raffaelosanzio/pages/mychart.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/widget/product_item.dart';
 
@@ -9,48 +11,12 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-
-  // Define the products for each category
-  final Map<String, List<Map<String, String>>> products = {
-    "T-Shirt": [
-      {
-        "title": "T-Shirt Classic",
-        "price": "Rp 100.000",
-        "image": "assets/T-Shirt.png"
-      },
-      {
-        "title": "T-Shirt Modern",
-        "price": "Rp 120.000",
-        "image": "assets/T-Shirt.png"
-      },
-    ],
-    "Jacket": [
-      {
-        "title": "Jacket Bomber",
-        "price": "Rp 150.000",
-        "image": "assets/Jacket.png"
-      },
-      {
-        "title": "Jacket Leather",
-        "price": "Rp 250.000",
-        "image": "assets/Jacket.png"
-      },
-    ],
-    // Add other categories as needed
-  };
-
-  final List<Map<String, String>> categories = [
-    {"title": "T-Shirt", "image": "assets/T-Shirt.png"},
-    {"title": "Jacket", "image": "assets/Jacket.png"},
-    {"title": "Blouse", "image": "assets/Blouse.png"},
-    {"title": "Dress", "image": "assets/Dress.png"},
-    {"title": "Hoodie", "image": "assets/Hoodie.png"},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +228,13 @@ class _HomePageState extends State<HomePage> {
         child: IconButton(
           icon: const Icon(Icons.shopping_cart, color: Colors.white),
           onPressed: () {
-            // Handle cart action
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const ShoppingCartPage(), // Navigasi ke ShoppingCartPage
+              ),
+            );
           },
         ),
       ),

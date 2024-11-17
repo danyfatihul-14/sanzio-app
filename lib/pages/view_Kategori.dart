@@ -7,10 +7,10 @@ class CategoryProductPage extends StatelessWidget {
   final List<Map<String, String>> products;
 
   const CategoryProductPage({
-    Key? key,
+    super.key,
     required this.categoryTitle,
     required this.products,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

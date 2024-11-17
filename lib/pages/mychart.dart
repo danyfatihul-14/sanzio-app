@@ -1,56 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Shopping Cart',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const ShoppingCartPage(),
-    );
-  }
-}
+import 'package:raffaelosanzio/models/item.dart';
+import 'package:raffaelosanzio/pages/payment.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   const ShoppingCartPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ShoppingCartPageState createState() => _ShoppingCartPageState();
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   List<Item> cartItems = [
-    Item(name: 'Jacket Bomber', price: 150000, quantity: 1, status: 'In Cart'),
-    Item(name: 'T-shirt', price: 75000, quantity: 2, status: 'In Cart'),
-    Item(name: 'Jeans', price: 125000, quantity: 1, status: 'Purchased'),
+    Item(
+      name: 'Jacket Bomber',
+      price: 150000,
+      quantity: 1,
+      ukuran: "XL",
+      imageUrl: 'assets/Daster.png',
+    ),
+    Item(
+      name: 'T-shirt',
+      price: 75000,
+      quantity: 2,
+      ukuran: "XL",
+      imageUrl: 'assets/T-Shirt.png',
+    ),
+    Item(
+      name: 'Jeans',
+      price: 125000,
+      quantity: 1,
+      ukuran: "XL",
+      imageUrl: 'assets/Batik.png',
+    ),
   ];
-
   // Controllers for the checkout form fields
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
   // Getters for total items and total price
-  int get totalItems => cartItems.fold(0, (sum, item) => sum + item.quantity);
-  int get totalPrice =>
-      cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+  int get totalItems => cartItems.fold(0, (sum, item) {
+        return item.status == 'Selected' ? sum + item.quantity : sum;
+      });
+  int get totalPrice {
+    return cartItems.fold(0, (sum, item) {
+      if (item.status == 'Selected') {
+        return sum + (item.price * item.quantity);
+      }
+      return sum;
+    });
+  }
+
+  bool selectAll = false;
+  void toggleSelectAll(bool? value) {
+    setState(() {
+      selectAll = value ?? false;
+      for (var item in cartItems) {
+        item.status = selectAll ? 'Selected' : 'In Cart';
+      }
+    });
+  }
 
   void incrementQuantity(int index) {
     setState(() {
-      cartItems[index].quantity++;
+      cartItems[index].quantity++; // Menambah jumlah item
     });
   }
 
   void decrementQuantity(int index) {
     setState(() {
       if (cartItems[index].quantity > 1) {
-        cartItems[index].quantity--;
+        cartItems[index].quantity--; // Mengurangi jumlah item, minimal 1
       }
     });
   }
@@ -61,7 +82,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     });
   }
 
-  // Checkout function that shows user input
   void checkout() {
     String name = nameController.text;
     String address = addressController.text;
@@ -70,10 +90,9 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Checkout successful for $name!")),
       );
-      // You can handle the actual checkout process here
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please fill in your details.")),
+        const SnackBar(content: Text("Please fill in your details.")),
       );
     }
   }
@@ -90,7 +109,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -100,13 +119,33 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
           style: GoogleFonts.plusJakartaSans(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: const Color(0xFF000000),
+            color: Colors.black,
           ),
         ),
         centerTitle: true,
       ),
       body: Column(
         children: [
+          // Select All Checkbox
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Checkbox(
+                  value: selectAll,
+                  onChanged: toggleSelectAll,
+                ),
+                Text(
+                  "Select All",
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: const Color.fromARGB(255, 79, 114, 189),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: cartItems.length,
@@ -116,6 +155,14 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                   onIncrement: () => incrementQuantity(index),
                   onDecrement: () => decrementQuantity(index),
                   onRemove: () => removeItem(index),
+                  onCheckboxChanged: (bool? value) {
+                    setState(() {
+                      cartItems[index].status = value! ? 'Selected' : 'In Cart';
+                      // Update the selectAll status if all items are selected
+                      selectAll =
+                          cartItems.every((item) => item.status == 'Selected');
+                    });
+                  },
                 );
               },
             ),
@@ -145,7 +192,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -165,54 +212,79 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 ),
                 Column(
                   children: [
-                    SizedBox(height: 16), // Adds space between widgets
-
+                    const SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: checkout, // Call the checkout method
+                      onPressed: checkout,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 138, 161, 211),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.card_giftcard,
+                                color: Colors.black,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Voucher",
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "Gunakan/masukan kode",
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Navigate to PaymentScreen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PaymentPage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 79, 114, 189),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 132),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
                       child: Text(
                         "Checkout",
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
-                          color: const Color.fromARGB(255, 255, 255, 255),
+                          color: Colors.white,
                         ),
                       ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 79, 114, 189),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 190), // Adjusted padding
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 16), // Adds space between the two buttons
-
-                    ElevatedButton(
-                      onPressed:
-                          checkout, // Call the checkout method for the second button
-                      child: Text(
-                        "Checkout",
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 79, 114, 189),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 190), // Adjusted padding
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
+                    )
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -227,52 +299,130 @@ class CartItemWidget extends StatelessWidget {
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final VoidCallback onRemove;
+  final ValueChanged<bool?> onCheckboxChanged;
 
   const CartItemWidget({
+    super.key,
     required this.item,
     required this.onIncrement,
     required this.onDecrement,
     required this.onRemove,
+    required this.onCheckboxChanged, // Menambahkan callback untuk perubahan status checkbox
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(2.0),
         child: Row(
           children: [
-            Container(
-              width: 50,
-              height: 50,
-              color: Colors.grey[300],
+            // Menambahkan checkbox di sebelah kiri
+            Checkbox(
+              value: item.status == 'Selected',
+              onChanged:
+                  onCheckboxChanged, // Menggunakan callback untuk memperbarui status
             ),
-            SizedBox(width: 16),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(
+                width: 80,
+                height: 80,
+                child: Image.asset(
+                  item.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.name,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  Text("Rp ${item.price}"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          item.name,
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: onRemove,
+                      ),
+                    ],
+                  ),
                   Row(
                     children: [
-                      Text("Size: XL"),
-                      Spacer(),
-                      IconButton(
-                        icon: Icon(Icons.remove_circle_outline),
-                        onPressed: onDecrement,
+                      GestureDetector(
+                        onTap: () {
+                          // ignore: avoid_print
+                          print("Ukuran dipilih");
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                item.ukuran,
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      Text(item.quantity.toString()),
-                      IconButton(
-                        icon: Icon(Icons.add_circle_outline),
-                        onPressed: onIncrement,
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Rp. ${item.price.toString()}",
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
                       ),
-                      IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
-                        onPressed: onRemove,
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.remove_circle_outline),
+                            color:
+                                item.quantity > 1 ? Colors.blue : Colors.grey,
+                            onPressed: item.quantity > 1 ? onDecrement : null,
+                          ),
+                          Text(
+                            item.quantity.toString(),
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.add_circle_outline),
+                            color: Colors.blue,
+                            onPressed: onIncrement,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -284,18 +434,4 @@ class CartItemWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-class Item {
-  final String name;
-  final int price;
-  int quantity;
-  String status;
-
-  Item({
-    required this.name,
-    required this.price,
-    this.quantity = 1,
-    this.status = 'In Cart',
-  });
 }

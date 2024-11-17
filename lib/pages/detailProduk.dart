@@ -7,13 +7,14 @@ class DetailProductPage extends StatefulWidget {
   final String imagePath;
 
   const DetailProductPage({
-    Key? key,
+    super.key,
     required this.name,
     required this.price,
     required this.imagePath,
-  }) : super(key: key);
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _DetailProductPageState createState() => _DetailProductPageState();
 }
 
