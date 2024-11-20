@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 
 class DetailProductPage extends StatefulWidget {
   final String name;
@@ -116,7 +117,12 @@ class _DetailProductPageState extends State<DetailProductPage> {
               children: ['S', 'M', 'L', 'XL', 'XXL'].map((size) {
                 return ChoiceChip(
                   label: Text(size),
+                  selectedColor: blue600,
+                  labelStyle: selectedSize == size
+                      ? TextStyle(color: whiteMain)
+                      : TextStyle(color: gray800),
                   selected: selectedSize == size,
+                  checkmarkColor: whiteMain,
                   onSelected: (bool selected) {
                     setState(() {
                       selectedSize = size;
