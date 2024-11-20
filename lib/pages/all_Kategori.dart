@@ -25,7 +25,10 @@ class AllCategoriesPage extends StatelessWidget {
         title: Text(
           'All Categories',
           style: TextStyle(
-              color: gray800, fontWeight: FontWeight.bold, fontSize: 16),
+            color: gray800,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
         ),
         centerTitle: true,
       ),
@@ -40,26 +43,29 @@ class AllCategoriesPage extends StatelessWidget {
               Text(
                 'Model',
                 style: GoogleFonts.plusJakartaSans(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.black),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
               ),
               const SizedBox(height: 8),
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount:
+                      MediaQuery.of(context).size.width > 400 ? 4 : 3,
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
-                  childAspectRatio: 0.75,
+                  childAspectRatio: MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height * 0.6), // Responsif
                 ),
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
                   var category = categories[index];
                   return CategoryCard(
                     title: category['title']!,
-                    itemCount: '100 Items',  // Anda bisa mengganti ini dengan jumlah produk sebenarnya
+                    itemCount: '100 Items', // Adjust this dynamically if needed
                     image: category['image']!,
                     onTap: () {
                       Navigator.push(
@@ -67,7 +73,8 @@ class AllCategoriesPage extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => CategoryProductPage(
                             categoryTitle: category['title']!,
-                            products: getProductsForCategory(category['title']!),
+                            products:
+                                getProductsForCategory(category['title']!),
                           ),
                         ),
                       );
@@ -81,18 +88,22 @@ class AllCategoriesPage extends StatelessWidget {
               Text(
                 'Genders',
                 style: GoogleFonts.plusJakartaSans(
-                    fontWeight: FontWeight.bold, fontSize: 18, color: gray800),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: gray800,
+                ),
               ),
               const SizedBox(height: 8),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GenderCard(
-                      image:
-                          'assets/female.png'), // Replace with actual image asset
-                  GenderCard(
-                      image:
-                          'assets/male.png'), // Replace with actual image asset
+                  Flexible(
+                    child: GenderCard(image: 'assets/female.png'),
+                  ),
+                  SizedBox(width: 8),
+                  Flexible(
+                    child: GenderCard(image: 'assets/male.png'),
+                  ),
                 ],
               ),
 
@@ -101,7 +112,10 @@ class AllCategoriesPage extends StatelessWidget {
               Text(
                 'Season',
                 style: GoogleFonts.plusJakartaSans(
-                    fontWeight: FontWeight.bold, fontSize: 18, color: gray800),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: gray800,
+                ),
               ),
               const SizedBox(height: 8),
               const Wrap(
