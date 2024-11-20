@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
-import 'package:raffaelosanzio/models/detail_product.dart';
+import 'package:raffaelosanzio/models/cart.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 
 class DetailProductPage extends StatefulWidget {
-  final DetailProduct product;
+  final Map<String, dynamic> product;
 
   const DetailProductPage({super.key, required this.product});
 
   @override
-  // ignore: library_private_types_in_public_api
   _DetailProductPageState createState() => _DetailProductPageState();
 }
 
@@ -21,6 +21,17 @@ class _DetailProductPageState extends State<DetailProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Mengakses data dari Map
+    final product = widget.product;
+    final imageUrl = product['image']; // Mengambil imageUrl dari Map
+    final title = product['title']; // Mengambil title dari Map
+    final subtitle = product['subtitle']; // Mengambil subtitle dari Map
+    final price = product['price']; // Mengambil price dari Map
+    final description =
+        product['description']; // Mengambil description dari Map
+    final stock = product['stock']; // Mengambil stock dari Map
+    final ratings = product['rating']; // Mengambil ratings dari Map
+
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 40, left: 16.0, right: 16.0),
@@ -31,8 +42,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
               children: [
                 Center(
                   child: Image.asset(
-                    widget.product
-                        .imageUrl, // Menggunakan imagePath dari parameter
+                    imageUrl, // Menggunakan imageUrl dari Map
                     height: 300,
                   ),
                 ),
@@ -76,18 +86,18 @@ class _DetailProductPageState extends State<DetailProductPage> {
             Row(
               children: [
                 Text(
-                  widget.product.price, // Menggunakan price dari parameter
+                  "Rp${NumberFormat('#,###', 'id_ID').format(price)}", // Menggunakan price dari Map
                   style: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.w400),
                 ),
                 const Spacer(),
-                const Row(
+                Row(
                   children: [
                     Icon(Icons.star, color: Colors.amber, size: 20),
                     SizedBox(width: 2),
                     Text(
-                      '4.8',
-                      style: TextStyle(fontSize: 14),
+                      ratings.toString(), // Menggunakan ratings dari Map
+                      style: const TextStyle(fontSize: 14),
                     ),
                   ],
                 ),
@@ -95,12 +105,12 @@ class _DetailProductPageState extends State<DetailProductPage> {
             ),
             const SizedBox(height: 8),
             Text(
-              widget.product.name, // Menggunakan name dari parameter
+              title, // Menggunakan title dari Map
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             Text(
-              widget.product.description1,
+              subtitle, // Menggunakan subtitle dari Map
               textAlign: TextAlign.left,
               style: const TextStyle(color: Colors.grey),
             ),
@@ -112,7 +122,11 @@ class _DetailProductPageState extends State<DetailProductPage> {
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: ['S', 'M', 'L', 'XL', 'XXL'].map((size) {
+              children: product['product_details'].map<Widget>((detail) {
+                String size = detail['size'];
+                int stock = detail['stock'];
+                bool isOutOfStock = stock == 0;
+
                 return ChoiceChip(
                   label: Text(size),
                   selectedColor: blue600,
@@ -121,13 +135,15 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       : TextStyle(color: gray800),
                   selected: selectedSize == size,
                   checkmarkColor: whiteMain,
-                  onSelected: (bool selected) {
-                    if (selected) {
-                      setState(() {
-                        selectedSize = size;
-                      });
-                    }
-                  },
+                  onSelected: isOutOfStock
+                      ? null // Jika stok habis, tidak bisa dipilih
+                      : (bool selected) {
+                          if (selected) {
+                            setState(() {
+                              selectedSize = size;
+                            });
+                          }
+                        },
                 );
               }).toList(),
             ),
@@ -138,7 +154,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
             ),
             const SizedBox(height: 8),
             Text(
-              widget.product.description2,
+              description, // Menggunakan description dari Map
               style: const TextStyle(color: Colors.grey),
             ),
           ],
@@ -164,20 +180,174 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 padding: const EdgeInsets.all(1),
                 child: OutlinedButton(
                   onPressed: () {
-                    // Mengirimkan event AddToCart ke CartBloc
-                    BlocProvider.of<CartBloc>(context).add(
-                      AddToCart(
-                        product: widget.product.copyWith(
-                          size: selectedSize, // Tambahkan ukuran yang dipilih
-                        ),
+                    showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(16)),
                       ),
-                    );
+                      builder: (context) {
+                        int quantity = 1; // Inisialisasi jumlah awal
+                        return StatefulBuilder(
+                          builder: (context, setModalState) {
+                            return Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Select Size",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: product['product_details']
+                                        .map<Widget>((detail) {
+                                      String size = detail['size'];
+                                      int stock = detail['stock'];
+                                      bool isOutOfStock = stock == 0;
 
-                    // Tampilkan notifikasi
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content:
-                              Text('${widget.product.name} added to cart!')),
+                                      return ChoiceChip(
+                                        label: Text(size),
+                                        checkmarkColor: whiteMain,
+                                        selectedColor: blue500,
+                                        labelStyle: selectedSize == size
+                                            ? TextStyle(color: whiteMain)
+                                            : TextStyle(color: gray800),
+                                        selected: selectedSize == size,
+                                        onSelected: isOutOfStock
+                                            ? null
+                                            : (bool selected) {
+                                                if (selected) {
+                                                  setModalState(() {
+                                                    selectedSize = size;
+                                                  });
+                                                }
+                                              },
+                                      );
+                                    }).toList(),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Stock: ${product['product_details'].firstWhere((detail) => detail['size'] == selectedSize, orElse: () => {
+                                              'stock': 0
+                                            })['stock']}",
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.remove),
+                                            onPressed: quantity > 1
+                                                ? () {
+                                                    setModalState(() {
+                                                      quantity--;
+                                                    });
+                                                  }
+                                                : null,
+                                          ),
+                                          Text(
+                                            quantity.toString(),
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.add),
+                                            onPressed: quantity <
+                                                    product['product_details']
+                                                        .firstWhere(
+                                                            (detail) =>
+                                                                detail[
+                                                                    'size'] ==
+                                                                selectedSize,
+                                                            orElse: () => {
+                                                                  'stock': 0
+                                                                })['stock']
+                                                ? () {
+                                                    setModalState(() {
+                                                      quantity++;
+                                                    });
+                                                  }
+                                                : null,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Container(
+                                    width: double.infinity,
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 12.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        // Ambil detail produk berdasarkan ukuran yang dipilih
+                                        final selectedDetail =
+                                            product['product_details']
+                                                .firstWhere(
+                                          (detail) =>
+                                              detail['size'] == selectedSize,
+                                          orElse: () => throw Exception(
+                                              "Detail produk tidak ditemukan"),
+                                        );
+                                        // Buat array Cart
+                                        final cartArray = Cart(
+                                          detailProductId: selectedDetail['id'],
+                                          title: title,
+                                          price: price,
+                                          size: selectedSize,
+                                          imageUrl: imageUrl,
+                                          quantity: quantity,
+                                        );
+                                        // Tambahkan ke keranjang menggunakan event Bloc
+                                        BlocProvider.of<CartBloc>(context).add(
+                                            AddToCart(cartItem: cartArray));
+
+                                        // Tampilkan notifikasi kepada pengguna
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              '${title} berhasil ditambahkan ke keranjang!',
+                                            ),
+                                          ),
+                                        );
+
+                                        // Tutup Bottom Sheet setelah menambahkan ke keranjang
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0, horizontal: 8.0),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          backgroundColor: blue600),
+                                      child: Text(
+                                        "ADD TO CART",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: whiteMain),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                     );
                   },
                   style: OutlinedButton.styleFrom(

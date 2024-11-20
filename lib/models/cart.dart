@@ -1,17 +1,21 @@
 class Cart {
-  final String name;
+  final int detailProductId;
+  final String title;
   final int price;
-  final String ukuran;
+  final String size;
   final String imageUrl;
   int quantity;
   String status;
+  bool isSelected;
 
   Cart({
-    required this.name,
+    required this.detailProductId,
+    required this.title,
     required this.price,
-    required this.ukuran,
+    required this.size,
     required this.imageUrl,
     this.quantity = 1,
     this.status = 'In Cart',
+    this.isSelected = false,
   });
 }

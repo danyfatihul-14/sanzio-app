@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:raffaelosanzio/models/detail_product.dart';
+import 'package:raffaelosanzio/models/cart.dart';
 
 abstract class CartEvent extends Equatable {
   const CartEvent();
@@ -9,19 +9,31 @@ abstract class CartEvent extends Equatable {
 }
 
 class AddToCart extends CartEvent {
-  final DetailProduct product;
+  final Cart cartItem;
 
-  const AddToCart({required this.product});
+  const AddToCart({required this.cartItem});
 
   @override
-  List<Object> get props => [product];
+  List<Object> get props => [cartItem];
 }
 
 class RemoveFromCart extends CartEvent {
-  final DetailProduct product;
+  final int detailProductId;
 
-  const RemoveFromCart({required this.product});
+  const RemoveFromCart({required this.detailProductId});
 
   @override
-  List<Object> get props => [product];
+  List<Object> get props => [detailProductId];
+}
+
+class UpdateQuantityEvent extends CartEvent {
+  final int index;
+  final int quantity;
+  UpdateQuantityEvent(this.index, this.quantity);
+}
+
+class ToggleSelectEvent extends CartEvent {
+  final int index;
+  final bool isSelected;
+  ToggleSelectEvent(this.index, this.isSelected);
 }

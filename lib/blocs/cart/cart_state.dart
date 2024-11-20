@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:raffaelosanzio/models/detail_product.dart';
+import 'package:raffaelosanzio/models/cart.dart';
 
 abstract class CartState extends Equatable {
   const CartState();
@@ -11,11 +11,8 @@ abstract class CartState extends Equatable {
 class CartInitial extends CartState {}
 
 class CartUpdated extends CartState {
-  final List<DetailProduct> products;
+  final List<Cart> cartItems;
   final double totalPrice;
 
-  const CartUpdated({required this.products, required this.totalPrice});
-
-  @override
-  List<Object> get props => [products, totalPrice];
+  CartUpdated({required this.cartItems, required this.totalPrice});
 }
