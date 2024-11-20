@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:raffaelosanzio/models/item.dart';
+import 'package:intl/intl.dart';
+import 'package:raffaelosanzio/models/cart.dart';
 import 'package:raffaelosanzio/pages/payment.dart';
 
 class ShoppingCartPage extends StatefulWidget {
@@ -12,22 +13,22 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
-  List<Item> cartItems = [
-    Item(
+  List<Cart> cartItems = [
+    Cart(
       name: 'Jacket Bomber',
       price: 150000,
       quantity: 1,
       ukuran: "XL",
       imageUrl: 'assets/Daster.png',
     ),
-    Item(
+    Cart(
       name: 'T-shirt',
       price: 75000,
       quantity: 2,
       ukuran: "XL",
       imageUrl: 'assets/T-Shirt.png',
     ),
-    Item(
+    Cart(
       name: 'Jeans',
       price: 125000,
       quantity: 1,
@@ -64,7 +65,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
 
   void incrementQuantity(int index) {
     setState(() {
-      cartItems[index].quantity++; // Menambah jumlah item
+      cartItems[index].quantity++;
     });
   }
 
@@ -150,19 +151,29 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             child: ListView.builder(
               itemCount: cartItems.length,
               itemBuilder: (context, index) {
-                return CartItemWidget(
-                  item: cartItems[index],
-                  onIncrement: () => incrementQuantity(index),
-                  onDecrement: () => decrementQuantity(index),
-                  onRemove: () => removeItem(index),
-                  onCheckboxChanged: (bool? value) {
-                    setState(() {
-                      cartItems[index].status = value! ? 'Selected' : 'In Cart';
-                      // Update the selectAll status if all items are selected
-                      selectAll =
-                          cartItems.every((item) => item.status == 'Selected');
-                    });
-                  },
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CartItemWidget(
+                          cart: cartItems[index],
+                          onIncrement: () => incrementQuantity(index),
+                          onDecrement: () => decrementQuantity(index),
+                          onRemove: () => removeItem(index),
+                          onCheckboxChanged: (bool? value) {
+                            setState(() {
+                              cartItems[index].status =
+                                  value! ? 'Selected' : 'In Cart';
+                              selectAll = cartItems.every(
+                                (item) => item.status == 'Selected',
+                              );
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
@@ -268,8 +279,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             const Color.fromARGB(255, 79, 114, 189),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 132),
+                        padding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.height * 0.02,
+                          horizontal: MediaQuery.of(context).size.width * 0.32,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -295,7 +308,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
 }
 
 class CartItemWidget extends StatelessWidget {
-  final Item item;
+  final Cart cart;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final VoidCallback onRemove;
@@ -303,7 +316,7 @@ class CartItemWidget extends StatelessWidget {
 
   const CartItemWidget({
     super.key,
-    required this.item,
+    required this.cart,
     required this.onIncrement,
     required this.onDecrement,
     required this.onRemove,
@@ -312,17 +325,21 @@ class CartItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formattedPrice = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp. ',
+      decimalDigits: 0,
+    ).format(cart.price);
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: Row(
           children: [
-            // Menambahkan checkbox di sebelah kiri
             Checkbox(
-              value: item.status == 'Selected',
-              onChanged:
-                  onCheckboxChanged, // Menggunakan callback untuk memperbarui status
+              value: cart.status == 'Selected',
+              onChanged: onCheckboxChanged,
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
@@ -330,7 +347,7 @@ class CartItemWidget extends StatelessWidget {
                 width: 80,
                 height: 80,
                 child: Image.asset(
-                  item.imageUrl,
+                  cart.imageUrl,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -345,7 +362,7 @@ class CartItemWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          item.name,
+                          cart.name,
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -376,7 +393,7 @@ class CartItemWidget extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                item.ukuran,
+                                cart.ukuran,
                                 style: GoogleFonts.plusJakartaSans(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
@@ -393,12 +410,16 @@ class CartItemWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Rp. ${item.price.toString()}",
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
+                      Flexible(
+                        child: Text(
+                          "Rp. ${cart.price.toString()}",
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                          overflow:
+                              TextOverflow.ellipsis, // Menangani teks panjang
                         ),
                       ),
                       Row(
@@ -406,13 +427,13 @@ class CartItemWidget extends StatelessWidget {
                           IconButton(
                             icon: const Icon(Icons.remove_circle_outline),
                             color:
-                                item.quantity > 1 ? Colors.blue : Colors.grey,
-                            onPressed: item.quantity > 1 ? onDecrement : null,
+                                cart.quantity > 1 ? Colors.blue : Colors.grey,
+                            onPressed: cart.quantity > 1 ? onDecrement : null,
                           ),
                           Text(
-                            item.quantity.toString(),
+                            cart.quantity.toString(),
                             style: GoogleFonts.plusJakartaSans(
-                              fontSize: 12,
+                              fontSize: 14,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
                             ),

@@ -1,4 +1,4 @@
-class Item {
+class Cart {
   final String name;
   final int price;
   final String ukuran;
@@ -6,7 +6,7 @@ class Item {
   int quantity;
   String status;
 
-  Item({
+  Cart({
     required this.name,
     required this.price,
     required this.ukuran,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
 import 'package:raffaelosanzio/pages/home.dart';
@@ -10,7 +13,12 @@ import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (context) => CartBloc(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -31,10 +39,15 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/main-home': (context) => const CustomBottomNavbar(),
         '/home': (context) => const HomePage(),
-        '/allKategori': (context) => const AllCategoriesPage(categories: [],),
-        '/viewkategory': (context) => const CategoryProductPage(categoryTitle: '', products: [],),
+        '/allKategori': (context) => const AllCategoriesPage(
+              categories: [],
+            ),
+        '/viewkategory': (context) => const CategoryProductPage(
+              categoryTitle: '',
+              products: [],
+            ),
         '/history': (context) => const HistoryPage(),
-        '/chart': (context) => const ShoppingCartPage(),
+        '/cart': (context) => const ShoppingCartPage(),
         '/success': (context) => const SuccessPage(),
       },
     );
