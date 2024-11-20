@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
+import 'package:raffaelosanzio/models/detail_product.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 
 class DetailProductPage extends StatefulWidget {
-  final String name;
-  final String price;
-  final String imagePath;
+  final DetailProduct product;
 
-  const DetailProductPage({
-    super.key,
-    required this.name,
-    required this.price,
-    required this.imagePath,
-  });
+  const DetailProductPage({super.key, required this.product});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -33,7 +31,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
               children: [
                 Center(
                   child: Image.asset(
-                    widget.imagePath, // Menggunakan imagePath dari parameter
+                    widget.product
+                        .imageUrl, // Menggunakan imagePath dari parameter
                     height: 300,
                   ),
                 ),
@@ -77,7 +76,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
             Row(
               children: [
                 Text(
-                  widget.price, // Menggunakan price dari parameter
+                  widget.product.price, // Menggunakan price dari parameter
                   style: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.w400),
                 ),
@@ -96,14 +95,14 @@ class _DetailProductPageState extends State<DetailProductPage> {
             ),
             const SizedBox(height: 8),
             Text(
-              widget.name, // Menggunakan name dari parameter
+              widget.product.name, // Menggunakan name dari parameter
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
-            const Text(
-              'Long established fact that a reader will be distracted by the readable',
+            Text(
+              widget.product.description1,
               textAlign: TextAlign.left,
-              style: TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 8),
             const Text(
@@ -118,9 +117,11 @@ class _DetailProductPageState extends State<DetailProductPage> {
                   label: Text(size),
                   selected: selectedSize == size,
                   onSelected: (bool selected) {
-                    setState(() {
-                      selectedSize = size;
-                    });
+                    if (selected) {
+                      setState(() {
+                        selectedSize = size;
+                      });
+                    }
                   },
                 );
               }).toList(),
@@ -131,26 +132,21 @@ class _DetailProductPageState extends State<DetailProductPage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Jaket bomber adalah jenis jaket yang memiliki desain khas dengan bagian depan yang dapat dibuka (zipper) dan sering kali dilengkapi dengan ribbed cuffs (pergelangan tangan) dan hem (bagian bawah). Awalnya, jaket ini dirancang untuk para pilot pesawat tempur selama Perang Dunia II, namun kini telah menjadi fashion staple yang populer di kalangan pria dan wanita.',
-              style: TextStyle(color: Colors.grey),
+            Text(
+              widget.product.description2,
+              style: const TextStyle(color: Colors.grey),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    width: 2, // Adjust the width of the border
-                    color:
-                        Colors.transparent, // Make the inner border transparent
-                  ),
+                  borderRadius: BorderRadius.circular(12),
                   gradient: const LinearGradient(
                     colors: [
                       Color(0xFFA5D1FE),
@@ -160,35 +156,48 @@ class _DetailProductPageState extends State<DetailProductPage> {
                     end: Alignment.bottomRight,
                   ),
                 ),
-                padding: const EdgeInsets.all(
-                    1), // Padding to create space for the gradient border
+                padding: const EdgeInsets.all(1),
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Mengirimkan event AddToCart ke CartBloc
+                    BlocProvider.of<CartBloc>(context).add(
+                      AddToCart(
+                        product: widget.product.copyWith(
+                          size: selectedSize, // Tambahkan ukuran yang dipilih
+                        ),
+                      ),
+                    );
+
+                    // Tampilkan notifikasi
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content:
+                              Text('${widget.product.name} added to cart!')),
+                    );
+                  },
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: Colors
-                        .white, // Set the button background to the specified blue color
+                    backgroundColor: whiteMain, // Warna latar belakang tombol
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    side: const BorderSide(
-                        color: Colors
-                            .transparent), // No border on the button itself
+                    side: BorderSide.none, // Hilangkan garis pembatas
                   ),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.shopping_cart,
-                          color:
-                              Color(0xFF8AA1D3)), // Set the icon color to white
-                      SizedBox(width: 8),
+                      Icon(
+                        Icons.shopping_cart,
+                        color: Color(0xFF8AA1D3),
+                        size: 16.0,
+                      ),
+                      SizedBox(width: 4),
                       Text(
                         'ADD TO CART',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color:
-                              Color(0xFF8AA1D3), // Set the text color to white
+                          color: Color(0xFF8AA1D3), // Warna teks
                         ),
                       ),
                     ],
@@ -210,7 +219,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 child: Text(
                   'BUY',
                   style: GoogleFonts.plusJakartaSans(
-                    fontSize: 18,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFFFFFFFF),
                     letterSpacing: 1.2, // Menambahkan spasi antar huruf

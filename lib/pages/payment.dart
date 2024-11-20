@@ -44,6 +44,7 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildAddressSection(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -196,6 +197,7 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildItemsSection() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -216,6 +218,7 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildItemRowWithImage(String name, String size, String color,
       String imagePath, int price, int quantity) {
     return Row(
@@ -242,7 +245,8 @@ class PaymentPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 4),
-              Text(' $quantity', style: const TextStyle(fontSize: 12)), // Quantity
+              Text(' $quantity',
+                  style: const TextStyle(fontSize: 12)), // Quantity
             ],
           ),
         ),
@@ -259,6 +263,7 @@ class PaymentPage extends StatelessWidget {
       ],
     );
   }
+
   Widget _buildPaymentMethodSection() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -304,6 +309,7 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildSummarySection() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -324,6 +330,7 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildSummaryRow(String title, String amount, {bool isTotal = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -342,13 +349,17 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildPaymentButton() {
     return Builder(
       builder: (BuildContext context) {
         return ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color.fromARGB(255, 79, 114, 189),
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 133),
+            padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * 0.02,
+              horizontal: MediaQuery.of(context).size.width * 0.32,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),

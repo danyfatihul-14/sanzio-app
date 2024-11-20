@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/models/detail_product.dart';
 import 'package:raffaelosanzio/pages/detailProduk.dart';
 
-Widget productItem(
-    BuildContext context, String name, String price, String imagePath) {
+Widget productItem(BuildContext context, String name, String price,
+    String imageUrl, String desc1, String desc2) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => DetailProductPage(
-            name: name,
-            price: price,
-            imagePath: imagePath,
+            product: DetailProduct(
+              name: name,
+              price: price,
+              imageUrl: imageUrl,
+              description1: desc1,
+              description2: desc2,
+            ),
           ),
         ),
       );
@@ -24,17 +29,18 @@ Widget productItem(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            // Center the image
             child: SizedBox(
-              height: 145, // You can adjust the height as needed
-              child: Image.asset(imagePath, fit: BoxFit.cover),
+              height: MediaQuery.of(context).size.height * 0.18, // Dinamis
+              child: Image.asset(imageUrl, fit: BoxFit.cover),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(name,
                 style: GoogleFonts.plusJakartaSans(
-                    fontSize: 13, fontWeight: FontWeight.w500)),
+                    fontSize:
+                        MediaQuery.of(context).size.width * 0.035, // Dinamis
+                    fontWeight: FontWeight.w500)),
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -56,7 +62,8 @@ Widget productItem(
                 Text(
                   price,
                   style: GoogleFonts.plusJakartaSans(
-                    fontSize: 10,
+                    fontSize:
+                        MediaQuery.of(context).size.width * 0.03, // Dinamis
                     color: Colors.black,
                     fontWeight: FontWeight.w400,
                   ),
@@ -70,7 +77,9 @@ Widget productItem(
                 const SizedBox(width: 4.0),
                 Text(
                   "4.8",
-                  style: GoogleFonts.plusJakartaSans(fontSize: 10),
+                  style: GoogleFonts.plusJakartaSans(
+                      fontSize:
+                          MediaQuery.of(context).size.width * 0.03), // Dinamis
                 ),
               ],
             ),

@@ -166,17 +166,19 @@ class _HomePageState extends State<HomePage> {
           crossAxisCount: 2,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          childAspectRatio: 0.75,
+          childAspectRatio: MediaQuery.of(context).size.width /
+              (MediaQuery.of(context).size.height * 0.68), // Sesuaikan proporsi
           children: [
             productItem(context, "Jacket Bomber", "Rp 150.000",
-                "assets/Jacket Bomber.png"),
-            productItem(context, "Daster", "Rp 150.000", "assets/Daster.png"),
-            productItem(
-                context, "Tank Top", "Rp 100.000", "assets/Tanktop.png"),
-            productItem(
-                context, "Batik Shirt", "Rp 250.000", "assets/Batik.png"),
+                "assets/Jacket Bomber.png", "ppp", "pppp"),
+            productItem(context, "Daster", "Rp 150.000", "assets/Daster.png",
+                "ppp", "pppp"),
+            productItem(context, "Tank Top", "Rp 100.000", "assets/Tanktop.png",
+                "ppp", "pppp"),
+            productItem(context, "Batik Shirt", "Rp 250.000",
+                "assets/Batik.png", "ppp", "pppp"),
           ],
-        ),
+        )
       ],
     );
   }

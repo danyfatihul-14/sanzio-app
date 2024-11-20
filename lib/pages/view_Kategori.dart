@@ -35,13 +35,16 @@ class CategoryProductPage extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
-                childAspectRatio: 0.75,
+                childAspectRatio: MediaQuery.of(context).size.width /
+                    (MediaQuery.of(context).size.height * 0.66),
                 children: products.map((product) {
                   return productItem(
                     context,
                     product['title'] ?? 'Unknown',
                     product['price'] ?? 'Unknown',
                     product['image'] ?? '',
+                    product['desc1'] ?? '',
+                    product['desc2'] ?? '',
                   );
                 }).toList(),
               ),
