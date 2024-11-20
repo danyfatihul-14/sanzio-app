@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:raffaelosanzio/models/detail_product.dart';
+import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/pages/detailProduk.dart';
 
-Widget productItem(BuildContext context, String name, String price,
-    String imageUrl, String desc1, String desc2) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DetailProductPage(
-            product: DetailProduct(
-              name: name,
-              price: price,
-              imageUrl: imageUrl,
-              description1: desc1,
-              description2: desc2,
-            ),
+class ProductItem extends StatelessWidget {
+  final Map<String, dynamic> product;
+
+  const ProductItem({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // Navigasi ke halaman detail dengan membawa data produk
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailProductPage(product: product),
           ),
-        ),
-      );
-    },
-    child: Card(
+        );
+      },
+      child: Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Column(
@@ -31,12 +29,12 @@ Widget productItem(BuildContext context, String name, String price,
           Center(
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.18, // Dinamis
-              child: Image.asset(imageUrl, fit: BoxFit.cover),
+              child: Image.asset(product['image'], fit: BoxFit.cover),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(name,
+            child: Text(product['title'],
                 style: GoogleFonts.plusJakartaSans(
                     fontSize:
                         MediaQuery.of(context).size.width * 0.035, // Dinamis
@@ -60,7 +58,7 @@ Widget productItem(BuildContext context, String name, String price,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  price,
+                  "Rp${NumberFormat('#,###', 'id_ID').format(product['price'])}",
                   style: GoogleFonts.plusJakartaSans(
                     fontSize:
                         MediaQuery.of(context).size.width * 0.03, // Dinamis
@@ -76,7 +74,7 @@ Widget productItem(BuildContext context, String name, String price,
                 ),
                 const SizedBox(width: 4.0),
                 Text(
-                  "4.8",
+                  product['rating'].toString(),
                   style: GoogleFonts.plusJakartaSans(
                       fontSize:
                           MediaQuery.of(context).size.width * 0.03), // Dinamis
@@ -87,5 +85,6 @@ Widget productItem(BuildContext context, String name, String price,
         ],
       ),
     ),
-  );
+    );
+  }
 }

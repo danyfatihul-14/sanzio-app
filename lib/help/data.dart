@@ -34,18 +34,18 @@ final List<Map<String, String>> categories = [
 ];
 
 final List<Map<String, String>> onProcessItems = [
-    {
-      'name': 'Blue T-Shirt',
-      'price': 'Rp 150.000',
-      'size': 'XL',
-      'date': '19-10-2024',
-      'status': 'Pending',
-    },
-    {
-      'name': 'Green Jacket',
-      'price': 'Rp 250.000',
-      'size': 'M',
-      'date': '18-10-2024',
-      'status': 'Rejected',
-    },
-  ];
+  {
+    'name': 'Blue T-Shirt',
+    'price': 'Rp 150.000',
+    'size': 'XL',
+    'date': '19-10-2024',
+    'status': 'Pending',
+  },
+  {
+    'name': 'Green Jacket',
+    'price': 'Rp 250.000',
+    'size': 'M',
+    'date': '18-10-2024',
+    'status': 'Rejected',
+  },
+];

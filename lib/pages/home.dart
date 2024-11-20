@@ -1,6 +1,8 @@
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/api/product_api.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/help/data.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
@@ -155,6 +157,7 @@ class _HomePageState extends State<HomePage> {
 
   // Popular Products section
   Widget _buildPopularProductsSection(BuildContext context) {
+    List<Map<String, dynamic>> formattedProducts = getFormattedProducts();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -168,16 +171,12 @@ class _HomePageState extends State<HomePage> {
           physics: const NeverScrollableScrollPhysics(),
           childAspectRatio: MediaQuery.of(context).size.width /
               (MediaQuery.of(context).size.height * 0.68), // Sesuaikan proporsi
-          children: [
-            productItem(context, "Jacket Bomber", "Rp 150.000",
-                "assets/Jacket Bomber.png", "ppp", "pppp"),
-            productItem(context, "Daster", "Rp 150.000", "assets/Daster.png",
-                "ppp", "pppp"),
-            productItem(context, "Tank Top", "Rp 100.000", "assets/Tanktop.png",
-                "ppp", "pppp"),
-            productItem(context, "Batik Shirt", "Rp 250.000",
-                "assets/Batik.png", "ppp", "pppp"),
-          ],
+          children: List.generate(formattedProducts.length, (index) {
+            final product = formattedProducts[index];
+
+            // Mengirimkan satu Map<String, dynamic> ke ProductItem
+            return ProductItem(product: product);
+          }),
         )
       ],
     );
@@ -247,16 +246,16 @@ class _HomePageState extends State<HomePage> {
   Widget categoryItem(String title, String imagePath) {
     return GestureDetector(
       onTap: () {
-        List<Map<String, String>> categoryProducts = products[title] ?? [];
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CategoryProductPage(
-              categoryTitle: title,
-              products: categoryProducts,
-            ),
-          ),
-        );
+        // List<Map<String, String>> categoryProducts = products[title] ?? [];
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => CategoryProductPage(
+        //       categoryTitle: title,
+        //       products: categoryProducts,
+        //     ),
+        //   ),
+        // );
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

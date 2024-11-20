@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
@@ -16,7 +15,7 @@ void main() {
   runApp(
     BlocProvider(
       create: (context) => CartBloc(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
