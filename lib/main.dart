@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
         '/success': (context) => const SuccessPage(),
         '/onboard': (context) => OnboardingScreen(),
         '/rimcian': (context) => Rincian(),
+        /// Test
       },
     );
   }
