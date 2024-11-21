@@ -4,9 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 class EditableAddressPage extends StatefulWidget {
   final Function(List<String>) onSave;
 
-  EditableAddressPage({required this.onSave});
+  const EditableAddressPage({super.key, required this.onSave});
 
   @override
+  // ignore: library_private_types_in_public_api
   _EditableAddressPageState createState() => _EditableAddressPageState();
 }
 
@@ -62,7 +63,7 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -84,9 +85,9 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
                         color: Colors.black87,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Container(
-                      padding: EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: Colors.blue[50],
                         borderRadius: BorderRadius.circular(8),
@@ -139,14 +140,14 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Column(
               children: addresses.asMap().entries.map((entry) {
                 int index = entry.key;
                 String address = entry.value;
                 return Container(
-                  padding: EdgeInsets.all(12),
-                  margin: EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.all(12),
+                  margin: const EdgeInsets.only(bottom: 8),
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(8),
@@ -201,7 +202,7 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
               }).toList(),
             ),
             if (showForm) ...[
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextField(
                 controller: addressController,
                 decoration: InputDecoration(
@@ -209,13 +210,13 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
                       ? 'Ubah Alamat'
                       : 'Masukkan Alamat Baru',
                   labelStyle: GoogleFonts.plusJakartaSans(),
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 ),
                 maxLines: 5,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   if (addressController.text.isNotEmpty) {
@@ -225,7 +226,7 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 79, 114, 189),
-                  minimumSize: Size(double.infinity, 48), // Tombol panjang
+                  minimumSize: const Size(double.infinity, 48), // Tombol panjang
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

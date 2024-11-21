@@ -76,7 +76,7 @@ class LoginPage extends StatelessWidget {
             CustomButton(
               title: 'Login',
               color: blue600,
-              pushTo: '/home',
+              pushTo: '/main-home',
             ),
             const SizedBox(height: 16.0),
 

@@ -1,53 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class OnProses extends StatefulWidget {
-  @override
-  _OnProsesState createState() => _OnProsesState();
-}
-
-class _OnProsesState extends State<OnProses> {
-  final List<Map<String, String>> items = [
-    {
-      'name': 'Blue T-Shirt',
-      'price': 'Rp 150.000',
-      'size': 'XL',
-      'date': '19-10-2024',
-      'status': 'Pending',
-    },
-    {
-      'name': 'Green Jacket',
-      'price': 'Rp 250.000',
-      'size': 'M',
-      'date': '18-10-2024',
-      'status': 'Rejected',
-    },
-    // Tambahkan lebih banyak item jika diperlukan
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: items.isEmpty
-          ? Center(
-              child: Text(
-                "No items in process",
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey,
-                ),
-              ),
-            )
-          : OnprosesList(items: items),
-    );
-  }
-}
-
-class OnprosesList extends StatelessWidget {
+class OnProcessList extends StatelessWidget {
   final List<Map<String, String>> items;
 
-  OnprosesList({required this.items});
+  const OnProcessList({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +26,7 @@ class OnprosesList extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
-                    'assets/jacket.jpg', // Ganti dengan path gambar yang sesuai
+                    'assets/jacket.jpg',
                     width: 80,
                     height: 80,
                     fit: BoxFit.cover,
@@ -81,7 +38,7 @@ class OnprosesList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item['name'] ?? "Unknown", // Nama item
+                        item['name'] ?? "Unknown",
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -90,7 +47,7 @@ class OnprosesList extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        item['price'] ?? "Unknown", // Harga
+                        item['price'] ?? "Unknown",
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 10,
                           fontWeight: FontWeight.w400,
@@ -99,41 +56,34 @@ class OnprosesList extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        item['size'] ?? "Unknown", // Ukuran
+                        item['size'] ?? "Unknown",
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 10,
                           fontWeight: FontWeight.w400,
                           color: const Color(0xFF242F38),
                         ),
                       ),
-                      const SizedBox(height: 8),
                       Row(
                         children: [
                           Text(
-                            item['date'] ?? "Unknown", // Tanggal
+                            item['date'] ?? "Unknown",
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 8,
                               fontWeight: FontWeight.w400,
                               color: const Color(0xFF242F38),
                             ),
                           ),
-                          const SizedBox(
-                            height: 35,
-                          ),
                           const Spacer(),
                           Text(
-                            item['status'] ?? "Unknown", // Status
+                            item['status'] ?? "Unknown",
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 8,
                               fontWeight: FontWeight.w600,
                               color: item['status'] == 'Pending'
-                                  ? const Color.fromARGB(255, 79, 114,
-                                      189) // Status Pending berwarna biru
+                                  ? const Color.fromARGB(255, 79, 114, 189)
                                   : item['status'] == 'Rejected'
-                                      ? Colors
-                                          .red // Status Rejected berwarna merah
-                                      : Colors
-                                          .grey, // Status lainnya berwarna abu-abu
+                                      ? Colors.red
+                                      : Colors.grey,
                             ),
                           ),
                         ],

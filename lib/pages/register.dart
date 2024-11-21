@@ -92,7 +92,7 @@ class RegisterPage extends StatelessWidget {
             CustomButton(
               title: 'Create Account',
               color: blue600,
-              pushTo: '/home',
+              pushTo: '/login',
             ),
             const SizedBox(height: 16.0),
 
