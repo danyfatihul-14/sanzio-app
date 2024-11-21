@@ -12,7 +12,13 @@ class CartInitial extends CartState {}
 
 class CartUpdated extends CartState {
   final List<Cart> cartItems;
-  final double totalPrice;
 
-  CartUpdated({required this.cartItems, required this.totalPrice});
+  const CartUpdated({required this.cartItems});
+
+  int get totalPrice =>
+      cartItems
+          .where((item) => item.status == 'Selected')
+          .map((item) => item.price * item.quantity)
+          .fold(0, (value, element) => value + element) |
+      0;
 }

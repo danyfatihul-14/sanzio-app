@@ -49,6 +49,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 Positioned(
                   top: 20,
                   left: 0,
+                  width: 36,
                   child: Container(
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
@@ -56,13 +57,13 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black26,
-                          blurRadius: 4,
+                          blurRadius: 2,
                           spreadRadius: 1,
                         ),
                       ],
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.grey),
+                      icon: Icon(Icons.arrow_back, color: blue600),
                       onPressed: () {
                         Navigator.pop(context); // Back button
                       },
@@ -308,10 +309,12 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                           size: selectedSize,
                                           imageUrl: imageUrl,
                                           quantity: quantity,
+                                          stock: selectedDetail['stock']
                                         );
                                         // Tambahkan ke keranjang menggunakan event Bloc
-                                        BlocProvider.of<CartBloc>(context).add(
+                                        context.read<CartBloc>().add(
                                             AddToCart(cartItem: cartArray));
+                                        print(cartArray);
 
                                         // Tampilkan notifikasi kepada pengguna
                                         ScaffoldMessenger.of(context)
