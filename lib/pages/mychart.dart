@@ -47,8 +47,9 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
               children: [
                 BlocBuilder<CartBloc, CartState>(
                   builder: (context, state) {
+                    bool allSelected = false;
                     if (state is CartUpdated) {
-                      bool allSelected = state.cartItems.isNotEmpty
+                      allSelected = state.cartItems.isNotEmpty
                           ? state.cartItems
                                   .every((item) => item.status == 'Selected')
                               ? true
@@ -66,7 +67,12 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                         },
                       );
                     }
-                    return const SizedBox.shrink();
+                    return Checkbox(
+                      value: allSelected,
+                      onChanged: (bool? value) {
+                        allSelected = false;
+                      },
+                    );
                   },
                 ),
                 Text(
@@ -83,7 +89,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
           Expanded(
             child: BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
-                if (state is CartUpdated) {
+                if (state is CartUpdated && state.cartItems.isNotEmpty) {
                   return ListView.builder(
                     itemCount: state.cartItems.length,
                     itemBuilder: (context, index) {
@@ -125,7 +131,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                     },
                   );
                 }
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: Text("Cart is Empty"));
               },
             ),
           ),

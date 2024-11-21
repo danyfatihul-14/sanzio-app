@@ -6,6 +6,7 @@ import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
 import 'package:raffaelosanzio/models/cart.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DetailProductPage extends StatefulWidget {
   final Map<String, dynamic> product;
@@ -29,7 +30,6 @@ class _DetailProductPageState extends State<DetailProductPage> {
     final price = product['price']; // Mengambil price dari Map
     final description =
         product['description']; // Mengambil description dari Map
-    final stock = product['stock']; // Mengambil stock dari Map
     final ratings = product['rating']; // Mengambil ratings dari Map
 
     return Scaffold(
@@ -303,27 +303,28 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                         );
                                         // Buat array Cart
                                         final cartArray = Cart(
-                                          detailProductId: selectedDetail['id'],
-                                          title: title,
-                                          price: price,
-                                          size: selectedSize,
-                                          imageUrl: imageUrl,
-                                          quantity: quantity,
-                                          stock: selectedDetail['stock']
-                                        );
+                                            detailProductId:
+                                                selectedDetail['id'],
+                                            title: title,
+                                            price: price,
+                                            size: selectedSize,
+                                            imageUrl: imageUrl,
+                                            quantity: quantity,
+                                            stock: selectedDetail['stock']);
                                         // Tambahkan ke keranjang menggunakan event Bloc
                                         context.read<CartBloc>().add(
                                             AddToCart(cartItem: cartArray));
                                         print(cartArray);
 
                                         // Tampilkan notifikasi kepada pengguna
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              '${title} berhasil ditambahkan ke keranjang!',
-                                            ),
-                                          ),
+                                        Fluttertoast.showToast(
+                                          msg: "${title} Berhasil Ditambahkan",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.TOP,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.green,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
                                         );
 
                                         // Tutup Bottom Sheet setelah menambahkan ke keranjang
