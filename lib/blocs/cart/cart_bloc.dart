@@ -7,14 +7,45 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartInitial()) {
     // Menangani event AddToCart
     on<AddToCart>((event, emit) {
-      _cartItems.add(event.cartItem);
+      if (_cartItems.isNotEmpty) {
+        // Cek apakah item dengan `detailProductId` yang sama sudah ada
+        final isExistingItem = _cartItems
+            .where((item) =>
+                item.detailProductId == event.cartItem.detailProductId)
+            .isNotEmpty;
 
-      double totalPrice =
-          _cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+        if (isExistingItem) {
+          // Jika item sudah ada, tambahkan quantity
+          final existingItem = _cartItems.firstWhere(
+            (item) => item.detailProductId == event.cartItem.detailProductId,
+          );
+          int quantity = existingItem.quantity;
+          if ((quantity + event.cartItem.quantity) > existingItem.stock) {
+            _cartItems
+                .firstWhere(
+                  (item) =>
+                      item.detailProductId == event.cartItem.detailProductId,
+                )
+                .quantity = existingItem.stock;
+          } else {
+            _cartItems
+                .firstWhere(
+                  (item) =>
+                      item.detailProductId == event.cartItem.detailProductId,
+                )
+                .quantity += event.cartItem.quantity;
+          }
+        } else {
+          // Jika item belum ada, tambahkan item baru
+          _cartItems.add(event.cartItem);
+        }
+      } else {
+        // Jika keranjang kosong, tambahkan item baru
+        _cartItems.add(event.cartItem);
+      }
 
       // Emit state keranjang yang diperbarui
-      emit(CartUpdated(
-          cartItems: List.from(_cartItems), totalPrice: totalPrice));
+      emit(CartUpdated(cartItems: _cartItems));
     });
 
     // Menangani event RemoveFromCart
@@ -22,39 +53,28 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       _cartItems
           .removeWhere((item) => item.detailProductId == event.detailProductId);
 
-      double totalPrice =
-          _cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
-
       // Emit state keranjang yang diperbarui
-      emit(CartUpdated(
-          cartItems: List.from(_cartItems), totalPrice: totalPrice));
+      emit(CartUpdated(cartItems: List<Cart>.from(_cartItems)));
     });
 
-  // Menangani event UpdateQuantityEvent
+    // Menangani event UpdateQuantityEvent
     on<UpdateQuantityEvent>((event, emit) {
       if (event.index >= 0 && event.index < _cartItems.length) {
         _cartItems[event.index].quantity = event.quantity;
 
-        double totalPrice =
-            _cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
-
         // Emit state keranjang yang diperbarui
-        emit(CartUpdated(
-            cartItems: List.from(_cartItems), totalPrice: totalPrice));
+        emit(CartUpdated(cartItems: List.from(_cartItems)));
       }
     });
 
     // Menangani event ToggleSelectEvent
     on<ToggleSelectEvent>((event, emit) {
       if (event.index >= 0 && event.index < _cartItems.length) {
-        _cartItems[event.index].status = event.isSelected ? 'Selected' : 'In Cart';
-
-        double totalPrice =
-            _cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+        _cartItems[event.index].status =
+            event.isSelected ? 'Selected' : 'In Cart';
 
         // Emit state keranjang yang diperbarui
-        emit(CartUpdated(
-            cartItems: List.from(_cartItems), totalPrice: totalPrice));
+        emit(CartUpdated(cartItems: List.from(_cartItems)));
       }
     });
   }

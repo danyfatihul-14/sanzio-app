@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:raffaelosanzio/models/cart.dart';
 import 'package:raffaelosanzio/pages/editable_address_page.dart';
 import 'package:raffaelosanzio/pages/success.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 
 class PaymentPage extends StatelessWidget {
-  const PaymentPage({super.key});
+  final List<Cart> selectedCart;
+
+  const PaymentPage({super.key, required this.selectedCart});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +43,86 @@ class PaymentPage extends StatelessWidget {
             const SizedBox(height: 16),
             _buildSummarySection(),
             const SizedBox(height: 16),
-            _buildPaymentButton(),
+            _buildPaymentButton(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildItemsSection() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey[300]!),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Items",
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          ...selectedCart.map((cart) => _buildItemRowWithImage(cart)).toList(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildItemRowWithImage(Cart cart) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            cart.imageUrl,
+            width: 80,
+            height: 80,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  cart.title,
+                  style: GoogleFonts.plusJakartaSans(
+                      fontWeight: FontWeight.bold, fontSize: 16.0),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'Size: ${cart.size}',
+                      style: GoogleFonts.plusJakartaSans(fontSize: 14),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Qty: ${cart.quantity}',
+                      style: GoogleFonts.plusJakartaSans(fontSize: 14),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "Rp${NumberFormat('#,###', 'id_ID').format(cart.price * cart.quantity)}",
+                  style: GoogleFonts.plusJakartaSans(
+                      fontSize: 14,
+                      color: gray800,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -58,11 +140,8 @@ class PaymentPage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GestureDetector(
-                child: const Icon(Icons.location_on,
-                    color: Color.fromARGB(255, 79, 114, 189)),
-              ),
-              const SizedBox(width: 8),
+              const Icon(Icons.location_on,
+                  color: Color.fromARGB(255, 79, 114, 189)),
               Expanded(
                 child: Align(
                   alignment: Alignment.centerLeft,
@@ -78,7 +157,6 @@ class PaymentPage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  print("Edit address");
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -109,158 +187,8 @@ class PaymentPage extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          const SizedBox(height: 8),
-          const Divider(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Jenis Pengiriman:',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'JNT',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Berat:',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '1 Kg',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Estimasi Waktu:',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '27 Oktober 2024',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
         ],
       ),
-    );
-  }
-
-  Widget _buildItemsSection() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Divider(),
-          _buildItemRowWithImage('Jacket Bomber', 'S', 'Yellow',
-              'assets/Jacket.png', 150000, 002), // Added quantity
-          const SizedBox(height: 15), // Space between items
-          _buildItemRowWithImage('Jacket Bomber', 'S', 'Yellow',
-              'assets/Jacket.png', 150000, 001), // Added quantity
-        ],
-      ),
-    );
-  }
-
-  Widget _buildItemRowWithImage(String name, String size, String color,
-      String imagePath, int price, int quantity) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Image.asset(
-          imagePath,
-          width: 60,
-          height: 60,
-          fit: BoxFit.cover,
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-              Row(
-                children: [
-                  Text(color, style: const TextStyle(fontSize: 12)),
-                  const SizedBox(width: 8),
-                  Text(', $size', style: const TextStyle(fontSize: 12)),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Text(' $quantity',
-                  style: const TextStyle(fontSize: 12)), // Quantity
-            ],
-          ),
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              const SizedBox(height: 8), // Add space between quantity and price
-              Text('Rp ${price.toString()}',
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
-            ],
-          ),
-        ),
-      ],
     );
   }
 
@@ -311,6 +239,8 @@ class PaymentPage extends StatelessWidget {
   }
 
   Widget _buildSummarySection() {
+    final int totalAmount =
+        selectedCart.fold(0, (sum, cart) => sum + (cart.price * cart.quantity));
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -320,12 +250,11 @@ class PaymentPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSummaryRow('Subtotal Produk', '003'),
-          _buildSummaryRow('Subtotal Pengiriman', 'Rp 12.000'),
-          _buildSummaryRow('Total Diskon', 'Rp 5.000'),
-          _buildSummaryRow('Voucher Diskon', '- Rp 10.000'),
+          _buildSummaryRow('Total Barang', '${selectedCart.length}'),
+          _buildSummaryRow('Total Harga', 'Rp $totalAmount'),
           const Divider(),
-          _buildSummaryRow('Total Pembayaran', 'Rp 447.000', isTotal: true),
+          _buildSummaryRow('Total Pembayaran', 'Rp $totalAmount',
+              isTotal: true),
         ],
       ),
     );
@@ -350,42 +279,36 @@ class PaymentPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentButton() {
-    return Builder(
-      builder: (BuildContext context) {
-        return ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 79, 114, 189),
-            padding: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * 0.02,
-              horizontal: MediaQuery.of(context).size.width * 0.32,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          onPressed: () {
-            print('Proceed to Payment');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    const SuccessPage(), // Ganti dengan halaman yang sesuai
-              ),
-            );
-          },
-          child: Center(
-            child: Text(
-              'Payment',
-              style: GoogleFonts.plusJakartaSans(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: Colors.white,
-              ),
-            ),
+  Widget _buildPaymentButton(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color.fromARGB(255, 79, 114, 189),
+        padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height * 0.02,
+          horizontal: MediaQuery.of(context).size.width * 0.32,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SuccessPage(),
           ),
         );
       },
+      child: Center(
+        child: Text(
+          'Payment',
+          style: GoogleFonts.plusJakartaSans(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }

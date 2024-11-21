@@ -7,6 +7,7 @@ class Cart {
   int quantity;
   String status;
   bool isSelected;
+  int stock;
 
   Cart({
     required this.detailProductId,
@@ -17,5 +18,6 @@ class Cart {
     this.quantity = 1,
     this.status = 'In Cart',
     this.isSelected = false,
+    this.stock = 1
   });
 }

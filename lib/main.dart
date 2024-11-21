@@ -14,12 +14,7 @@ import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
 
 void main() {
-  runApp(
-    BlocProvider(
-      create: (context) => CartBloc(),
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -27,33 +22,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Raffaelo Sanzio',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return BlocProvider(
+      create: (context) => CartBloc(),
+      child: MaterialApp(
+        title: 'Raffaelo Sanzio',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        initialRoute: '/login',
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/login': (context) => const LoginPage(),
+          '/register': (context) => const RegisterPage(),
+          '/main-home': (context) => const CustomBottomNavbar(),
+          '/home': (context) => const HomePage(),
+          '/allKategori': (context) => const AllCategoriesPage(
+                categories: [],
+              ),
+          '/viewkategory': (context) => const CategoryProductPage(
+                categoryTitle: '',
+                products: [],
+              ),
+          '/history': (context) => const HistoryPage(),
+          '/cart': (context) => const ShoppingCartPage(),
+          '/success': (context) => const SuccessPage(),
+          '/onboard': (context) => OnboardingScreen(),
+          '/rimcian': (context) => Rincian(),
+        },
       ),
-      initialRoute: '/login',
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/main-home': (context) => const CustomBottomNavbar(),
-        '/home': (context) => const HomePage(),
-        '/allKategori': (context) => const AllCategoriesPage(
-              categories: [],
-            ),
-        '/viewkategory': (context) => const CategoryProductPage(
-              categoryTitle: '',
-              products: [],
-            ),
-        '/history': (context) => const HistoryPage(),
-        '/cart': (context) => const ShoppingCartPage(),
-        '/success': (context) => const SuccessPage(),
-        '/onboard': (context) => OnboardingScreen(),
-        '/rimcian': (context) => Rincian(),
-        /// Test
-      },
     );
   }
 }
