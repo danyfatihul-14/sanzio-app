@@ -6,7 +6,9 @@ import 'package:raffaelosanzio/pages/all_Kategori.dart';
 import 'package:raffaelosanzio/pages/home.dart';
 import 'package:raffaelosanzio/pages/login.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
+import 'package:raffaelosanzio/pages/onboarding.dart';
 import 'package:raffaelosanzio/pages/register.dart';
+import 'package:raffaelosanzio/pages/rincian_pesanan.dart';
 import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
         '/history': (context) => const HistoryPage(),
         '/cart': (context) => const ShoppingCartPage(),
         '/success': (context) => const SuccessPage(),
+        '/onboard': (context) => OnboardingScreen(),
+        '/rimcian': (context) => Rincian(),
       },
     );
   }
