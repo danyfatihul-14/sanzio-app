@@ -21,7 +21,9 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteMain,
       appBar: AppBar(
+        backgroundColor: whiteMain,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

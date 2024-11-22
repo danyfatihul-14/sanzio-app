@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 
 class OnProcessList extends StatelessWidget {
   final List<Map<String, String>> items;
@@ -14,6 +15,7 @@ class OnProcessList extends StatelessWidget {
       itemBuilder: (context, index) {
         final item = items[index];
         return Card(
+          color: whiteMain,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

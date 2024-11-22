@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/help/data.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/history_list.dart';
 import 'package:raffaelosanzio/widget/on_process_list.dart';
 
@@ -25,7 +26,9 @@ class _HistoryPageState extends State<HistoryPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteMain,
       appBar: AppBar(
+        backgroundColor: whiteMain,
         automaticallyImplyLeading: false,
         title: Text(
           "History",
@@ -47,17 +50,13 @@ class _HistoryPageState extends State<HistoryPage>
           unselectedLabelColor: const Color.fromARGB(255, 113, 113, 113),
           tabs: [
             Tab(
-              child: Text('Done',
-                style: GoogleFonts.plusJakartaSans(
-                fontSize: 14, fontWeight: FontWeight.w600)
-              )
-            ),
+                child: Text('Done',
+                    style: GoogleFonts.plusJakartaSans(
+                        fontSize: 14, fontWeight: FontWeight.w600))),
             Tab(
-              child: Text('On Process',
-                style: GoogleFonts.plusJakartaSans(
-                fontSize: 14, fontWeight: FontWeight.w600)
-                )
-            ),
+                child: Text('On Process',
+                    style: GoogleFonts.plusJakartaSans(
+                        fontSize: 14, fontWeight: FontWeight.w600))),
           ],
         ),
       ),
@@ -66,17 +65,17 @@ class _HistoryPageState extends State<HistoryPage>
         children: [
           const HistoryList(status: "Success"),
           onProcessItems.isEmpty
-            ? Center(
-              child: Text(
-                "No items in process",
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey,
-                ),
-              ),
-            )
-          : OnProcessList(items: onProcessItems),
+              ? Center(
+                  child: Text(
+                    "No items in process",
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey,
+                    ),
+                  ),
+                )
+              : OnProcessList(items: onProcessItems),
         ],
       ),
     );
