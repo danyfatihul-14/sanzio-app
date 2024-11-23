@@ -3,6 +3,7 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/home.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
+import 'package:raffaelosanzio/pages/profile.dart';
 
 class ScanButton extends StatelessWidget {
   const ScanButton({super.key});
@@ -73,7 +74,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
     const HomePage(),
     const Text('FYP'),
     const HistoryPage(),
-    const Text('Profile'),
+    const MyProfile(),
   ];
 
   void onItemTapped(int index) {

@@ -7,6 +7,7 @@ import 'package:raffaelosanzio/pages/home.dart';
 import 'package:raffaelosanzio/pages/login.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
 import 'package:raffaelosanzio/pages/onboarding.dart';
+import 'package:raffaelosanzio/pages/profile.dart';
 import 'package:raffaelosanzio/pages/register.dart';
 import 'package:raffaelosanzio/pages/rincian_pesanan.dart';
 import 'package:raffaelosanzio/pages/success.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
           '/success': (context) => LoadingToFlipCheck(),
           '/onboard': (context) => OnboardingScreen(),
           '/rimcian': (context) => Rincian(),
+          '/profile': (context) => MyProfile()
         },
       ),
     );
