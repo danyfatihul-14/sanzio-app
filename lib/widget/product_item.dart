@@ -34,7 +34,22 @@ class ProductItem extends StatelessWidget {
               Center(
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.18, // Dinamis
-                  child: Image.asset(product['image'], fit: BoxFit.cover),
+                  child: Hero(
+                    tag: product[
+                        'id'], // Pastikan tag ini unik untuk setiap produk
+                    child: Image.asset(product['image'], fit: BoxFit.cover),
+                    flightShuttleBuilder: (flightContext, animation, direction,
+                        fromContext, toContext) {
+                      return ScaleTransition(
+                        scale: animation.drive(
+                          CurveTween(
+                              curve:
+                                  const Interval(0.0, 1.0, curve: Curves.easeInOut)),
+                        ),
+                        child: Image.asset(product['image'], fit: BoxFit.cover),
+                      );
+                    },
+                  ),
                 ),
               ),
               Text(

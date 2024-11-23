@@ -88,6 +88,7 @@ List<Map<String, dynamic>> getFormattedProducts() {
         .toList();
 
     return {
+      "id": product.id,
       "title": product.title,
       "subtitle": product.subtitle,
       "description": product.description,
