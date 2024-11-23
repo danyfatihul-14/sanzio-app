@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           '/success': (context) => LoadingToFlipCheck(),
           '/onboard': (context) => OnboardingScreen(),
           '/rimcian': (context) => Rincian(),
-          '/profile': (context) => MyProfile()
+          '/profile': (context) => const MyProfile()
         },
       ),
     );
