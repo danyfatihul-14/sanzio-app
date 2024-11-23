@@ -102,12 +102,12 @@ class MyResetPassword extends StatelessWidget {
                 ),
                 SizedBox(height: 42), // Memberikan jarak sebelum tombol
                 // Tombol Recover Password yang memanggil halaman GetCode
-                CustomButton(
-                  text: 'Create New Password', 
-                  onPressed: () {
+                // CustomButton(
+                //   text: 'Create New Password', 
+                //   onPressed: () {
 
-                  },
-                ),
+                //   },
+                // ),
               ],
             ),
           ),

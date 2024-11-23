@@ -101,17 +101,17 @@ class MyGetCode extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 64),
-                CustomButton(
-                  text: 'Send Code', 
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyResetPassword(), 
-                      ),
-                    );
-                  }
-                ), // Memberikan jarak sebelum tombol
+                // CustomButton(
+                //   text: 'Send Code', 
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => MyResetPassword(), 
+                //       ),
+                //     );
+                //   }
+                // ), // Memberikan jarak sebelum tombol
               ],
             ),
           ),
