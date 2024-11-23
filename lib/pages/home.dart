@@ -7,6 +7,7 @@ import 'package:raffaelosanzio/help/data.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/product_item.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
+      backgroundColor: whiteMain,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -36,6 +38,7 @@ class _HomePageState extends State<HomePage> {
               _buildCategoriesSection(context),
               const SizedBox(height: 16.0),
               _buildPopularProductsSection(context),
+              const SizedBox(height: 16.0)
             ],
           ),
         ),
@@ -47,12 +50,10 @@ class _HomePageState extends State<HomePage> {
   AppBar _buildAppBar() {
     return AppBar(
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      surfaceTintColor: whiteMain,
+      backgroundColor: whiteMain,
       automaticallyImplyLeading: false,
-      title: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        child: _buildSearchField(),
-      ),
+      title: _buildSearchField(),
       actions: [_buildCartIcon()],
       toolbarHeight: 50,
     );
@@ -187,16 +188,16 @@ class _HomePageState extends State<HomePage> {
     return Container(
       height: 40,
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: gray50,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: const Row(
+      child: Row(
         children: [
           Padding(
             padding: EdgeInsets.only(left: 8.0),
-            child: Icon(Icons.search, color: Colors.grey),
+            child: Icon(Icons.search, color: gray600),
           ),
-          Expanded(
+          const Expanded(
             child: TextField(
               textAlign: TextAlign.start,
               decoration: InputDecoration(
@@ -216,8 +217,10 @@ class _HomePageState extends State<HomePage> {
   // Cart icon widget
   Widget _buildCartIcon() {
     return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
+        width: 40,
+        height: 40,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Color(0xFFA5D1FE), Color(0xFFCDB4DB)],
@@ -257,29 +260,32 @@ class _HomePageState extends State<HomePage> {
         //   ),
         // );
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 70,
-            height: 70,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 70,
+              height: 70,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            title,
-            style: GoogleFonts.plusJakartaSans(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
+            const SizedBox(height: 8.0),
+            Text(
+              title,
+              style: GoogleFonts.plusJakartaSans(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

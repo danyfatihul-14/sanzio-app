@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/pages/login.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -11,12 +13,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
 
   final List<Map<String, String>> _onboardingData = [
-    {
-      'imagePath': 'assets/Type 6.png',
-      'title': 'Selamat Datang di Sanzio',
-      'description':
-          'Nikmati pengalaman berbelanja yang lebih praktis dan menyenangkan tanpa batasan waktu maupun tempat! Dengan hanya beberapa klik, Anda bisa memenuhi kebutuhan kapan saja dan di mana saja, langsung dari genggaman tangan Anda.',
-    },
     {
       'imagePath': 'assets/onboarding 1.png',
       'title': 'Temukan Produk Favorit Anda',
@@ -40,6 +36,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteMain,
+      appBar: AppBar(
+        backgroundColor: whiteMain,
+        actions: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: TextButton(
+              onPressed: () {
+                // Aksi tombol Skip
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+              child: Text(
+                'Skip',
+                style: GoogleFonts.plusJakartaSans(
+                    color: blue600,
+                    fontWeight:
+                        FontWeight.w600 // Pastikan teks terlihat di AppBar
+                    ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
@@ -62,23 +84,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(_onboardingData.length, (index) {
-              return AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                margin: EdgeInsets.symmetric(horizontal: 4.0),
-                height: 10.0,
-                width: _currentPage == index ? 20.0 : 10.0,
-                decoration: BoxDecoration(
-                  color: _currentPage == index
-                      ? const Color.fromARGB(255, 79, 114, 189)
-                      : Colors.grey[400],
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              );
-            }),
-          ),
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
@@ -89,8 +94,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             const Color.fromARGB(255, 79, 114, 189),
-                        minimumSize:
-                            Size(double.infinity, 50), // Full lebar tombol
+                        minimumSize: const Size(
+                            double.infinity, 50), // Full lebar tombol
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -101,7 +106,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'Mulai Belanja',
                         style: TextStyle(
                           fontFamily: 'PlusJakartaSans',
@@ -113,46 +118,34 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   )
                 : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      // Tombol Skip hanya ditampilkan sebelum halaman terakhir
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                            color: const Color.fromARGB(
-                                255, 79, 114, 189), // Warna outline
-                            width: 2,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          minimumSize: Size(100, 50),
-                        ),
-                        onPressed: () {
-                          // Aksi tombol Skip
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:
+                            List.generate(_onboardingData.length, (index) {
+                          return AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                            height: 10.0,
+                            width: _currentPage == index ? 20.0 : 10.0,
+                            decoration: BoxDecoration(
+                              color: _currentPage == index
+                                  ? const Color.fromARGB(255, 79, 114, 189)
+                                  : Colors.grey[400],
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                           );
-                        },
-                        child: Text(
-                          'Skip',
-                          style: TextStyle(
-                            fontFamily: 'PlusJakartaSans',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: const Color.fromARGB(
-                                255, 79, 114, 189), // Warna teks
-                          ),
-                        ),
+                        }),
                       ),
-                      // Tombol Selanjutnya
+                      SizedBox(
+                        width: MediaQuery.of(context).size.height * (1 / 8),
+                      ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 79, 114, 189),
-                          minimumSize: Size(120, 50),
+                          minimumSize: Size(150, 50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -163,7 +156,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             curve: Curves.easeInOut,
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'Selanjutnya',
                           style: TextStyle(
                             fontFamily: 'PlusJakartaSans',
@@ -191,37 +184,46 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       builder: (context, constraints) {
         return SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             constraints: BoxConstraints(
               minHeight: constraints.maxHeight,
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.001,
+                ),
                 Image.asset(
                   imagePath,
                   height: constraints.maxHeight * imageHeight,
                   fit: BoxFit.contain,
                 ),
-                SizedBox(height: 20),
-                Text(
-                  title,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'PlusJakartaSans',
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  description,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'PlusJakartaSans',
-                    fontSize: 12,
-                    color: Colors.grey[700],
-                  ),
+                Column(
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontFamily: 'PlusJakartaSans',
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: gray600),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      description,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'PlusJakartaSans',
+                        fontSize: 14,
+                        color: gray400,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 36,
+                    )
+                  ],
                 ),
               ],
             ),

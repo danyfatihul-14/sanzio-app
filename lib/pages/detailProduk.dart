@@ -6,6 +6,7 @@ import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
 import 'package:raffaelosanzio/models/cart.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DetailProductPage extends StatefulWidget {
   final Map<String, dynamic> product;
@@ -29,26 +30,42 @@ class _DetailProductPageState extends State<DetailProductPage> {
     final price = product['price']; // Mengambil price dari Map
     final description =
         product['description']; // Mengambil description dari Map
-    final stock = product['stock']; // Mengambil stock dari Map
     final ratings = product['rating']; // Mengambil ratings dari Map
 
     return Scaffold(
+      backgroundColor: gray60,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 40, left: 16.0, right: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
-                Center(
-                  child: Image.asset(
-                    imageUrl, // Menggunakan imageUrl dari Map
-                    height: 300,
+                Container(
+                  padding: const EdgeInsets.only(top: 40.0),
+                  color: whiteMain,
+                  child: Center(
+                    child: Image.asset(
+                      imageUrl, // Menggunakan imageUrl dari Map
+                      height: 300,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 320.0),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(backgroundColor: Colors.grey, radius: 6),
+                      SizedBox(width: 8),
+                      CircleAvatar(backgroundColor: Colors.brown, radius: 6),
+                      SizedBox(width: 8),
+                      CircleAvatar(backgroundColor: Colors.blueGrey, radius: 6),
+                    ],
                   ),
                 ),
                 Positioned(
-                  top: 20,
-                  left: 0,
+                  top: 40,
+                  left: 12,
                   width: 36,
                   child: Container(
                     decoration: const BoxDecoration(
@@ -57,13 +74,17 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black26,
-                          blurRadius: 2,
-                          spreadRadius: 1,
+                          blurRadius: 8,
+                          spreadRadius: -2,
                         ),
                       ],
                     ),
                     child: IconButton(
-                      icon: Icon(Icons.arrow_back, color: blue600),
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: blue600,
+                        size: 20,
+                      ),
                       onPressed: () {
                         Navigator.pop(context); // Back button
                       },
@@ -72,103 +93,125 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(backgroundColor: Colors.grey, radius: 5),
-                SizedBox(width: 8),
-                CircleAvatar(backgroundColor: Colors.brown, radius: 5),
-                SizedBox(width: 8),
-                CircleAvatar(backgroundColor: Colors.blueGrey, radius: 5),
-              ],
+            Container(
+              color: whiteMain,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Rp${NumberFormat('#,###', 'id_ID').format(price)}", // Menggunakan price dari Map
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w400),
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Icon(Icons.star, color: Colors.amber, size: 20),
+                          SizedBox(width: 2),
+                          Text(
+                            ratings.toString(), // Menggunakan ratings dari Map
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    title, // Menggunakan title dari Map
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle, // Menggunakan subtitle dari Map
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: gray300),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Text(
-                  "Rp${NumberFormat('#,###', 'id_ID').format(price)}", // Menggunakan price dari Map
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w400),
-                ),
-                const Spacer(),
-                Row(
-                  children: [
-                    Icon(Icons.star, color: Colors.amber, size: 20),
-                    SizedBox(width: 2),
-                    Text(
-                      ratings.toString(), // Menggunakan ratings dari Map
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              title, // Menggunakan title dari Map
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle, // Menggunakan subtitle dari Map
-              textAlign: TextAlign.left,
-              style: const TextStyle(color: Colors.grey),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Select Size',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: product['product_details'].map<Widget>((detail) {
-                String size = detail['size'];
-                int stock = detail['stock'];
-                bool isOutOfStock = stock == 0;
+            const SizedBox(height: 12),
+            Container(
+              color: whiteMain,
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Select Size',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: product['product_details'].map<Widget>((detail) {
+                      String size = detail['size'];
+                      int stock = detail['stock'];
+                      bool isOutOfStock = stock == 0;
 
-                return ChoiceChip(
-                  label: Text(size),
-                  selectedColor: blue600,
-                  labelStyle: selectedSize == size
-                      ? TextStyle(color: whiteMain)
-                      : TextStyle(color: gray800),
-                  selected: selectedSize == size,
-                  checkmarkColor: whiteMain,
-                  onSelected: isOutOfStock
-                      ? null // Jika stok habis, tidak bisa dipilih
-                      : (bool selected) {
-                          if (selected) {
-                            setState(() {
-                              selectedSize = size;
-                            });
-                          }
-                        },
-                );
-              }).toList(),
+                      return ChoiceChip(
+                        label: Text(size),
+                        selectedColor: blue600,
+                        backgroundColor: whiteMain,
+                        labelStyle: selectedSize == size
+                            ? TextStyle(color: whiteMain)
+                            : TextStyle(color: gray800),
+                        selected: selectedSize == size,
+                        checkmarkColor: whiteMain,
+                        onSelected: isOutOfStock
+                            ? null // Jika stok habis, tidak bisa dipilih
+                            : (bool selected) {
+                                if (selected) {
+                                  setState(() {
+                                    selectedSize = size;
+                                  });
+                                }
+                              },
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 16),
-            const Text(
-              'Description',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            const SizedBox(height: 12),
+            Container(
+              color: whiteMain,
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Description',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    description, // Menggunakan description dari Map
+                    style: TextStyle(color: gray300),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              description, // Menggunakan description dari Map
-              style: const TextStyle(color: Colors.grey),
+            const SizedBox(
+              height: 12.0,
             ),
           ],
         ),
       ),
       bottomNavigationBar: Container(
+        color: whiteMain,
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                   gradient: const LinearGradient(
                     colors: [
                       Color(0xFFA5D1FE),
@@ -183,7 +226,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.vertical(top: Radius.circular(16)),
                       ),
@@ -288,8 +331,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                   const SizedBox(height: 16),
                                   Container(
                                     width: double.infinity,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 12.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12.0),
                                     child: ElevatedButton(
                                       onPressed: () {
                                         // Ambil detail produk berdasarkan ukuran yang dipilih
@@ -303,27 +346,28 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                         );
                                         // Buat array Cart
                                         final cartArray = Cart(
-                                          detailProductId: selectedDetail['id'],
-                                          title: title,
-                                          price: price,
-                                          size: selectedSize,
-                                          imageUrl: imageUrl,
-                                          quantity: quantity,
-                                          stock: selectedDetail['stock']
-                                        );
+                                            detailProductId:
+                                                selectedDetail['id'],
+                                            title: title,
+                                            price: price,
+                                            size: selectedSize,
+                                            imageUrl: imageUrl,
+                                            quantity: quantity,
+                                            stock: selectedDetail['stock']);
                                         // Tambahkan ke keranjang menggunakan event Bloc
                                         context.read<CartBloc>().add(
                                             AddToCart(cartItem: cartArray));
                                         print(cartArray);
 
                                         // Tampilkan notifikasi kepada pengguna
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              '${title} berhasil ditambahkan ke keranjang!',
-                                            ),
-                                          ),
+                                        Fluttertoast.showToast(
+                                          msg: "${title} Berhasil Ditambahkan",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.TOP,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.green,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
                                         );
 
                                         // Tutup Bottom Sheet setelah menambahkan ke keranjang
@@ -357,7 +401,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     backgroundColor: whiteMain, // Warna latar belakang tombol
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     side: BorderSide.none, // Hilangkan garis pembatas
                   ),
@@ -373,7 +417,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       Text(
                         'ADD TO CART',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF8AA1D3), // Warna teks
                         ),
@@ -397,7 +441,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 child: Text(
                   'BUY',
                   style: GoogleFonts.plusJakartaSans(
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFFFFFFFF),
                     letterSpacing: 1.2, // Menambahkan spasi antar huruf

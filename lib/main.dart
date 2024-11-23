@@ -12,6 +12,7 @@ import 'package:raffaelosanzio/pages/register.dart';
 import 'package:raffaelosanzio/pages/rincian_pesanan.dart';
 import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
 
 void main() {
@@ -30,8 +31,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          primaryColor: whiteMain,
         ),
-        initialRoute: '/login',
+        initialRoute: '/onboard',
         debugShowCheckedModeBanner: false,
         routes: {
           '/login': (context) => const LoginPage(),
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
               ),
           '/history': (context) => const HistoryPage(),
           '/cart': (context) => const ShoppingCartPage(),
-          '/success': (context) => const SuccessPage(),
+          '/success': (context) => LoadingToFlipCheck(),
           '/onboard': (context) => OnboardingScreen(),
           '/rimcian': (context) => Rincian(),
           '/profile': (context) => MyProfile()
