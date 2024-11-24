@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           primaryColor: whiteMain,
         ),
-        initialRoute: '/onboard',
+        initialRoute: '/success',
         debugShowCheckedModeBanner: false,
         routes: {
           '/login': (context) => const LoginPage(),
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           '/success': (context) => LoadingToFlipCheck(),
           '/onboard': (context) => OnboardingScreen(),
           '/rimcian': (context) => Rincian(),
-          '/profile': (context) => MyProfile()
+          '/profile': (context) => const MyProfile()
         },
       ),
     );

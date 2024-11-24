@@ -1,5 +1,6 @@
 class Product {
   final int id;
+  final int categoryId;
   final String title;
   final String imageUrl;
   final String subtitle;
@@ -10,6 +11,7 @@ class Product {
 
   Product({
     required this.id,
+    required this.categoryId,
     required this.title,
     required this.imageUrl,
     required this.subtitle,
@@ -21,6 +23,7 @@ class Product {
 
   Product copyWith({
     int? id,
+    int? categoryId,
     String? title,
     String? imageUrl,
     String? subtitle,
@@ -31,6 +34,7 @@ class Product {
   }) {
     return Product(
       id: id ?? this.id,
+      categoryId: categoryId ?? this.categoryId,
       title: title ?? this.title,
       imageUrl: imageUrl ?? this.imageUrl,
       subtitle: subtitle ?? this.subtitle,

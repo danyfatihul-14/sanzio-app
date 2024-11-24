@@ -38,6 +38,7 @@ class CartItemWidget extends StatelessWidget {
   // }
   Widget build(BuildContext context) {
     return Card(
+      color: whiteMain,
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(2.0),

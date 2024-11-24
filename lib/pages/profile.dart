@@ -25,30 +25,28 @@ class _MyProfileState extends State<MyProfile> {
     }
 
     return Scaffold(
-    
-      backgroundColor: whiteMain,
+      backgroundColor: gray60,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
+              padding: const EdgeInsets.only(top: 36, bottom: 4.0),
               width: width,
-              height: 180,
               decoration: BoxDecoration(
                 color: whiteMain,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 15.0,
-                    offset: const Offset(0.0, 0.75),
-                  )
-                ],
+                image: const DecorationImage(
+                  image: AssetImage("assets/bg_profile.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 20, 0, 30),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14.0, vertical: 8.0),
                     child: Container(
                       width: 120,
                       height: 120,
@@ -64,7 +62,7 @@ class _MyProfileState extends State<MyProfile> {
                         borderRadius: BorderRadius.circular(60),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(4),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -80,35 +78,38 @@ class _MyProfileState extends State<MyProfile> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 35, 0, 40),
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Username",
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 24,
+                                  color: gray600),
                             ),
                             Text(
                               "Full Name",
                               style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
+                                color: gray400,
+                                fontSize: 16,
                               ),
                             )
                           ],
                         ),
+                        const SizedBox(
+                          height: 16,
+                        ),
                         Row(
                           children: [
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 14,
+                              height: 14,
                               decoration: BoxDecoration(
                                 color: const Color.fromRGBO(135, 86, 40, 100),
                                 borderRadius: BorderRadius.circular(12),
@@ -117,10 +118,10 @@ class _MyProfileState extends State<MyProfile> {
                             const SizedBox(
                               width: 5,
                             ),
-                            const Text(
+                            Text(
                               "Type 10",
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: gray400,
                               ),
                             )
                           ],
@@ -132,59 +133,83 @@ class _MyProfileState extends State<MyProfile> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              child: Column(children: [
-                const CustomOutlineMenuProfile(
-                  title: "Informasi Pengguna",
-                  pushTo: "/profile/information",
-                ),
-                const CustomOutlineMenuProfile(
-                  title: "Alamat Saya",
-                  pushTo: "/",
-                ),
-                const CustomOutlineMenuProfile(
-                  title: "Ganti Password",
-                  pushTo: "/",
-                ),
-                const CustomOutlineMenuProfile(
-                  title: "Favorite",
-                  pushTo: "/",
-                ),
-                const SizedBox(height: 40),
-                const CustomOutlineMenuProfile(
-                  title: "Kebijakan Sanzio",
-                  pushTo: "/",
-                ),
-                const CustomOutlineMenuProfile(
-                  title: "Tentang Sanzio",
-                  pushTo: "/",
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                  child: Container(
-                    width: width * 0.95,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        width: 3,
-                        color: const Color.fromRGBO(171, 111, 205, 100),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Logout",
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: const Color.fromRGBO(171, 111, 205, 100),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Column(
+                children: [
+                  Container(
+                    color: whiteMain,
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                          child: Text(
+                            "Informasi Pengguna",
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
+                              color: gray600,
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: 12),
+                        const CustomOutlineMenuProfile(
+                          title: "Akun Saya",
+                          pushTo: "/profile/information",
+                        ),
+                        const CustomOutlineMenuProfile(
+                          title: "Alamat Saya",
+                          pushTo: "/",
+                        ),
+                        const CustomOutlineMenuProfile(
+                          title: "Ganti Password",
+                          pushTo: "/",
+                        ),
+                        const CustomOutlineMenuProfile(
+                          title: "Favorite",
+                          pushTo: "/",
+                        ),
+                      ],
                     ),
                   ),
-                )
-              ]),
+                  const SizedBox(height: 10),
+                  Container(
+                    color: whiteMain,
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                          child: Text(
+                            "Tentang Kami",
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
+                              color: gray600,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        const CustomOutlineMenuProfile(
+                          title: "Kebijakan Sanzio",
+                          pushTo: "/",
+                        ),
+                        const CustomOutlineMenuProfile(
+                          title: "Tentang Sanzio",
+                          pushTo: "/",
+                        ),
+                      ],
+                    ),
+                  ),
+                  CustomOutlineButton(
+                    title: "Logout",
+                    color: purple600,
+                    pushTo: "/login",
+                  ),
+                ],
+              ),
             ),
           ],
         ),

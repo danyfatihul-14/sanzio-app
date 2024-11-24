@@ -52,11 +52,11 @@ class _HistoryPageState extends State<HistoryPage>
             Tab(
                 child: Text('Done',
                     style: GoogleFonts.plusJakartaSans(
-                        fontSize: 14, fontWeight: FontWeight.w600))),
+                        fontSize: 16, fontWeight: FontWeight.w600))),
             Tab(
                 child: Text('On Process',
                     style: GoogleFonts.plusJakartaSans(
-                        fontSize: 14, fontWeight: FontWeight.w600))),
+                        fontSize: 16, fontWeight: FontWeight.w600))),
           ],
         ),
       ),

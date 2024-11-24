@@ -5,6 +5,7 @@ import 'package:raffaelosanzio/models/product.dart';
 final List<Product> products = [
   Product(
       id: 1,
+      categoryId: 1,
       title: "Jacket Bomber",
       imageUrl: "assets/JacketBomber.png",
       subtitle: "Jacket Bomber dengan style retro",
@@ -15,26 +16,29 @@ final List<Product> products = [
       rating: 4.8),
   Product(
       id: 2,
+      categoryId: 2,
       title: "Daster",
       imageUrl: "assets/Daster.png",
       subtitle: "Jacket Bomber dengan style retro",
       description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      gender: "M",
+      gender: "W",
       price: 150000,
       rating: 4.8),
   Product(
       id: 3,
+      categoryId: 3,
       title: "Tank Top",
       imageUrl: "assets/Tanktop.png",
       subtitle: "Jacket Bomber dengan style retro",
       description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      gender: "M",
+      gender: "W",
       price: 150000,
       rating: 4.8),
   Product(
       id: 4,
+      categoryId: 4,
       title: "Batik Shirt",
       imageUrl: "assets/Batik.png",
       subtitle: "Jacket Bomber dengan style retro",
@@ -88,6 +92,8 @@ List<Map<String, dynamic>> getFormattedProducts() {
         .toList();
 
     return {
+      "id": product.id,
+      "categoryId": product.categoryId,
       "title": product.title,
       "subtitle": product.subtitle,
       "description": product.description,

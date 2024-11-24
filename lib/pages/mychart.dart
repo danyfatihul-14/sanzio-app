@@ -21,7 +21,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteMain,
+      backgroundColor: gray50,
       appBar: AppBar(
         backgroundColor: whiteMain,
         leading: IconButton(
@@ -137,7 +137,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
               },
             ),
           ),
-          Padding(
+          Container(
+            color: whiteMain,
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
