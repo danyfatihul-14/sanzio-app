@@ -25,12 +25,12 @@ final Map<String, List<Map<String, String>>> products = {
   ],
 };
 
-final List<Map<String, String>> categories = [
-  {"title": "T-Shirt", "image": "assets/T-Shirt.png"},
-  {"title": "Jacket", "image": "assets/Jacket.png"},
-  {"title": "Blouse", "image": "assets/Blouse.png"},
-  {"title": "Dress", "image": "assets/Dress.png"},
-  {"title": "Hoodie", "image": "assets/Hoodie.png"},
+final List<Map<String, dynamic>> categories = [
+  {"id": 1, "title": "T-Shirt", "image": "assets/T-Shirt.png"},
+  {"id": 2, "title": "Jacket", "image": "assets/Jacket.png"},
+  {"id": 3, "title": "Blouse", "image": "assets/Blouse.png"},
+  {"id": 4, "title": "Dress", "image": "assets/Dress.png"},
+  {"id": 5, "title": "Hoodie", "image": "assets/Hoodie.png"},
 ];
 
 final List<Map<String, String>> onProcessItems = [

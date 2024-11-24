@@ -5,6 +5,7 @@ import 'package:raffaelosanzio/models/product.dart';
 final List<Product> products = [
   Product(
       id: 1,
+      categoryId: 1,
       title: "Jacket Bomber",
       imageUrl: "assets/JacketBomber.png",
       subtitle: "Jacket Bomber dengan style retro",
@@ -15,6 +16,7 @@ final List<Product> products = [
       rating: 4.8),
   Product(
       id: 2,
+      categoryId: 2,
       title: "Daster",
       imageUrl: "assets/Daster.png",
       subtitle: "Jacket Bomber dengan style retro",
@@ -25,6 +27,7 @@ final List<Product> products = [
       rating: 4.8),
   Product(
       id: 3,
+      categoryId: 3,
       title: "Tank Top",
       imageUrl: "assets/Tanktop.png",
       subtitle: "Jacket Bomber dengan style retro",
@@ -35,6 +38,7 @@ final List<Product> products = [
       rating: 4.8),
   Product(
       id: 4,
+      categoryId: 4,
       title: "Batik Shirt",
       imageUrl: "assets/Batik.png",
       subtitle: "Jacket Bomber dengan style retro",
@@ -89,6 +93,7 @@ List<Map<String, dynamic>> getFormattedProducts() {
 
     return {
       "id": product.id,
+      "categoryId": product.categoryId,
       "title": product.title,
       "subtitle": product.subtitle,
       "description": product.description,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/api/product_api.dart';
 import 'package:raffaelosanzio/help/product_helper.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
@@ -8,7 +9,7 @@ import 'package:raffaelosanzio/widget/gender_card.dart';
 import 'package:raffaelosanzio/widget/season_card.dart';
 
 class AllCategoriesPage extends StatelessWidget {
-  final List<Map<String, String>> categories;
+  final List<Map<String, dynamic>> categories;
 
   const AllCategoriesPage({required this.categories, super.key});
 
@@ -68,14 +69,18 @@ class AllCategoriesPage extends StatelessWidget {
                     itemCount: '100 Items', // Adjust this dynamically if needed
                     image: category['image']!,
                     onTap: () {
+                      List<Map<String, dynamic>> formattedProducts =
+                          getFormattedProducts();
+                      List<Map<String, dynamic>> categoryProducts =
+                          formattedProducts.where((product) {
+                        return product['categoryId'] == categories[index]['id'];
+                      }).toList();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => CategoryProductPage(
-                            categoryTitle: category['title']!,
-                            products:
-                                getProductsForCategory(category['title']!),
-                          ),
+                              categoryTitle: category['title']!,
+                              products: categoryProducts),
                         ),
                       );
                     },
@@ -98,34 +103,18 @@ class AllCategoriesPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
-                    child: GenderCard(image: 'assets/female.png'),
+                    child: GenderCard(
+                      image: 'assets/female.png',
+                      gender: "Women",
+                    ),
                   ),
                   SizedBox(width: 8),
                   Flexible(
-                    child: GenderCard(image: 'assets/male.png'),
+                    child: GenderCard(
+                      image: 'assets/male.png',
+                      gender: "Man",
+                    ),
                   ),
-                ],
-              ),
-
-              // Season Section
-              const SizedBox(height: 24),
-              Text(
-                'Season',
-                style: GoogleFonts.plusJakartaSans(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: gray800,
-                ),
-              ),
-              const SizedBox(height: 8),
-              const Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  SeasonCard(title: 'Summer'),
-                  SeasonCard(title: 'Spring'),
-                  SeasonCard(title: 'Fall'),
-                  SeasonCard(title: 'Winter'),
                 ],
               ),
             ],
