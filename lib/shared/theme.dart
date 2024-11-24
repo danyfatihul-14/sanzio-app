@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Warna Netral
 Color whiteMain = const Color(0xffFFFFFF);
-Color gray50 = const Color(0xffF8F8F8);
+Color gray50 = const Color(0xffF8F8FF);
 Color gray60 = const Color(0xffF5F5F5);
 Color gray100 = const Color(0xffD4D4D4);
 Color gray200 = const Color(0xffB8B8B8);

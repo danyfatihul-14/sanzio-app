@@ -16,6 +16,7 @@ class AllCategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: gray50,
       appBar: AppBar(
         backgroundColor: whiteMain,
         elevation: 0,
@@ -28,7 +29,7 @@ class AllCategoriesPage extends StatelessWidget {
           style: TextStyle(
             color: gray800,
             fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontSize: 20,
           ),
         ),
         centerTitle: true,

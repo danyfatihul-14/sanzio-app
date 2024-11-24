@@ -31,9 +31,15 @@ class _MyProfileState extends State<MyProfile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              color: whiteMain,
               padding: const EdgeInsets.only(top: 36, bottom: 4.0),
               width: width,
+              decoration: BoxDecoration(
+                color: whiteMain,
+                image: const DecorationImage(
+                  image: AssetImage("assets/bg_profile.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -177,7 +183,7 @@ class _MyProfileState extends State<MyProfile> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 14.0),
                           child: Text(
-                            "About Sanzio",
+                            "Tentang Kami",
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 18.0,
                               fontWeight: FontWeight.w600,

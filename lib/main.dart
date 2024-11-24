@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           primaryColor: whiteMain,
         ),
-        initialRoute: '/onboard',
+        initialRoute: '/success',
         debugShowCheckedModeBanner: false,
         routes: {
           '/login': (context) => const LoginPage(),
