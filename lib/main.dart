@@ -16,6 +16,7 @@ import 'package:raffaelosanzio/pages/register.dart';
 import 'package:raffaelosanzio/pages/rincian_pesanan.dart';
 import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
 
 void main() {
@@ -34,31 +35,28 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          primaryColor: whiteMain,
         ),
-        initialRoute: '/profile',
+        initialRoute: '/onboard',
         debugShowCheckedModeBanner: false,
         routes: {
-          // '/login': (context) => const LoginPage(),
-          // '/register': (context) => const RegisterPage(),
-          // '/main-home': (context) => const CustomBottomNavbar(),
-          // '/home': (context) => const HomePage(),
-          // '/allKategori': (context) => const AllCategoriesPage(
-          //       categories: [],
-          //     ),
-          // '/viewkategory': (context) => const CategoryProductPage(
-          //       categoryTitle: '',
-          //       products: [],
-          //     ),
-          // '/history': (context) => const HistoryPage(),
-          // '/cart': (context) => const ShoppingCartPage(),
-          // '/success': (context) => const SuccessPage(),
-          // '/onboard': (context) => OnboardingScreen(),
-          // '/rimcian': (context) => Rincian(),
-          '/profile': (context) => MyProfile(),
-          '/profile/info_pengguna': (context) => MyInformasiPengguna(),
-          '/profile/ganti_password': (context) => MyGantiPassword(),
-          '/profile/kebijakan': (context) => Kebijakan(),
-          '/profile/about': (context) => About(),
+          '/login': (context) => const LoginPage(),
+          '/register': (context) => const RegisterPage(),
+          '/main-home': (context) => const CustomBottomNavbar(),
+          '/home': (context) => const HomePage(),
+          '/allKategori': (context) => const AllCategoriesPage(
+                categories: [],
+              ),
+          '/viewkategory': (context) => const CategoryProductPage(
+                categoryTitle: '',
+                products: [],
+              ),
+          '/history': (context) => const HistoryPage(),
+          '/cart': (context) => const ShoppingCartPage(),
+          '/success': (context) => LoadingToFlipCheck(),
+          '/onboard': (context) => OnboardingScreen(),
+          '/rimcian': (context) => Rincian(),
+          '/profile': (context) => MyProfile()
         },
       ),
     );

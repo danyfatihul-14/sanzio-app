@@ -106,17 +106,17 @@ class MyForgetPassword extends StatelessWidget {
                 ),
                 SizedBox(height: 42), // Memberikan jarak sebelum tombol
                 // Tombol Recover Password yang memanggil halaman GetCode
-                CustomButton(
-                  text: 'Recover Password', 
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyGetCode(), // Halaman GetCode yang sudah Anda buat
-                      ),
-                    );
-                  }
-                ),
+                // CustomButton(
+                //   text: 'Recover Password', 
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => MyGetCode(), // Halaman GetCode yang sudah Anda buat
+                //       ),
+                //     );
+                //   }
+                // ),
               ],
             ),
           ),

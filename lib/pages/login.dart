@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
                     children: [
                       // Logo
                       Image.asset(
-                        'assets/Type4.png', // Path to your logo image
+                        'assets/img_login.png', // Path to your logo image
                         height: 200, // Set the desired height
                       ),
                       Text(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/home.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
+import 'package:raffaelosanzio/pages/profile.dart';
 
 class ScanButton extends StatelessWidget {
   const ScanButton({super.key});
@@ -72,7 +74,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
     const HomePage(),
     const Text('FYP'),
     const HistoryPage(),
-    const Text('Profile'),
+    const MyProfile(),
   ];
 
   void onItemTapped(int index) {
@@ -88,34 +90,48 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
       body: Center(
         child: widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onItemTapped,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF4F72BD),
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusBold.home_2),
-            activeIcon: Icon(IconsaxPlusBold.home_2),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusLinear.heart),
-            activeIcon: Icon(IconsaxPlusBold.heart),
-            label: "FYP",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusBroken.bag_timer),
-            activeIcon: Icon(IconsaxPlusBold.bag_timer),
-            label: "History",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusBroken.profile_circle),
-            activeIcon: Icon(IconsaxPlusBold.profile_circle),
-            label: "Profile",
-          ),
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1), // Shadow color
+              spreadRadius: -2,
+              blurRadius: 12,
+              offset: Offset(0, -3), // Shadow position
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          backgroundColor:
+              whiteMain, // Transparent background as it's already set in container
+          onTap: onItemTapped,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _selectedIndex,
+          selectedItemColor: const Color(0xFF4F72BD),
+          unselectedItemColor: Colors.grey,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(IconsaxPlusLinear.home),
+              activeIcon: Icon(IconsaxPlusBold.home),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(IconsaxPlusLinear.heart),
+              activeIcon: Icon(IconsaxPlusBold.heart),
+              label: "FYP",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(IconsaxPlusLinear.bag_timer),
+              activeIcon: Icon(IconsaxPlusBold.bag_timer),
+              label: "History",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(IconsaxPlusLinear.profile_circle),
+              activeIcon: Icon(IconsaxPlusBold.profile_circle),
+              label: "Profile",
+            ),
+          ],
+        ),
       ),
       floatingActionButton: const ScanButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
