@@ -36,9 +36,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteMain,
+      backgroundColor: gray50,
       appBar: AppBar(
-        backgroundColor: whiteMain,
+        backgroundColor: gray50,
         actions: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -84,11 +84,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
             ),
           ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+          Container(
             child: _currentPage == _onboardingData.length - 1
-                ? SizedBox(
+                ? Container(
+                    color: whiteMain,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12.0,
+                      horizontal: 12.0,
+                    ),
                     width: double.infinity, // Tombol full panjang
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -117,56 +120,61 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children:
-                            List.generate(_onboardingData.length, (index) {
-                          return AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                            height: 10.0,
-                            width: _currentPage == index ? 20.0 : 10.0,
-                            decoration: BoxDecoration(
-                              color: _currentPage == index
-                                  ? const Color.fromARGB(255, 79, 114, 189)
-                                  : Colors.grey[400],
-                              borderRadius: BorderRadius.circular(10.0),
+                : Container(
+                    color: whiteMain,
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:
+                              List.generate(_onboardingData.length, (index) {
+                            return AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                              height: 10.0,
+                              width: _currentPage == index ? 20.0 : 10.0,
+                              decoration: BoxDecoration(
+                                color: _currentPage == index
+                                    ? const Color.fromARGB(255, 79, 114, 189)
+                                    : Colors.grey[400],
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            );
+                          }),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.height * (1 / 8),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 79, 114, 189),
+                            minimumSize: Size(150, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          );
-                        }),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.height * (1 / 8),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 79, 114, 189),
-                          minimumSize: Size(150, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          onPressed: () {
+                            _pageController.nextPage(
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          },
+                          child: const Text(
+                            'Selanjutnya',
+                            style: TextStyle(
+                              fontFamily: 'PlusJakartaSans',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                        onPressed: () {
-                          _pageController.nextPage(
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                        child: const Text(
-                          'Selanjutnya',
-                          style: TextStyle(
-                            fontFamily: 'PlusJakartaSans',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
           )
         ],
@@ -184,7 +192,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       builder: (context, constraints) {
         return SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.all(16.0),
             constraints: BoxConstraints(
               minHeight: constraints.maxHeight,
             ),
@@ -199,31 +206,35 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   height: constraints.maxHeight * imageHeight,
                   fit: BoxFit.contain,
                 ),
-                Column(
-                  children: [
-                    Text(
-                      title,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontFamily: 'PlusJakartaSans',
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: gray600),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      description,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'PlusJakartaSans',
-                        fontSize: 14,
-                        color: gray400,
+                Container(
+                  color: whiteMain,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 40,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        title,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontFamily: 'PlusJakartaSans',
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: gray600),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 36,
-                    )
-                  ],
+                      const SizedBox(height: 16),
+                      Text(
+                        description,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'PlusJakartaSans',
+                          fontSize: 14,
+                          color: gray400,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

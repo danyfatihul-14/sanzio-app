@@ -14,7 +14,9 @@ class PaymentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: gray50,
       appBar: AppBar(
+        backgroundColor: whiteMain,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -26,7 +28,7 @@ class PaymentPage extends StatelessWidget {
           style: GoogleFonts.plusJakartaSans(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.black,
+            color: gray600,
           ),
         ),
         centerTitle: true,
@@ -54,7 +56,8 @@ class PaymentPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!),
+        color: whiteMain,
+        border: Border.all(color: gray100),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -131,8 +134,15 @@ class PaymentPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: whiteMain,
         borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: const Offset(2, 2),
+            blurRadius: 4,
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,8 +150,7 @@ class PaymentPage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(Icons.location_on,
-                  color: Color.fromARGB(255, 79, 114, 189)),
+              Icon(Icons.location_on, color: blue600),
               Expanded(
                 child: Align(
                   alignment: Alignment.centerLeft,
@@ -165,8 +174,10 @@ class PaymentPage extends StatelessWidget {
                             )),
                   );
                 },
-                child: const Icon(Icons.edit,
-                    color: Color.fromARGB(255, 79, 114, 189)),
+                child: Icon(
+                  Icons.edit,
+                  color: blue600,
+                ),
               ),
             ],
           ),
@@ -196,7 +207,7 @@ class PaymentPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: whiteMain,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.blueAccent.withOpacity(0.4)),
       ),
@@ -244,8 +255,15 @@ class PaymentPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: whiteMain,
         borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: const Offset(2, 2),
+            blurRadius: 4,
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,7 +279,7 @@ class PaymentPage extends StatelessWidget {
   }
 
   Widget _buildSummaryRow(String title, String amount, {bool isTotal = false}) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -44,9 +44,24 @@ class _DetailProductPageState extends State<DetailProductPage> {
                   padding: const EdgeInsets.only(top: 40.0),
                   color: whiteMain,
                   child: Center(
-                    child: Image.asset(
-                      imageUrl, // Menggunakan imageUrl dari Map
-                      height: 300,
+                    child: Hero(
+                      tag: product[
+                          'id'], // Pastikan tag ini unik untuk setiap produk
+                      child: Image.asset(
+                        imageUrl,
+                        height: 300,
+                      ),
+                      flightShuttleBuilder: (flightContext, animation,
+                          direction, fromContext, toContext) {
+                        return ScaleTransition(
+                          scale: animation.drive(
+                            CurveTween(
+                                curve: const Interval(0.0, 1.0,
+                                    curve: Curves.easeInOut)),
+                          ),
+                          child: Image.asset(imageUrl, fit: BoxFit.cover),
+                        );
+                      },
                     ),
                   ),
                 ),
