@@ -146,6 +146,7 @@ class _HomePageState extends State<HomePage> {
             itemCount: categories.length,
             itemBuilder: (context, index) {
               return categoryItem(
+                categories[index]['id']!,
                 categories[index]['title']!,
                 categories[index]['image']!,
               );
@@ -246,19 +247,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Category item widget
-  Widget categoryItem(String title, String imagePath) {
+  Widget categoryItem(int id, String title, String imagePath) {
     return GestureDetector(
       onTap: () {
-        // List<Map<String, String>> categoryProducts = products[title] ?? [];
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => CategoryProductPage(
-        //       categoryTitle: title,
-        //       products: categoryProducts,
-        //     ),
-        //   ),
-        // );
+        List<Map<String, dynamic>> formattedProducts = getFormattedProducts();
+        List<Map<String, dynamic>> categoryProducts =
+            formattedProducts.where((product) {
+          return product['categoryId'] == id;
+        }).toList();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CategoryProductPage(
+              categoryTitle: title,
+              products: categoryProducts,
+            ),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4.0),
