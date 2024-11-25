@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/button.dart';
 import 'package:raffaelosanzio/widget/textField.dart';
@@ -25,31 +26,38 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 // Content on top of the background
-                Container(
-                  margin: const EdgeInsets.only(top: 80.0),
-                  width: double.infinity,
-                  child: Column(
+                Center(
+                  child: Stack(
                     children: [
-                      // Logo
-                      Image.asset(
-                        'assets/img_login.png', // Path to your logo image
-                        height: 200, // Set the desired height
+                      Lottie.asset(
+                        "assets/an_login.json",
+                        fit: BoxFit.cover,
                       ),
-                      Text(
-                        'Discover Your Style',
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Find clothing that complements your skin tone\n'
-                        'Confident with styles curated just for you',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.plusJakartaSans(
-                          color: gray400,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: (MediaQuery.of(context).size.width) * 0.78),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Discover Your Style',
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                'Find clothing that complements your skin tone\n'
+                                'Confident with styles curated just for you',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.plusJakartaSans(
+                                  color: gray400,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

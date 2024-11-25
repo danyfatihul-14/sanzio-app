@@ -10,7 +10,7 @@ class OnProcessList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(14.0),
       itemCount: items.length,
       itemBuilder: (context, index) {
         final item = items[index];
@@ -29,8 +29,8 @@ class OnProcessList extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
                     'assets/jacket.jpg',
-                    width: 80,
-                    height: 80,
+                    width: 100,
+                    height: 100,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -42,44 +42,45 @@ class OnProcessList extends StatelessWidget {
                       Text(
                         item['name'] ?? "Unknown",
                         style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: const Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: gray600,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         item['price'] ?? "Unknown",
                         style: GoogleFonts.plusJakartaSans(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xFF242F38),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: gray600,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         item['size'] ?? "Unknown",
                         style: GoogleFonts.plusJakartaSans(
-                          fontSize: 10,
+                          fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color: const Color(0xFF242F38),
+                          color: gray400,
                         ),
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             item['date'] ?? "Unknown",
                             style: GoogleFonts.plusJakartaSans(
-                              fontSize: 8,
+                              fontSize: 10,
                               fontWeight: FontWeight.w400,
-                              color: const Color(0xFF242F38),
+                              color: gray400,
                             ),
                           ),
                           const Spacer(),
                           Text(
                             item['status'] ?? "Unknown",
                             style: GoogleFonts.plusJakartaSans(
-                              fontSize: 8,
+                              fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: item['status'] == 'Pending'
                                   ? const Color.fromARGB(255, 79, 114, 189)
