@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/textField.dart';
+import 'package:raffaelosanzio/widget/button.dart';
 
 class MyInformasiPengguna extends StatelessWidget {
   const MyInformasiPengguna({super.key});
@@ -101,34 +102,23 @@ class MyInformasiPengguna extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 24),
               const CustomOutlineInputProfileUser(
                   title: "Your Skintone", image: "assets/scan.png"),
+              const SizedBox(height: 6),
               const CustomOutlineInputProfileUser(
                   title: "Nama Lengkap", image: "assets/user.png"),
+              const SizedBox(height: 6),
               const CustomOutlineInputProfileUser(
                   title: "Username", image: "assets/profile-circle.png"),
+              const SizedBox(height: 6),
               const CustomOutlineInputProfileUser(
                   title: "No. Telp", image: "assets/call-calling.png"),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                child: Container(
-                  width: width * 0.95,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: const Color.fromRGBO(171, 111, 205, 100),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Simpan",
-                      style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: whiteMain),
-                    ),
-                  ),
-                ),
+              const SizedBox(height: 24),
+              CustomOutlineButton(
+                title: "Simpan",
+                color: Color.fromRGBO(171, 111, 205, 1),
+                pushTo: '/profile',
               ),
             ],
           ),

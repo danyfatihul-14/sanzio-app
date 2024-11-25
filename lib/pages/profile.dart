@@ -137,7 +137,7 @@ class _MyProfileState extends State<MyProfile> {
               child: Column(children: [
                 const CustomOutlineMenuProfile(
                   title: "Informasi Pengguna",
-                  pushTo: "/profile/information",
+                  pushTo: "/profile/info_pengguna",
                 ),
                 const CustomOutlineMenuProfile(
                   title: "Alamat Saya",
@@ -145,7 +145,7 @@ class _MyProfileState extends State<MyProfile> {
                 ),
                 const CustomOutlineMenuProfile(
                   title: "Ganti Password",
-                  pushTo: "/",
+                  pushTo: "/profile/ganti_password",
                 ),
                 const CustomOutlineMenuProfile(
                   title: "Favorite",
@@ -154,11 +154,11 @@ class _MyProfileState extends State<MyProfile> {
                 const SizedBox(height: 40),
                 const CustomOutlineMenuProfile(
                   title: "Kebijakan Sanzio",
-                  pushTo: "/",
+                  pushTo: "/profile/kebijakan",
                 ),
                 const CustomOutlineMenuProfile(
                   title: "Tentang Sanzio",
-                  pushTo: "/",
+                  pushTo: "/profile/about",
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),

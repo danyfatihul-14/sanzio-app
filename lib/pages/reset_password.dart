@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:raffaelosanzio/pages/profile.dart';
+import 'package:raffaelosanzio/widget/button.dart';
 import 'package:raffaelosanzio/widget/textField.dart';
 
 class MyResetPassword extends StatelessWidget {
@@ -102,11 +103,10 @@ class MyResetPassword extends StatelessWidget {
                 ),
                 SizedBox(height: 42), // Memberikan jarak sebelum tombol
                 // Tombol Recover Password yang memanggil halaman GetCode
-                CustomButton(
-                  text: 'Create New Password', 
-                  onPressed: () {
-
-                  },
+                CustomOutlineButton(
+                  title: "Create New Password", 
+                  color: Color.fromRGBO(79, 114, 189, 1), 
+                  pushTo: '/',
                 ),
               ],
             ),
