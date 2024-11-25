@@ -56,7 +56,10 @@ class MyApp extends StatelessWidget {
           '/success': (context) => LoadingToFlipCheck(),
           '/onboard': (context) => OnboardingScreen(),
           '/rimcian': (context) => Rincian(),
-          '/profile': (context) => const MyProfile()
+          '/profile': (context) => const MyProfile(),
+          '/user-info': (context) => const MyInformasiPengguna(),
+          '/change-password': (context) => const MyGantiPassword(),
+          '/kebijakan': (context) => const Kebijakan(),
         },
       ),
     );

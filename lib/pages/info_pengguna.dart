@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/textField.dart';
 import 'package:raffaelosanzio/widget/button.dart';
@@ -9,44 +10,38 @@ class MyInformasiPengguna extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.sizeOf(context).width;
-    // ignore: unused_local_variable
-    double height = MediaQuery.sizeOf(context).height;
     return Scaffold(
+      backgroundColor: gray50,
       appBar: AppBar(
         title: Text(
           "Informasi Pengguna",
           style: GoogleFonts.plusJakartaSans(
-            fontSize: 14,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
         backgroundColor: whiteMain,
-        shadowColor: Colors.grey,
         leading: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
             child: Container(
               width: 20,
               height: 20,
-              child: const Image(image: AssetImage("assets/Back-AppBar.png")),
+              child: Icon(
+                IconsaxPlusBold.arrow_circle_left,
+                color: blue400,
+                size: 36,
+              ),
             ),
           ),
         ),
       ),
-      body: Container(
-        width: width,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage("assets/BG-data.png"),
-          fit: BoxFit.cover,
-        )),
+      body: SingleChildScrollView(
         child: SizedBox(
-          width: width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,46 +51,47 @@ class MyInformasiPengguna extends StatelessWidget {
                 height: 120,
                 child: Stack(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color.fromRGBO(165, 209, 254, 1), // Light Blue
-                              Color.fromRGBO(205, 180, 219, 1), // Light Purple
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                          borderRadius: BorderRadius.circular(60),
+                    Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromRGBO(165, 209, 254, 1), // Light Blue
+                            Color.fromRGBO(205, 180, 219, 1), // Light Purple
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            width: 112,
-                            height: 112,
-                            child: const Image(
-                              image: AssetImage("assets/Ellipse 192.png"),
-                              fit: BoxFit.fill,
-                            ),
+                        borderRadius: BorderRadius.circular(60),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          width: 112,
+                          height: 112,
+                          child: const Image(
+                            image: AssetImage("assets/Ellipse 192.png"),
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
                     ),
-                    const Positioned(
+                    Positioned(
                       left: 80,
                       bottom: 0,
-                      child: SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: Image(
-                          image: AssetImage("EditProfilePicture.png"),
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: blue600,
+                          borderRadius: BorderRadius.circular(60),
+                        ),
+                        child: Icon(
+                          Icons.mode_edit_outline,
+                          color: whiteMain,
                         ),
                       ),
                     ),
@@ -103,26 +99,37 @@ class MyInformasiPengguna extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              const CustomOutlineInputProfileUser(
-                  title: "Your Skintone", image: "assets/scan.png"),
-              const SizedBox(height: 6),
-              const CustomOutlineInputProfileUser(
-                  title: "Nama Lengkap", image: "assets/user.png"),
-              const SizedBox(height: 6),
-              const CustomOutlineInputProfileUser(
-                  title: "Username", image: "assets/profile-circle.png"),
-              const SizedBox(height: 6),
-              const CustomOutlineInputProfileUser(
-                  title: "No. Telp", image: "assets/call-calling.png"),
-              const SizedBox(height: 24),
-              CustomOutlineButton(
-                title: "Simpan",
-                color: Color.fromRGBO(171, 111, 205, 1),
-                pushTo: '/profile',
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: const Column(
+                  children: [
+                    CustomOutlineInputProfileUser(
+                      value: "Username",
+                      icons: Icon(IconsaxPlusLinear.profile_circle),
+                    ),
+                    SizedBox(height: 6),
+                    CustomOutlineInputProfileUser(
+                        value: "Full Name",
+                        icons: Icon(IconsaxPlusLinear.user)),
+                    SizedBox(height: 6),
+                    CustomOutlineInputProfileUser(
+                        value: "Email", icons: Icon(IconsaxPlusLinear.sms)),
+                    SizedBox(height: 6),
+                    CustomOutlineInputProfileUser(
+                        value: "No. Telp",
+                        icons: Icon(IconsaxPlusLinear.call_calling)),
+                    SizedBox(height: 24),
+                  ],
+                ),
               ),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: whiteMain,
+        child: CustomOutlineButton(
+            title: "Simpan", color: blue600, pushTo: '/main-home'),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 
 class Kebijakan extends StatelessWidget {
@@ -10,12 +11,14 @@ class Kebijakan extends StatelessWidget {
     double width = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
+      backgroundColor: gray50,
       appBar: AppBar(
         title: Text(
           "Kebijakan Sanzio",
           style: GoogleFonts.plusJakartaSans(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: gray600,
           ),
         ),
         centerTitle: true,
@@ -24,13 +27,17 @@ class Kebijakan extends StatelessWidget {
         leading: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
             child: Container(
               width: 20,
               height: 20,
-              child: const Image(image: AssetImage("assets/Back-AppBar.png")),
+              child: Icon(
+                IconsaxPlusBold.arrow_circle_left,
+                color: blue400,
+                size: 36,
+              ),
             ),
           ),
         ),
@@ -49,9 +56,7 @@ class Kebijakan extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 31),
-              Text(
-                "Kebijakan"
-              ),
+              Text("Kebijakan"),
               // Save Button
             ],
           ),

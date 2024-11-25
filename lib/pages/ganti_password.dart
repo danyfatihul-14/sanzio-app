@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/widget/button.dart';
 import 'package:raffaelosanzio/widget/textField.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
@@ -12,12 +13,14 @@ class MyGantiPassword extends StatelessWidget {
     double width = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
+      backgroundColor: gray50,
       appBar: AppBar(
         title: Text(
           "Ganti Password",
           style: GoogleFonts.plusJakartaSans(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: gray600,
           ),
         ),
         centerTitle: true,
@@ -26,13 +29,17 @@ class MyGantiPassword extends StatelessWidget {
         leading: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
             child: Container(
               width: 20,
               height: 20,
-              child: const Image(image: AssetImage("assets/Back-AppBar.png")),
+              child: Icon(
+                IconsaxPlusBold.arrow_circle_left,
+                color: blue400,
+                size: 36,
+              ),
             ),
           ),
         ),
@@ -45,35 +52,35 @@ class MyGantiPassword extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 41),
-              FormFieldNoIconCustom(
-                label: 'Password', 
-                value: 'Password',
-              ),
-              const SizedBox(height: 20),
-              FormFieldNoIconCustom(
-                label: 'New Password', 
-                value: 'New Password',
-              ),
-              const SizedBox(height: 20),
-              FormFieldNoIconCustom(
-                label: 'Confirmation Password', 
-                value: '*********************',
-              ),
-              const SizedBox(height: 70),
-              CustomOutlineButton(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            const FormFieldNoIconCustom(
+              label: 'Password',
+              value: 'Password',
+            ),
+            const SizedBox(height: 20),
+            const FormFieldNoIconCustom(
+              label: 'New Password',
+              value: 'New Password',
+            ),
+            const SizedBox(height: 20),
+            const FormFieldNoIconCustom(
+              label: 'Confirmation Password',
+              value: 'Confriamtion Password',
+            ),
+            const SizedBox(height: 70),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: CustomButton(
                 title: "Simpan",
-                color: Color.fromRGBO(171, 111, 205, 1),
+                color: blue600,
                 pushTo: '/profile',
               ),
-              // Save Button
-            ],
-          ),
+            ),
+            // Save Button
+          ],
         ),
       ),
     );

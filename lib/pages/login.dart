@@ -81,42 +81,51 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 24.0),
 
             // Sign In Button
-            CustomButton(
-              title: 'Login',
-              color: blue600,
-              pushTo: '/main-home',
-            ),
-            const SizedBox(height: 16.0),
-
-            // Divider with "Or"
-            Container(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
+              child: Column(
                 children: [
-                  const Expanded(
-                      child: Divider(thickness: 1, color: Color(0xFF2A2A2A))),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      "Or",
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 12,
-                        color: const Color(0xFF2A2A2A),
-                      ),
+                  CustomButton(
+                    title: 'Login',
+                    color: blue600,
+                    pushTo: '/main-home',
+                  ),
+                  const SizedBox(height: 16.0),
+
+                  // Divider with "Or"
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Row(
+                      children: [
+                        const Expanded(
+                            child: Divider(
+                                thickness: 1, color: Color(0xFF2A2A2A))),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            "Or",
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 12,
+                              color: const Color(0xFF2A2A2A),
+                            ),
+                          ),
+                        ),
+                        const Expanded(
+                            child: Divider(
+                                thickness: 1, color: Color(0xFF2A2A2A))),
+                      ],
                     ),
                   ),
-                  const Expanded(
-                      child: Divider(thickness: 1, color: Color(0xFF2A2A2A))),
+                  const SizedBox(height: 16.0),
+
+                  // Create Account Button
+                  CustomOutlineButton(
+                    title: 'Create Account',
+                    color: purple600,
+                    pushTo: '/register',
+                  ),
                 ],
               ),
-            ),
-            const SizedBox(height: 16.0),
-
-            // Create Account Button
-            CustomOutlineButton(
-              title: 'Create Account',
-              color: purple600,
-              pushTo: '/register',
             ),
           ],
         ),
