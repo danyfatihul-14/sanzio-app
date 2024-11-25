@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
+import 'package:raffaelosanzio/pages/about.dart';
+import 'package:raffaelosanzio/pages/ganti_password.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
 import 'package:raffaelosanzio/pages/home.dart';
+import 'package:raffaelosanzio/pages/info_pengguna.dart';
+import 'package:raffaelosanzio/pages/kebijakan.dart';
 import 'package:raffaelosanzio/pages/login.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
 import 'package:raffaelosanzio/pages/onboarding.dart';
