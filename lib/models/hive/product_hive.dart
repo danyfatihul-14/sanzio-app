@@ -48,7 +48,7 @@ class Product {
 
     return Product(
       id: json['id'] ?? 0,
-      categoryId: json['categoryId'] ?? 0,
+      categoryId: json['category_id'] ?? 0,
       title: json['title'],
       imageUrl: json['image'],
       subtitle: json['subtitle'],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:raffaelosanzio/auth/auth_handler.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/models/hive/product_hive.dart';
 import 'package:raffaelosanzio/pages/history.dart';
@@ -25,6 +26,7 @@ void main() async {
   Hive.registerAdapter(ProductAdapter());
   Hive.registerAdapter(DetailProductAdapter());
   await Hive.openBox('Product');
+  StorageService().storage;
   runApp(const MyApp());
 }
 
@@ -51,6 +53,7 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const HomePage(),
           '/allKategori': (context) => const AllCategoriesPage(
                 categories: [],
+                products: [],
               ),
           '/viewkategory': (context) => const CategoryProductPage(
                 categoryTitle: '',

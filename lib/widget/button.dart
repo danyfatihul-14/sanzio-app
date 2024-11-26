@@ -6,7 +6,7 @@ import 'package:raffaelosanzio/shared/theme.dart';
 class CustomButton extends StatelessWidget {
   final String title;
   final Color color;
-  final String pushTo;
+  final VoidCallback pushTo;
   const CustomButton(
       {super.key,
       required this.title,
@@ -18,10 +18,7 @@ class CustomButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ElevatedButton(
-        onPressed: () {
-          // Navigate to HomePage using named route
-          Navigator.pushNamed(context, pushTo);
-        },
+        onPressed: pushTo,
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.infinity, 50),
           backgroundColor: color, // Set button color
@@ -45,7 +42,7 @@ class CustomButton extends StatelessWidget {
 class CustomOutlineButton extends StatelessWidget {
   final String title;
   final Color color;
-  final String pushTo;
+  final VoidCallback pushTo;
 
   const CustomOutlineButton(
       {super.key,
@@ -58,10 +55,7 @@ class CustomOutlineButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: OutlinedButton(
-        onPressed: () {
-          // Navigate to HomePage using named route
-          Navigator.pushNamed(context, pushTo);
-        },
+        onPressed: pushTo,
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(double.infinity, 50),
           side: BorderSide(

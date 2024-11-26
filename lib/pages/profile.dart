@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/auth/auth_handler.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/button.dart';
 
@@ -22,6 +24,32 @@ class _MyProfileState extends State<MyProfile> {
       setState(() {
         _selectedIndex = index;
       });
+    }
+
+    void _logout() async {
+      bool isLogout = await AuthHandler().logout();
+      if (isLogout) {
+        Fluttertoast.showToast(
+          msg: "Logout Berhasil",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        Fluttertoast.showToast(
+          msg: "Terjadi kesalahan saat logout",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
     }
 
     return Scaffold(
@@ -206,7 +234,7 @@ class _MyProfileState extends State<MyProfile> {
                   CustomOutlineButton(
                     title: "Logout",
                     color: purple600,
-                    pushTo: "/login",
+                    pushTo: _logout,
                   ),
                 ],
               ),

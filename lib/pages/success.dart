@@ -344,7 +344,9 @@ class CheckmarkPage extends StatelessWidget {
                 child: CustomOutlineButton(
                   title: "Kembali ke Beranda",
                   color: blue600,
-                  pushTo: "/main-home",
+                  pushTo: (){
+                    Navigator.pushReplacementNamed(context, '/main-home');
+                  },
                 ),
               ),
             ],

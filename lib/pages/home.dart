@@ -141,8 +141,10 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        AllCategoriesPage(categories: categories),
+                    builder: (context) => AllCategoriesPage(
+                      categories: categories,
+                      products: _products,
+                    ),
                   ),
                 );
               },
