@@ -51,43 +51,43 @@ class AllCategoriesPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount:
-                      MediaQuery.of(context).size.width > 400 ? 4 : 3,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: MediaQuery.of(context).size.width /
-                      (MediaQuery.of(context).size.height * 0.6), // Responsif
-                ),
-                itemCount: categories.length,
-                itemBuilder: (context, index) {
-                  var category = categories[index];
-                  return CategoryCard(
-                    title: category['title']!,
-                    itemCount: '100 Items', // Adjust this dynamically if needed
-                    image: category['image']!,
-                    onTap: () {
-                      List<Map<String, dynamic>> formattedProducts =
-                          getFormattedProducts();
-                      List<Map<String, dynamic>> categoryProducts =
-                          formattedProducts.where((product) {
-                        return product['categoryId'] == categories[index]['id'];
-                      }).toList();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CategoryProductPage(
-                              categoryTitle: category['title']!,
-                              products: categoryProducts),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+              // GridView.builder(
+              //   shrinkWrap: true,
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount:
+              //         MediaQuery.of(context).size.width > 400 ? 4 : 3,
+              //     mainAxisSpacing: 8,
+              //     crossAxisSpacing: 8,
+              //     childAspectRatio: MediaQuery.of(context).size.width /
+              //         (MediaQuery.of(context).size.height * 0.6), // Responsif
+              //   ),
+              //   itemCount: categories.length,
+              //   itemBuilder: (context, index) {
+              //     var category = categories[index];
+              //     return CategoryCard(
+              //       title: category['title']!,
+              //       itemCount: '100 Items', // Adjust this dynamically if needed
+              //       image: category['image']!,
+              //       onTap: () {
+              //         List<Map<String, dynamic>> formattedProducts =
+              //             getFormattedProducts();
+              //         List<Map<String, dynamic>> categoryProducts =
+              //             formattedProducts.where((product) {
+              //           return product['categoryId'] == categories[index]['id'];
+              //         }).toList();
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) => CategoryProductPage(
+              //                 categoryTitle: category['title']!,
+              //                 products: categoryProducts),
+              //           ),
+              //         );
+              //       },
+              //     );
+              //   },
+              // ),
 
               // Genders Section
               const SizedBox(height: 24),

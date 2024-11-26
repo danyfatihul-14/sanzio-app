@@ -84,7 +84,7 @@ class PaymentPage extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
+          Image.network(
             cart.imageUrl,
             width: 80,
             height: 80,
