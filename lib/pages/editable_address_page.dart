@@ -53,7 +53,7 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            "History",
+            "Alamat Saya",
             style: GoogleFonts.plusJakartaSans(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -226,7 +226,8 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 79, 114, 189),
-                  minimumSize: const Size(double.infinity, 48), // Tombol panjang
+                  minimumSize:
+                      const Size(double.infinity, 48), // Tombol panjang
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

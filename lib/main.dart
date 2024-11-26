@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/pages/about.dart';
+import 'package:raffaelosanzio/pages/editable_address_page.dart';
 import 'package:raffaelosanzio/pages/ganti_password.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
@@ -59,7 +60,13 @@ class MyApp extends StatelessWidget {
           '/profile': (context) => const MyProfile(),
           '/user-info': (context) => const MyInformasiPengguna(),
           '/change-password': (context) => const MyGantiPassword(),
-          '/kebijakan': (context) => const Kebijakan(),
+          '/kebijakan': (context) => Kebijakan(),
+          '/about': (context) => About(),
+          '/edit-address': (context) => EditableAddressPage(
+                onSave: (addresses) {
+                  print('Alamat disimpan: $addresses');
+                },
+              ),
         },
       ),
     );

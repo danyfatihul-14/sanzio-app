@@ -160,7 +160,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         const CustomOutlineMenuProfile(
                           title: "Alamat Saya",
-                          pushTo: "/",
+                          pushTo: "/edit-address",
                         ),
                         const CustomOutlineMenuProfile(
                           title: "Ganti Password",
@@ -198,7 +198,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         const CustomOutlineMenuProfile(
                           title: "Tentang Sanzio",
-                          pushTo: "/",
+                          pushTo: "/about",
                         ),
                       ],
                     ),
