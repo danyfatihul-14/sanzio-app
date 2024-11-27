@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/auth/auth_handler.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/button.dart';
 
@@ -13,45 +16,84 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
+  int _selectedIndex = 0;
+  bool _isLoading = true;
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserFromHive();
+  }
+
+  Future<void> _fetchUserFromHive() async {
+    try {
+      await UserApiHandler().fetchUser();
+      var box = Hive.box('User');
+      User user = box.get(1);
+      setState(() {
+        _user = user;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "Terjadi kesalahan saat mengambil data pengguna ${e}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  void onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void _logout() async {
+    bool isLogout = await AuthHandler().logout();
+    
+    if (isLogout) {
+      Fluttertoast.showToast(
+        msg: "Logout Berhasil",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      Navigator.pushReplacementNamed(context, '/login');
+    } else {
+      Fluttertoast.showToast(
+        msg: "Terjadi kesalahan saat logout",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.sizeOf(context).width;
-    // ignore: unused_local_variable
-    double height = MediaQuery.sizeOf(context).height;
-    int _selectedIndex = 0;
+    return _isLoading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : _buildProfilePage(context);
+  }
 
-    void onItemTapped(int index) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-
-    void _logout() async {
-      bool isLogout = await AuthHandler().logout();
-      if (isLogout) {
-        Fluttertoast.showToast(
-          msg: "Logout Berhasil",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Navigator.pushReplacementNamed(context, '/login');
-      } else {
-        Fluttertoast.showToast(
-          msg: "Terjadi kesalahan saat logout",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      }
-    }
-
+  Widget _buildProfilePage(BuildContext context) {
     return Scaffold(
       backgroundColor: gray60,
       body: SingleChildScrollView(
@@ -60,7 +102,7 @@ class _MyProfileState extends State<MyProfile> {
           children: [
             Container(
               padding: const EdgeInsets.only(top: 36, bottom: 4.0),
-              width: width,
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: whiteMain,
                 image: const DecorationImage(
@@ -115,14 +157,14 @@ class _MyProfileState extends State<MyProfile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Username",
+                              _user?.username ?? '',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 24,
                                   color: gray600),
                             ),
                             Text(
-                              "Full Name",
+                              _user?.fullname ?? '',
                               style: TextStyle(
                                 color: gray400,
                                 fontSize: 16,

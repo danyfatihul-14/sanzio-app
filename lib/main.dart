@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:raffaelosanzio/auth/auth_handler.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
-import 'package:raffaelosanzio/models/hive/product_hive.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
 import 'package:raffaelosanzio/pages/home.dart';
@@ -13,6 +13,7 @@ import 'package:raffaelosanzio/pages/onboarding.dart';
 import 'package:raffaelosanzio/pages/profile.dart';
 import 'package:raffaelosanzio/pages/register.dart';
 import 'package:raffaelosanzio/pages/rincian_pesanan.dart';
+import 'package:raffaelosanzio/pages/splash_screen.dart';
 import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
@@ -25,7 +26,14 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProductAdapter());
   Hive.registerAdapter(DetailProductAdapter());
+  Hive.registerAdapter(OrderAdapter());
+  Hive.registerAdapter(OrderDetailAdapter());
+  Hive.registerAdapter(ProductDetailRequestAdapter());
+  Hive.registerAdapter(ProductRequestAdapter());
+  Hive.registerAdapter(UserAdapter());
   await Hive.openBox('Product');
+  await Hive.openBox('History');
+  await Hive.openBox('User');
   StorageService().storage;
   runApp(const MyApp());
 }
@@ -44,9 +52,10 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           primaryColor: whiteMain,
         ),
-        initialRoute: '/onboard',
+        initialRoute: '/',
         debugShowCheckedModeBanner: false,
         routes: {
+          '/': (context) => const SplashScreen(),
           '/login': (context) => const LoginPage(),
           '/register': (context) => const RegisterPage(),
           '/main-home': (context) => const CustomBottomNavbar(),

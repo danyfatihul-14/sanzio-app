@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/api/product_api.dart';
 import 'package:raffaelosanzio/help/product_helper.dart';
-import 'package:raffaelosanzio/models/hive/product_hive.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/category_card.dart';

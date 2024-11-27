@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive/hive.dart';
-import 'package:raffaelosanzio/models/hive/product_hive.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 
 class ProductApiHandler {
   final String baseUrl = dotenv.env['API_BASEURL']!;
