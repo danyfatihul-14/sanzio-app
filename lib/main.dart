@@ -3,10 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:raffaelosanzio/auth/auth_handler.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
+import 'package:raffaelosanzio/pages/about.dart';
+import 'package:raffaelosanzio/pages/editable_address_page.dart';
+import 'package:raffaelosanzio/pages/ganti_password.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
 import 'package:raffaelosanzio/pages/home.dart';
+import 'package:raffaelosanzio/pages/info_pengguna.dart';
+import 'package:raffaelosanzio/pages/kebijakan.dart';
 import 'package:raffaelosanzio/pages/login.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
 import 'package:raffaelosanzio/pages/onboarding.dart';
@@ -73,7 +78,16 @@ class MyApp extends StatelessWidget {
           '/success': (context) => LoadingToFlipCheck(),
           '/onboard': (context) => OnboardingScreen(),
           '/rimcian': (context) => Rincian(),
-          '/profile': (context) => const MyProfile()
+          '/profile': (context) => const MyProfile(),
+          '/user-info': (context) => const MyInformasiPengguna(),
+          '/change-password': (context) => const MyGantiPassword(),
+          '/kebijakan': (context) => Kebijakan(),
+          '/about': (context) => About(),
+          '/edit-address': (context) => EditableAddressPage(
+                onSave: (addresses) {
+                  print('Alamat disimpan: $addresses');
+                },
+              ),
         },
       ),
     );

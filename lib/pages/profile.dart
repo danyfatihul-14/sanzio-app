@@ -226,15 +226,15 @@ class _MyProfileState extends State<MyProfile> {
                         const SizedBox(height: 12),
                         const CustomOutlineMenuProfile(
                           title: "Akun Saya",
-                          pushTo: "/profile/information",
+                          pushTo: "/user-info",
                         ),
                         const CustomOutlineMenuProfile(
                           title: "Alamat Saya",
-                          pushTo: "/",
+                          pushTo: "/edit-address",
                         ),
                         const CustomOutlineMenuProfile(
                           title: "Ganti Password",
-                          pushTo: "/",
+                          pushTo: "/change-password",
                         ),
                         const CustomOutlineMenuProfile(
                           title: "Favorite",
@@ -264,11 +264,11 @@ class _MyProfileState extends State<MyProfile> {
                         const SizedBox(height: 12),
                         const CustomOutlineMenuProfile(
                           title: "Kebijakan Sanzio",
-                          pushTo: "/",
+                          pushTo: "/kebijakan",
                         ),
                         const CustomOutlineMenuProfile(
                           title: "Tentang Sanzio",
-                          pushTo: "/",
+                          pushTo: "/about",
                         ),
                       ],
                     ),

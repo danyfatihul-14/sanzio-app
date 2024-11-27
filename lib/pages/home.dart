@@ -6,6 +6,7 @@ import 'package:raffaelosanzio/help/data.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
+import 'package:raffaelosanzio/pages/search.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/product_item.dart';
@@ -215,7 +216,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Search field widget
+  // Search functionality
   Widget _buildSearchField() {
     return Container(
       height: 40,
@@ -229,16 +230,24 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(left: 8.0),
             child: Icon(Icons.search, color: gray600),
           ),
-          const Expanded(
+          Expanded(
             child: TextField(
               textAlign: TextAlign.start,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search',
                 filled: true,
                 fillColor: Colors.transparent,
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(vertical: 10.0),
               ),
+              onSubmitted: (query) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchPage(query: query),
+                  ),
+                );
+              },
             ),
           ),
         ],
