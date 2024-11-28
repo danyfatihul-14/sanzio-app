@@ -2,31 +2,49 @@ import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/api/product_api.dart';
-import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/help/data.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/all_Kategori.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
 import 'package:raffaelosanzio/pages/search.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/product_item.dart';
+import 'package:hive/hive.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  List<Product> _products = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProductsFromHive();
+  }
+
+  Future<void> _fetchProductsFromHive() async {
+    await ProductApiHandler().fetchAndStoreProducts();
+    _isLoading = false;
+    var box = Hive.box('Product');
+    List<Product> products = box.get(1)?.cast<Product>() ?? [];
+    setState(() {
+      _products = products;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      backgroundColor: whiteMain,
+      backgroundColor: gray50,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -62,7 +80,8 @@ class _HomePageState extends State<HomePage> {
 
   // Carousel Slider for banners
   Widget _buildCarouselSlider() {
-    return SizedBox(
+    return Container(
+      color: whiteMain,
       height: 180,
       child: CarouselSlider(
         items: [
@@ -124,8 +143,10 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        AllCategoriesPage(categories: categories),
+                    builder: (context) => AllCategoriesPage(
+                      categories: categories,
+                      products: _products,
+                    ),
                   ),
                 );
               },
@@ -160,7 +181,10 @@ class _HomePageState extends State<HomePage> {
 
   // Popular Products section
   Widget _buildPopularProductsSection(BuildContext context) {
-    List<Map<String, dynamic>> formattedProducts = getFormattedProducts();
+    final popularProducts = _products
+        .where((product) => product.rating > 4.5)
+        .toList()
+      ..sort((a, b) => b.rating.compareTo(a.rating));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -168,19 +192,27 @@ class _HomePageState extends State<HomePage> {
             style: GoogleFonts.plusJakartaSans(
                 fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8.0),
-        GridView.count(
-          crossAxisCount: 2,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height * 0.68), // Sesuaikan proporsi
-          children: List.generate(formattedProducts.length, (index) {
-            final product = formattedProducts[index];
+        _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                childAspectRatio: MediaQuery.of(context).size.width /
+                    (MediaQuery.of(context).size.height *
+                        0.68), // Sesuaikan proporsi
+                children: List.generate(
+                  popularProducts.length,
+                  (index) {
+                    final product = popularProducts[index];
 
-            // Mengirimkan satu Map<String, dynamic> ke ProductItem
-            return ProductItem(product: product);
-          }),
-        )
+                    // Mengirimkan satu Map<String, dynamic> ke ProductItem
+                    return ProductItem(product: product.toJson());
+                  },
+                ),
+              ),
       ],
     );
   }
@@ -259,11 +291,10 @@ class _HomePageState extends State<HomePage> {
   Widget categoryItem(int id, String title, String imagePath) {
     return GestureDetector(
       onTap: () {
-        List<Map<String, dynamic>> formattedProducts = getFormattedProducts();
-        List<Map<String, dynamic>> categoryProducts =
-            formattedProducts.where((product) {
-          return product['categoryId'] == id;
-        }).toList();
+        List<Map<String, dynamic>> categoryProducts = _products
+            .where((product) => product.categoryId == id)
+            .map((product) => product.toJson())
+            .toList();
         Navigator.push(
           context,
           MaterialPageRoute(

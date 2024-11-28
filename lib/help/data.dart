@@ -1,30 +1,3 @@
-final Map<String, List<Map<String, String>>> products = {
-  "T-Shirt": [
-    {
-      "title": "T-Shirt Classic",
-      "price": "Rp 100.000",
-      "image": "assets/T-Shirt.png"
-    },
-    {
-      "title": "T-Shirt Modern",
-      "price": "Rp 120.000",
-      "image": "assets/T-Shirt.png"
-    },
-  ],
-  "Jacket": [
-    {
-      "title": "Jacket Bomber",
-      "price": "Rp 150.000",
-      "image": "assets/Jacket.png"
-    },
-    {
-      "title": "Jacket Leather",
-      "price": "Rp 250.000",
-      "image": "assets/Jacket.png"
-    },
-  ],
-};
-
 final List<Map<String, dynamic>> categories = [
   {"id": 1, "title": "T-Shirt", "image": "assets/T-Shirt.png"},
   {"id": 2, "title": "Jacket", "image": "assets/Jacket.png"},

@@ -47,7 +47,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                     child: Hero(
                       tag: product[
                           'id'], // Pastikan tag ini unik untuk setiap produk
-                      child: Image.asset(
+                      child: Image.network(
                         imageUrl,
                         height: 300,
                       ),
@@ -59,7 +59,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                 curve: const Interval(0.0, 1.0,
                                     curve: Curves.easeInOut)),
                           ),
-                          child: Image.asset(imageUrl, fit: BoxFit.cover),
+                          child: Image.network(imageUrl, fit: BoxFit.cover),
                         );
                       },
                     ),
@@ -240,6 +240,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 child: OutlinedButton(
                   onPressed: () {
                     showModalBottomSheet(
+                      backgroundColor: whiteMain,
                       context: context,
                       shape: const RoundedRectangleBorder(
                         borderRadius:
@@ -273,6 +274,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                       bool isOutOfStock = stock == 0;
 
                                       return ChoiceChip(
+                                        backgroundColor: whiteMain,
                                         label: Text(size),
                                         checkmarkColor: whiteMain,
                                         selectedColor: blue500,
