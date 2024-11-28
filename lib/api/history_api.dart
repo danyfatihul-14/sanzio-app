@@ -10,6 +10,7 @@ class HistoryApiHandler {
 
   Future<void> fetchHistory() async {
     print("Fetching products");
+    await AuthHandler().validateToken();
     final storage = StorageService().storage;
     final accessToken = await storage.read(key: 'access_token');
     final response = await http.get(

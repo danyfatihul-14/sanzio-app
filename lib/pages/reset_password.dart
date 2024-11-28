@@ -106,7 +106,7 @@ class MyResetPassword extends StatelessWidget {
                 CustomOutlineButton(
                   title: "Create New Password", 
                   color: Color.fromRGBO(79, 114, 189, 1), 
-                  pushTo: '/',
+                  pushTo: (){},
                 ),
               ],
             ),

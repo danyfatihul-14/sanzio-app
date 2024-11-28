@@ -50,7 +50,7 @@ class Kebijakan extends StatelessWidget {
             Text(
               'Kebijakan Privasi Aplikasi Sanzio',
               style: GoogleFonts.plusJakartaSans(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: blue400,
               ),
@@ -87,7 +87,7 @@ class Kebijakan extends StatelessWidget {
         Text(
           title,
           style: GoogleFonts.plusJakartaSans(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: blue400,
           ),
@@ -103,7 +103,7 @@ class Kebijakan extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.plusJakartaSans(
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: FontWeight.w400,
         color: gray600,
       ),

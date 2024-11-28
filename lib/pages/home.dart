@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      backgroundColor: whiteMain,
+      backgroundColor: gray50,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -80,7 +80,8 @@ class _HomePageState extends State<HomePage> {
 
   // Carousel Slider for banners
   Widget _buildCarouselSlider() {
-    return SizedBox(
+    return Container(
+      color: whiteMain,
       height: 180,
       child: CarouselSlider(
         items: [
