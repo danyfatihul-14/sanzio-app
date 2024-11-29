@@ -345,3 +345,101 @@ class UserAdapter extends TypeAdapter<User> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class AddressAdapter extends TypeAdapter<Address> {
+  @override
+  final int typeId = 7;
+
+  @override
+  Address read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Address(
+      id: fields[0] as int,
+      address: fields[1] as String,
+      isDefault: fields[2] as bool,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Address obj) {
+    writer
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.address)
+      ..writeByte(2)
+      ..write(obj.isDefault);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AddressAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class CartHiveAdapter extends TypeAdapter<CartHive> {
+  @override
+  final int typeId = 8;
+
+  @override
+  CartHive read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return CartHive(
+      detailProductId: fields[0] as int,
+      title: fields[1] as String,
+      price: fields[2] as int,
+      size: fields[3] as String,
+      imageUrl: fields[4] as String,
+      quantity: fields[5] as int,
+      status: fields[6] as String,
+      isSelected: fields[7] as bool,
+      stock: fields[8] as int,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, CartHive obj) {
+    writer
+      ..writeByte(9)
+      ..writeByte(0)
+      ..write(obj.detailProductId)
+      ..writeByte(1)
+      ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.price)
+      ..writeByte(3)
+      ..write(obj.size)
+      ..writeByte(4)
+      ..write(obj.imageUrl)
+      ..writeByte(5)
+      ..write(obj.quantity)
+      ..writeByte(6)
+      ..write(obj.status)
+      ..writeByte(7)
+      ..write(obj.isSelected)
+      ..writeByte(8)
+      ..write(obj.stock);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CartHiveAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

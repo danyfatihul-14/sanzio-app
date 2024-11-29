@@ -1,15 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:raffaelosanzio/api/address_api.dart';
+import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/models/cart.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/editable_address_page.dart';
 import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 
-class PaymentPage extends StatelessWidget {
+class PaymentPage extends StatefulWidget {
   final List<Cart> selectedCart;
 
   const PaymentPage({super.key, required this.selectedCart});
+
+  @override
+  State<PaymentPage> createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> with RouteAware {
+  Address? address;
+  User? user;
+  bool isLoading = true;
+  late int totalItem;
+
+  @override
+  void initState() {
+    super.initState();
+    totalItem = widget.selectedCart.fold(0, (sum, cart) => sum + cart.quantity);
+    _fetchAddress();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    ModalRoute.of(context)!.addScopedWillPopCallback(() async {
+      await _fetchAddress();
+      return true;
+    });
+  }
+
+  @override
+  void didPopNext() {
+    _fetchAddress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +108,9 @@ class PaymentPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          ...selectedCart.map((cart) => _buildItemRowWithImage(cart)).toList(),
+          ...widget.selectedCart
+              .map((cart) => _buildItemRowWithImage(cart))
+              .toList(),
         ],
       ),
     );
@@ -130,7 +168,63 @@ class PaymentPage extends StatelessWidget {
     );
   }
 
+  Future<void> _fetchAddress() async {
+    isLoading = true;
+    final box = await AddressApiHandler().getAddress();
+    await UserApiHandler().fetchUser();
+    var boxUser = Hive.box('User');
+    User user = boxUser.get(1);
+    final address = box.where((element) => element.isDefault == true).first;
+    setState(() {
+      this.address = address;
+      this.user = user;
+      if (this.address != null) {
+        isLoading = false;
+      }
+    });
+  }
+
   Widget _buildAddressSection(BuildContext context) {
+    if (isLoading) {
+      return GestureDetector(
+        onTap: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EditableAddressPage(
+                      onSave: (String) {},
+                    )),
+          ).then((value) {
+            _fetchAddress();
+          })
+        },
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: whiteMain,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                offset: const Offset(2, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              'Alamat Utama Belum Ditentukan',
+              style: GoogleFonts.plusJakartaSans(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: blue600,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -172,7 +266,10 @@ class PaymentPage extends StatelessWidget {
                         builder: (context) => EditableAddressPage(
                               onSave: (String) {},
                             )),
-                  );
+                  ).then((value) {
+                    _fetchAddress();
+                  });
+                  ;
                 },
                 child: Icon(
                   Icons.edit,
@@ -183,7 +280,7 @@ class PaymentPage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Rafaello Sanzio | 0813XXXXXXX',
+            "${user!.fullname} | 0813XXXXXXX",
             style: GoogleFonts.plusJakartaSans(
               fontSize: 14,
               fontWeight: FontWeight.w400,
@@ -191,7 +288,7 @@ class PaymentPage extends StatelessWidget {
             ),
           ),
           Text(
-            'Jalan Soekarno Hatta No. 1, Lowokwaru, Kota Malang, Jawa Timur, ID 12345',
+            address!.address,
             style: GoogleFonts.plusJakartaSans(
               fontSize: 14,
               fontWeight: FontWeight.w400,
@@ -250,8 +347,8 @@ class PaymentPage extends StatelessWidget {
   }
 
   Widget _buildSummarySection() {
-    final int totalAmount =
-        selectedCart.fold(0, (sum, cart) => sum + (cart.price * cart.quantity));
+    final int totalAmount = widget.selectedCart
+        .fold(0, (sum, cart) => sum + (cart.price * cart.quantity));
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -268,7 +365,7 @@ class PaymentPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSummaryRow('Total Barang', '${selectedCart.length}'),
+          _buildSummaryRow('Total Barang', '${totalItem}'),
           _buildSummaryRow('Total Harga', 'Rp $totalAmount'),
           const Divider(),
           _buildSummaryRow('Total Pembayaran', 'Rp $totalAmount',
@@ -310,12 +407,24 @@ class PaymentPage extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoadingToFlipCheck(),
-          ),
-        );
+        if (isLoading) {
+          Fluttertoast.showToast(
+            msg: 'Pilih Alamat Yang Ingin Digunakan',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoadingToFlipCheck(),
+            ),
+          );
+        }
       },
       child: Center(
         child: Text(

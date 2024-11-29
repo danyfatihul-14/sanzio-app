@@ -36,9 +36,13 @@ void main() async {
   Hive.registerAdapter(ProductDetailRequestAdapter());
   Hive.registerAdapter(ProductRequestAdapter());
   Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(AddressAdapter());
+  Hive.registerAdapter(CartHiveAdapter());
   await Hive.openBox('Product');
   await Hive.openBox('History');
   await Hive.openBox('User');
+  await Hive.openBox('Address');
+  await Hive.openBox('Cart');
   StorageService().storage;
   runApp(const MyApp());
 }

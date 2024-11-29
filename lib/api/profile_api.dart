@@ -14,7 +14,7 @@ class UserApiHandler {
     final storage = StorageService().storage;
     final accessToken = await storage.read(key: 'access_token');
     final response = await http.get(
-      Uri.parse('$baseUrl/api/user'),
+      Uri.parse('$baseUrl/api/user/'),
       headers: {
         'Authorization': 'Bearer $accessToken',
       },
@@ -23,7 +23,6 @@ class UserApiHandler {
     if (response.statusCode == 200) {
       dynamic data = json.decode(response.body);
       User user = User.fromJson(data);
-      print("User: ${user.image}");
       var box = Hive.box('User');
       box.put(1, user);
       print("Berhasil");

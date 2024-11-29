@@ -163,11 +163,9 @@ class AuthHandler {
         if (response.statusCode == 201) {
           final responseData = jsonDecode(response.body);
           final newAccessToken = responseData['access_token'];
-          final newRefreshToken = responseData['refresh_token'];
 
           final storage = StorageService().storage;
           await storage.write(key: 'access_token', value: newAccessToken);
-          await storage.write(key: 'refresh_token', value: newRefreshToken);
 
           print('Token refreshed successfully');
           return true;

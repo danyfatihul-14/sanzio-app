@@ -336,3 +336,68 @@ class User {
     };
   }
 }
+
+@HiveType(typeId: 7)
+class Address extends HiveObject {
+  @HiveField(0)
+  final int id;
+  @HiveField(1)
+  String address;
+  @HiveField(2)
+  bool isDefault;
+
+  Address({
+    required this.id,
+    required this.address,
+    required this.isDefault,
+  });
+
+  factory Address.fromJson(Map<String, dynamic> json) {
+    return Address(
+      id: json['id'],
+      address: json['address'],
+      isDefault: json['is_default'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'address': address,
+      'isDefault': isDefault,
+    };
+  }
+}
+
+@HiveType(typeId: 8)
+class CartHive extends HiveObject {
+  @HiveField(0)
+  final int detailProductId;
+  @HiveField(1)
+  final String title;
+  @HiveField(2)
+  final int price;
+  @HiveField(3)
+  final String size;
+  @HiveField(4)
+  final String imageUrl;
+  @HiveField(5)
+  int quantity;
+  @HiveField(6)
+  String status;
+  @HiveField(7)
+  bool isSelected;
+  @HiveField(8)
+  int stock;
+
+  CartHive(
+      {required this.detailProductId,
+      required this.title,
+      required this.price,
+      required this.size,
+      required this.imageUrl,
+      this.quantity = 1,
+      this.status = 'In Cart',
+      this.isSelected = false,
+      this.stock = 1});
+}
