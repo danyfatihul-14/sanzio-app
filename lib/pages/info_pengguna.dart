@@ -128,8 +128,8 @@ class MyInformasiPengguna extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         color: whiteMain,
-        child: CustomOutlineButton(
-            title: "Simpan", color: blue600, pushTo: '/main-home'),
+        child:
+            CustomOutlineButton(title: "Simpan", color: blue600, pushTo: () {}),
       ),
     );
   }

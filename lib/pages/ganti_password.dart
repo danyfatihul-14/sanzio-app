@@ -76,7 +76,7 @@ class MyGantiPassword extends StatelessWidget {
               child: CustomButton(
                 title: "Simpan",
                 color: blue600,
-                pushTo: '/profile',
+                pushTo: () {},
               ),
             ),
             // Save Button

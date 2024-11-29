@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/api/product_api.dart';
 import 'package:raffaelosanzio/help/product_helper.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/category_card.dart';
@@ -10,8 +11,10 @@ import 'package:raffaelosanzio/widget/season_card.dart';
 
 class AllCategoriesPage extends StatelessWidget {
   final List<Map<String, dynamic>> categories;
+  final List<Product> products;
 
-  const AllCategoriesPage({required this.categories, super.key});
+  const AllCategoriesPage(
+      {required this.categories, required this.products, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +73,13 @@ class AllCategoriesPage extends StatelessWidget {
                     itemCount: '100 Items', // Adjust this dynamically if needed
                     image: category['image']!,
                     onTap: () {
-                      List<Map<String, dynamic>> formattedProducts =
-                          getFormattedProducts();
-                      List<Map<String, dynamic>> categoryProducts =
-                          formattedProducts.where((product) {
-                        return product['categoryId'] == categories[index]['id'];
-                      }).toList();
+                      List<Map<String, dynamic>> categoryProducts = products
+                          .where((product) {
+                            return product.categoryId ==
+                                categories[index]['id'];
+                          })
+                          .map((product) => product.toJson())
+                          .toList();
                       Navigator.push(
                         context,
                         MaterialPageRoute(

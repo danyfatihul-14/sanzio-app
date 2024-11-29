@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
@@ -273,6 +274,15 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                                     PaymentPage(selectedCart: selectedItems),
                               ),
                             );
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Pilih setidaknya 1 Item terlebih dahulu",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.TOP,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
                           }
                         }
                       },

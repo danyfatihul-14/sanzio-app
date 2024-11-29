@@ -21,21 +21,6 @@ class CartItemWidget extends StatelessWidget {
   });
 
   @override
-  // Widget build(BuildContext context) {
-  //   return ListTile(
-  //     leading: Checkbox(
-  //       value: cart.isSelected,
-  //       onChanged: onCheckboxChanged,
-  //     ),
-  //     title: Text(cart.title),
-  //     subtitle: Text("Price: \$${cart.price}, Quantity: ${cart.quantity}"),
-  //     trailing: IconButton(
-  //       icon: const Icon(Icons.remove_circle),
-  //       onPressed: onRemove,
-  //     ),
-  //     onTap: () {},
-  //   );
-  // }
   Widget build(BuildContext context) {
     return Card(
       color: whiteMain,
@@ -53,7 +38,7 @@ class CartItemWidget extends StatelessWidget {
               child: SizedBox(
                 width: 100,
                 height: 100,
-                child: Image.asset(
+                child: Image.network(
                   cart.imageUrl,
                   fit: BoxFit.cover,
                 ),

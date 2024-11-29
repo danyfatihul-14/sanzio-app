@@ -6,11 +6,16 @@ class FormFieldCustom extends StatelessWidget {
   final String label;
   final String value;
   final Icon icons;
-  const FormFieldCustom(
-      {super.key,
-      required this.label,
-      required this.value,
-      required this.icons});
+  final TextEditingController controller;
+  final bool isPassword;
+  const FormFieldCustom({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.icons,
+    required this.controller,
+    required this.isPassword,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +50,8 @@ class FormFieldCustom extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: TextField(
-                obscureText: true,
+                controller: controller,
+                obscureText: isPassword,
                 decoration: InputDecoration(
                   prefixIcon: icons, // Icon for password
                   hintText: value, // Inner hint text

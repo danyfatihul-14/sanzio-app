@@ -11,17 +11,12 @@ class DetailProduct {
     required this.stock,
   });
 
-  DetailProduct copyWith({
-    int? id,
-    int? productId,
-    String? size,
-    int? stock,
-  }) {
+  factory DetailProduct.fromJson(Map<String, dynamic> json) {
     return DetailProduct(
-      id: id ?? this.id,
-      productId: productId ?? this.productId,
-      size: size ?? this.size,
-      stock: stock ?? this.stock,
+      id: json['id'] ?? 0,
+      productId: json['productId'] ?? 0,
+      size: json['size'],
+      stock: json['stock'],
     );
   }
 }

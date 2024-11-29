@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_hiveHandler.dart';
 import 'package:raffaelosanzio/models/cart.dart';
 import 'cart_event.dart';
 import 'cart_state.dart';
@@ -6,6 +7,18 @@ import 'cart_state.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartInitial()) {
     // Menangani event AddToCart
+    on<LoadCartFromHive>((event, emit) {
+      if (_cartItems.isEmpty) {
+        List<Cart> _cartHive = CartHivehandler().getCart();
+
+        for (var cart in _cartHive) {
+          _cartItems.add(cart);
+        }
+
+        emit(CartUpdated(cartItems: _cartItems));
+      }
+    });
+
     on<AddToCart>((event, emit) {
       if (_cartItems.isNotEmpty) {
         // Cek apakah item dengan `detailProductId` yang sama sudah ada
@@ -46,6 +59,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
       // Emit state keranjang yang diperbarui
       emit(CartUpdated(cartItems: _cartItems));
+      CartHivehandler().modifyCart(_cartItems);
     });
 
     // Menangani event RemoveFromCart
@@ -55,6 +69,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
       // Emit state keranjang yang diperbarui
       emit(CartUpdated(cartItems: List<Cart>.from(_cartItems)));
+      CartHivehandler().modifyCart(_cartItems);
     });
 
     // Menangani event UpdateQuantityEvent
@@ -64,6 +79,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         // Emit state keranjang yang diperbarui
         emit(CartUpdated(cartItems: List.from(_cartItems)));
+        CartHivehandler().modifyCart(_cartItems);
       }
     });
 
@@ -75,6 +91,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         // Emit state keranjang yang diperbarui
         emit(CartUpdated(cartItems: List.from(_cartItems)));
+        CartHivehandler().modifyCart(_cartItems);
       }
     });
   }

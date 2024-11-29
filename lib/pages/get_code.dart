@@ -60,34 +60,34 @@ class MyGetCode extends StatelessWidget {
                 ),
                 SizedBox(height: 47),
                 // Row with 4 CustomTextFields for code input
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FormFieldCustom(
-                      label: '', 
-                      value: '', 
-                      icons: Icon(IconsaxPlusLinear.add),
-                    ),
-                    SizedBox(width: 12), // Jarak antara kotak
-                    FormFieldCustom(
-                      label: '', 
-                      value: '', 
-                      icons: Icon(IconsaxPlusLinear.add),
-                    ),
-                    SizedBox(width: 12),
-                    FormFieldCustom(
-                      label: '', 
-                      value: '', 
-                      icons: Icon(IconsaxPlusLinear.add),
-                    ),
-                    SizedBox(width: 12),
-                    FormFieldCustom(
-                      label: '', 
-                      value: '', 
-                      icons: Icon(IconsaxPlusLinear.add),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     FormFieldCustom(
+                //       label: '', 
+                //       value: '', 
+                //       icons: Icon(IconsaxPlusLinear.add),
+                //     ),
+                //     SizedBox(width: 12), // Jarak antara kotak
+                //     FormFieldCustom(
+                //       label: '', 
+                //       value: '', 
+                //       icons: Icon(IconsaxPlusLinear.add),
+                //     ),
+                //     SizedBox(width: 12),
+                //     FormFieldCustom(
+                //       label: '', 
+                //       value: '', 
+                //       icons: Icon(IconsaxPlusLinear.add),
+                //     ),
+                //     SizedBox(width: 12),
+                //     FormFieldCustom(
+                //       label: '', 
+                //       value: '', 
+                //       icons: Icon(IconsaxPlusLinear.add),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
