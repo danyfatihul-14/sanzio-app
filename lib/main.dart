@@ -79,7 +79,6 @@ class MyApp extends StatelessWidget {
               ),
           '/history': (context) => const HistoryPage(),
           '/cart': (context) => const ShoppingCartPage(),
-          '/success': (context) => LoadingToFlipCheck(),
           '/onboard': (context) => OnboardingScreen(),
           '/rimcian': (context) => Rincian(),
           '/profile': (context) => const MyProfile(),

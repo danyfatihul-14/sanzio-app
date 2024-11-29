@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:intl/intl.dart';
+import 'package:raffaelosanzio/api/address_api.dart';
+import 'package:raffaelosanzio/api/history_api.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
+import 'package:raffaelosanzio/models/order.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'dart:math' as math;
 
 import 'package:raffaelosanzio/widget/button.dart';
 
 class LoadingToFlipCheck extends StatefulWidget {
+  final OrderForm orderForm;
+
+  const LoadingToFlipCheck({Key? key, required this.orderForm})
+      : super(key: key);
   @override
   _LoadingToFlipCheckState createState() => _LoadingToFlipCheckState();
 }
@@ -18,45 +27,65 @@ class _LoadingToFlipCheckState extends State<LoadingToFlipCheck>
 
   late Animation<double> _flipAnimation;
   bool _showCheckmark = false;
+  Order? ordercode;
 
   @override
   void initState() {
     super.initState();
 
-    // Animation controller untuk loading animasi (2 detik)
+    // Inisialisasi loading controller
     _loadingController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     )..repeat();
 
-    // Animation controller untuk flip animasi
+    // Inisialisasi flip controller
     _flipController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(seconds: 1),
     );
 
-    // Animasi flip
-    _flipAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _flipController, curve: Curves.easeInOut),
-    );
+    // Inisialisasi flip animation
+    _flipAnimation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_flipController);
 
-    // Transisi dari loading ke flip
-    Future.delayed(const Duration(seconds: 2), () {
+    // Memulai proses pesanan setelah inisialisasi
+    _processOrder();
+  }
+
+  Future<void> _processOrder() async {
+    try {
+      // Simulasi atau panggil API
+      ordercode = await HistoryApiHandler().createOrder(widget.orderForm);
       _loadingController.stop();
+
+      // Mulai animasi flip
       _flipController.forward().whenComplete(() {
         setState(() {
           _showCheckmark = true;
         });
 
-        // Pindah ke halaman baru setelah 2 detik
+        // Tunggu 2 detik lalu pindah ke halaman berikutnya
         Future.delayed(const Duration(seconds: 2), () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => CheckmarkPage()),
+            MaterialPageRoute(
+              builder: (context) => CheckmarkPage(
+                order: ordercode!,
+              ),
+            ),
           );
         });
       });
-    });
+    } catch (e) {
+      // Tangani error
+      _loadingController.stop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Gagal memproses pesanan: $e"),
+        ),
+      );
+    }
   }
 
   @override
@@ -123,7 +152,30 @@ class _LoadingToFlipCheckState extends State<LoadingToFlipCheck>
   }
 }
 
-class CheckmarkPage extends StatelessWidget {
+class CheckmarkPage extends StatefulWidget {
+  final Order order;
+
+  const CheckmarkPage({super.key, required this.order});
+
+  @override
+  State<CheckmarkPage> createState() => _CheckmarkPageState();
+}
+
+class _CheckmarkPageState extends State<CheckmarkPage> {
+  Address? address;
+
+  void initState() {
+    super.initState();
+    _fetchAddress();
+  }
+
+  Future<void> _fetchAddress() async {
+    final _address = await AddressApiHandler().getAddress();
+    setState(() {
+      address = _address.firstWhere((element) => element.isDefault == true);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -202,7 +254,7 @@ class CheckmarkPage extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          "Jalan Soekarno Hatta No. 1, Lowokwaru, Kota Malang, Jawa Timur, ID 12345",
+                          "${address?.address ?? 'Alamat tidak ditemukan'}",
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -239,7 +291,7 @@ class CheckmarkPage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "NOV1924XYZA",
+                            widget.order.orderCode,
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -264,7 +316,7 @@ class CheckmarkPage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "19-11-2024",
+                            "${DateFormat('dd MMM yyyy').format(widget.order.orderDate)}",
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -289,7 +341,7 @@ class CheckmarkPage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "08:00 WIB",
+                            "${DateFormat('HH:mm').format(widget.order.orderDate.toLocal())} WIB",
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -322,7 +374,7 @@ class CheckmarkPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Rp 250.000,00",
+                        "${NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0).format(widget.order.amount)}",
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -344,7 +396,7 @@ class CheckmarkPage extends StatelessWidget {
                 child: CustomOutlineButton(
                   title: "Kembali ke Beranda",
                   color: blue600,
-                  pushTo: (){
+                  pushTo: () {
                     Navigator.pushReplacementNamed(context, '/main-home');
                   },
                 ),

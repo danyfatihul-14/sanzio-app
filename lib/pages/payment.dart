@@ -7,6 +7,7 @@ import 'package:raffaelosanzio/api/address_api.dart';
 import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/models/cart.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
+import 'package:raffaelosanzio/models/order.dart';
 import 'package:raffaelosanzio/pages/editable_address_page.dart';
 import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
@@ -30,20 +31,6 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
   void initState() {
     super.initState();
     totalItem = widget.selectedCart.fold(0, (sum, cart) => sum + cart.quantity);
-    _fetchAddress();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    ModalRoute.of(context)!.addScopedWillPopCallback(() async {
-      await _fetchAddress();
-      return true;
-    });
-  }
-
-  @override
-  void didPopNext() {
     _fetchAddress();
   }
 
@@ -418,10 +405,20 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
             fontSize: 16.0,
           );
         } else {
+          List<OrderDetailForm> orderDetails = widget.selectedCart
+              .map((cart) => OrderDetailForm(
+                    detailId: cart.detailProductId,
+                    amount: cart.quantity,
+                  ))
+              .toList();
+          OrderForm _orderForm =
+              OrderForm(addressId: address!.id, detailProducts: orderDetails);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => LoadingToFlipCheck(),
+              builder: (context) => LoadingToFlipCheck(
+                orderForm: _orderForm,
+              ),
             ),
           );
         }
