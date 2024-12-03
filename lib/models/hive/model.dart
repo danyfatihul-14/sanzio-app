@@ -295,6 +295,11 @@ class ProductRequest {
   }
 }
 
+enum Gender {
+  M,
+  W,
+}
+
 @HiveType(typeId: 6)
 class User {
   @HiveField(0)
@@ -307,6 +312,8 @@ class User {
   final String? fullname;
   @HiveField(4)
   final String? image;
+  @HiveField(5)
+  Gender? gender;
 
   User({
     this.username,
@@ -314,6 +321,7 @@ class User {
     this.phone,
     this.fullname,
     this.image,
+    this.gender,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -323,6 +331,7 @@ class User {
       image: json['image'] != null ? json['image'] : null,
       phone: json['telp'] != null ? json['telp'] : null,
       email: json['email'],
+      gender: User.jsonToGender(json['gender']),
     );
   }
 
@@ -333,6 +342,105 @@ class User {
       'email': email,
       'phone': phone,
       'image': image,
+      'gender': gender
     };
   }
+
+  static Gender? jsonToGender(String? genderString) {
+    switch (genderString) {
+      case 'M':
+        return Gender.M;
+      case 'W':
+        return Gender.W;
+      default:
+        return null;
+    }
+  }
+
+  static Gender? stringToGender(String? genderString) {
+    switch (genderString) {
+      case 'Man':
+        return Gender.M;
+      case 'Woman':
+        return Gender.W;
+      default:
+        return null;
+    }
+  }
+
+  static String? genderToString(Gender? gender) {
+    switch (gender) {
+      case Gender.M:
+        return 'Man';
+      case Gender.W:
+        return 'Woman';
+      default:
+        return null;
+    }
+  }
+}
+
+@HiveType(typeId: 7)
+class Address extends HiveObject {
+  @HiveField(0)
+  final int id;
+  @HiveField(1)
+  String address;
+  @HiveField(2)
+  bool isDefault;
+
+  Address({
+    required this.id,
+    required this.address,
+    required this.isDefault,
+  });
+
+  factory Address.fromJson(Map<String, dynamic> json) {
+    return Address(
+      id: json['id'],
+      address: json['address'],
+      isDefault: json['is_default'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'address': address,
+      'isDefault': isDefault,
+    };
+  }
+}
+
+@HiveType(typeId: 8)
+class CartHive extends HiveObject {
+  @HiveField(0)
+  final int detailProductId;
+  @HiveField(1)
+  final String title;
+  @HiveField(2)
+  final int price;
+  @HiveField(3)
+  final String size;
+  @HiveField(4)
+  final String imageUrl;
+  @HiveField(5)
+  int quantity;
+  @HiveField(6)
+  String status;
+  @HiveField(7)
+  bool isSelected;
+  @HiveField(8)
+  int stock;
+
+  CartHive(
+      {required this.detailProductId,
+      required this.title,
+      required this.price,
+      required this.size,
+      required this.imageUrl,
+      this.quantity = 1,
+      this.status = 'In Cart',
+      this.isSelected = false,
+      this.stock = 1});
 }

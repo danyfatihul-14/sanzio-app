@@ -16,10 +16,10 @@ import 'package:raffaelosanzio/pages/login.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
 import 'package:raffaelosanzio/pages/onboarding.dart';
 import 'package:raffaelosanzio/pages/profile.dart';
+import 'package:raffaelosanzio/pages/profile_camera.dart';
 import 'package:raffaelosanzio/pages/register.dart';
 import 'package:raffaelosanzio/pages/rincian_pesanan.dart';
 import 'package:raffaelosanzio/pages/splash_screen.dart';
-import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
@@ -36,9 +36,13 @@ void main() async {
   Hive.registerAdapter(ProductDetailRequestAdapter());
   Hive.registerAdapter(ProductRequestAdapter());
   Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(AddressAdapter());
+  Hive.registerAdapter(CartHiveAdapter());
   await Hive.openBox('Product');
   await Hive.openBox('History');
   await Hive.openBox('User');
+  await Hive.openBox('Address');
+  await Hive.openBox('Cart');
   StorageService().storage;
   runApp(const MyApp());
 }
@@ -75,7 +79,6 @@ class MyApp extends StatelessWidget {
               ),
           '/history': (context) => const HistoryPage(),
           '/cart': (context) => const ShoppingCartPage(),
-          '/success': (context) => LoadingToFlipCheck(),
           '/onboard': (context) => OnboardingScreen(),
           '/rimcian': (context) => Rincian(),
           '/profile': (context) => const MyProfile(),
@@ -88,6 +91,7 @@ class MyApp extends StatelessWidget {
                   print('Alamat disimpan: $addresses');
                 },
               ),
+          '/profile-camera': (context) => CameraScreen(),
         },
       ),
     );

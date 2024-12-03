@@ -85,9 +85,20 @@ class _HistoryPageState extends State<HistoryPage>
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : HistoryList(
-                  orders: _orders,
-                ),
+              : _orders.isEmpty
+                  ? Center(
+                      child: Text(
+                        "No items in process",
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )
+                  : HistoryList(
+                      orders: _orders,
+                    ),
           _orders.isEmpty
               ? Center(
                   child: Text(

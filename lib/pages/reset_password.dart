@@ -72,10 +72,10 @@ class MyResetPassword extends StatelessWidget {
                           style: TextStyle(fontSize: 14),
                         ),
                         SizedBox(height: 7),
-                        FormFieldNoIconCustom(
-                          label: 'Password', 
-                          value: 'Password', 
-                        ),
+                        // FormFieldNoIconCustom(
+                        //   label: 'Password', 
+                        //   value: 'Password', 
+                        // ),
                       ],
                     ),
                   ),
@@ -93,10 +93,10 @@ class MyResetPassword extends StatelessWidget {
                           style: TextStyle(fontSize: 14),
                         ),
                         SizedBox(height: 7),
-                        FormFieldNoIconCustom(
-                          label: 'Confirmation Password', 
-                          value: 'Confirmation Password',
-                        ),
+                        // FormFieldNoIconCustom(
+                        //   label: 'Confirmation Password', 
+                        //   value: 'Confirmation Password',
+                        // ),
                       ],
                     ),
                   ),
