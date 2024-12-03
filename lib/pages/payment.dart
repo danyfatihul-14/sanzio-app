@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/api/address_api.dart';
 import 'package:raffaelosanzio/api/profile_api.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
 import 'package:raffaelosanzio/models/cart.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/models/order.dart';
@@ -32,6 +35,14 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
     super.initState();
     totalItem = widget.selectedCart.fold(0, (sum, cart) => sum + cart.quantity);
     _fetchAddress();
+  }
+
+  void _clearSelectedCartItems() {
+    for (var cart in widget.selectedCart) {
+      context
+          .read<CartBloc>()
+          .add(RemoveFromCart(detailProductId: cart.detailProductId));
+    }
   }
 
   @override
@@ -405,6 +416,7 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
             fontSize: 16.0,
           );
         } else {
+          _clearSelectedCartItems();
           List<OrderDetailForm> orderDetails = widget.selectedCart
               .map((cart) => OrderDetailForm(
                     detailId: cart.detailProductId,

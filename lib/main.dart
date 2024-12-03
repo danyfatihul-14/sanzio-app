@@ -16,10 +16,10 @@ import 'package:raffaelosanzio/pages/login.dart';
 import 'package:raffaelosanzio/pages/mychart.dart';
 import 'package:raffaelosanzio/pages/onboarding.dart';
 import 'package:raffaelosanzio/pages/profile.dart';
+import 'package:raffaelosanzio/pages/profile_camera.dart';
 import 'package:raffaelosanzio/pages/register.dart';
 import 'package:raffaelosanzio/pages/rincian_pesanan.dart';
 import 'package:raffaelosanzio/pages/splash_screen.dart';
-import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
@@ -91,6 +91,7 @@ class MyApp extends StatelessWidget {
                   print('Alamat disimpan: $addresses');
                 },
               ),
+          '/profile-camera': (context) => CameraScreen(),
         },
       ),
     );

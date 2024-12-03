@@ -22,6 +22,7 @@ class ProductApiHandler {
           2, DateTime.now().add(Duration(minutes: 2)).millisecondsSinceEpoch);
       print("Fethcing success");
     } else {
+      print("Gagal");
       throw Exception('Failed to load products');
     }
   }

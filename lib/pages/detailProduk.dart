@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
 import 'package:raffaelosanzio/models/cart.dart';
+import 'package:raffaelosanzio/pages/payment.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -447,7 +448,181 @@ class _DetailProductPageState extends State<DetailProductPage> {
             const SizedBox(width: 16),
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                    backgroundColor: whiteMain,
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16)),
+                    ),
+                    builder: (context) {
+                      int quantity = 1; // Inisialisasi jumlah awal
+                      return StatefulBuilder(
+                        builder: (context, setModalState) {
+                          return Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Select Size",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: product['product_details']
+                                      .map<Widget>((detail) {
+                                    String size = detail['size'];
+                                    int stock = detail['stock'];
+                                    bool isOutOfStock = stock == 0;
+
+                                    return ChoiceChip(
+                                      backgroundColor: whiteMain,
+                                      label: Text(size),
+                                      checkmarkColor: whiteMain,
+                                      selectedColor: blue500,
+                                      labelStyle: selectedSize == size
+                                          ? TextStyle(color: whiteMain)
+                                          : TextStyle(color: gray800),
+                                      selected: selectedSize == size,
+                                      onSelected: isOutOfStock
+                                          ? null
+                                          : (bool selected) {
+                                              if (selected) {
+                                                setModalState(() {
+                                                  selectedSize = size;
+                                                });
+                                              }
+                                            },
+                                    );
+                                  }).toList(),
+                                ),
+                                const SizedBox(height: 16),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Stock: ${product['product_details'].firstWhere((detail) => detail['size'] == selectedSize, orElse: () => {
+                                            'stock': 0
+                                          })['stock']}",
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.remove),
+                                          onPressed: quantity > 1
+                                              ? () {
+                                                  setModalState(() {
+                                                    quantity--;
+                                                  });
+                                                }
+                                              : null,
+                                        ),
+                                        Text(
+                                          quantity.toString(),
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.add),
+                                          onPressed: quantity <
+                                                  product['product_details']
+                                                      .firstWhere(
+                                                          (detail) =>
+                                                              detail['size'] ==
+                                                              selectedSize,
+                                                          orElse: () => {
+                                                                'stock': 0
+                                                              })['stock']
+                                              ? () {
+                                                  setModalState(() {
+                                                    quantity++;
+                                                  });
+                                                }
+                                              : null,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Ambil detail produk berdasarkan ukuran yang dipilih
+                                      final selectedDetail =
+                                          product['product_details'].firstWhere(
+                                        (detail) =>
+                                            detail['size'] == selectedSize,
+                                        orElse: () => throw Exception(
+                                            "Detail produk tidak ditemukan"),
+                                      );
+                                      // Buat array Cart
+                                      final cartArray = Cart(
+                                          detailProductId: selectedDetail['id'],
+                                          title: title,
+                                          price: price,
+                                          size: selectedSize,
+                                          imageUrl: imageUrl,
+                                          quantity: quantity,
+                                          stock: selectedDetail['stock']);
+                                      // Tambahkan ke keranjang menggunakan event Bloc
+
+                                      // Tampilkan notifikasi kepada pengguna
+                                      Fluttertoast.showToast(
+                                        msg: "${title} Berhasil Ditambahkan",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.TOP,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.green,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0,
+                                      );
+
+                                      // Tutup Bottom Sheet setelah menambahkan ke keranjang
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PaymentPage(
+                                              selectedCart: [cartArray]),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0, horizontal: 8.0),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        backgroundColor: blue600),
+                                    child: Text(
+                                      "BUY NOW",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: whiteMain),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4F72BD),
                   padding: const EdgeInsets.symmetric(vertical: 16),

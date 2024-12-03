@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/auth/auth_handler.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_hiveHandler.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/button.dart';
@@ -59,7 +63,7 @@ class _MyProfileState extends State<MyProfile> {
 
   void _logout() async {
     bool isLogout = await AuthHandler().logout();
-    
+
     if (isLogout) {
       Fluttertoast.showToast(
         msg: "Logout Berhasil",
@@ -70,6 +74,12 @@ class _MyProfileState extends State<MyProfile> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+      final cartItem = await CartHivehandler().getCart();
+      for (var cart in cartItem) {
+        context
+            .read<CartBloc>()
+            .add(RemoveFromCart(detailProductId: cart.detailProductId));
+      }
       Navigator.pushReplacementNamed(context, '/login');
     } else {
       Fluttertoast.showToast(
@@ -139,9 +149,13 @@ class _MyProfileState extends State<MyProfile> {
                           ),
                           width: 112,
                           height: 112,
-                          child: const Image(
-                            image: AssetImage("assets/Ellipse 192.png"),
-                            fit: BoxFit.fill,
+                          child: ClipOval(
+                            child: Image(
+                              image: _user!.image == null
+                                  ? const AssetImage("assets/Ellipse 192.png")
+                                  : NetworkImage(_user!.image!),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
                       ),

@@ -295,6 +295,11 @@ class ProductRequest {
   }
 }
 
+enum Gender {
+  M,
+  W,
+}
+
 @HiveType(typeId: 6)
 class User {
   @HiveField(0)
@@ -307,6 +312,8 @@ class User {
   final String? fullname;
   @HiveField(4)
   final String? image;
+  @HiveField(5)
+  Gender? gender;
 
   User({
     this.username,
@@ -314,6 +321,7 @@ class User {
     this.phone,
     this.fullname,
     this.image,
+    this.gender,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -323,6 +331,7 @@ class User {
       image: json['image'] != null ? json['image'] : null,
       phone: json['telp'] != null ? json['telp'] : null,
       email: json['email'],
+      gender: User.jsonToGender(json['gender']),
     );
   }
 
@@ -333,7 +342,41 @@ class User {
       'email': email,
       'phone': phone,
       'image': image,
+      'gender': gender
     };
+  }
+
+  static Gender? jsonToGender(String? genderString) {
+    switch (genderString) {
+      case 'M':
+        return Gender.M;
+      case 'W':
+        return Gender.W;
+      default:
+        return null;
+    }
+  }
+
+  static Gender? stringToGender(String? genderString) {
+    switch (genderString) {
+      case 'Man':
+        return Gender.M;
+      case 'Woman':
+        return Gender.W;
+      default:
+        return null;
+    }
+  }
+
+  static String? genderToString(Gender? gender) {
+    switch (gender) {
+      case Gender.M:
+        return 'Man';
+      case Gender.W:
+        return 'Woman';
+      default:
+        return null;
+    }
   }
 }
 

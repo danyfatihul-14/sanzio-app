@@ -5,6 +5,11 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:raffaelosanzio/api/product_api.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
+import 'package:raffaelosanzio/blocs/cart/cart_hiveHandler.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 
 class AuthHandler {
   final String baseUrl = dotenv.env['API_BASEURL']!;
@@ -93,9 +98,11 @@ class AuthHandler {
       await storage.delete(key: 'refresh_token');
       var userBox = await Hive.box('User');
       var historyBox = await Hive.box('History');
+      var cartBox = await Hive.box('Cart');
       // Clear data from Hive boxes
       await userBox.clear();
       await historyBox.clear();
+      await cartBox.clear();
       print('Logout successful');
       return true;
     } else {
