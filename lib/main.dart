@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
@@ -19,13 +20,20 @@ import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
+import 'package:raffaelosanzio/widget/takepicture_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+
+  runApp(MyApp(camera: firstCamera));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final CameraDescription camera;
+
+  const MyApp({super.key, required this.camera});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +46,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           primaryColor: whiteMain,
         ),
-        initialRoute: '/success',
+        initialRoute: '/onboard',
         debugShowCheckedModeBanner: false,
         routes: {
           '/login': (context) => const LoginPage(),
@@ -60,13 +68,14 @@ class MyApp extends StatelessWidget {
           '/profile': (context) => const MyProfile(),
           '/user-info': (context) => const MyInformasiPengguna(),
           '/change-password': (context) => const MyGantiPassword(),
-          '/kebijakan': (context) => Kebijakan(),
-          '/about': (context) => About(),
+          '/kebijakan': (context) => const Kebijakan(),
+          '/about': (context) => const About(),
           '/edit-address': (context) => EditableAddressPage(
                 onSave: (addresses) {
                   print('Alamat disimpan: $addresses');
                 },
               ),
+          '/take-picture': (context) => TakePictureScreen(camera: camera),
         },
       ),
     );
