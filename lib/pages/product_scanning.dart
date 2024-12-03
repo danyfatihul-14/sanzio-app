@@ -2,12 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/api/product_api.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/product_item.dart';
 
-class ProductScanningPage extends StatelessWidget {
+class ProductScanningPage extends StatefulWidget {
   const ProductScanningPage({super.key});
 
+  @override
+  State<ProductScanningPage> createState() => _ProductScanningPageState();
+}
+
+class _ProductScanningPageState extends State<ProductScanningPage> {
+  List<Product> _products = [];
+  bool _isLoading = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchProductsFromHive();
+  }
+  Future<void> _fetchProductsFromHive() async {
+    List<Product> products = await ProductApiHandler().getProducts();
+    setState(() {
+      _products = products;
+    });
+    _isLoading = false;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +65,7 @@ class ProductScanningPage extends StatelessWidget {
   }
 
   Widget _buildPopularProductsSection(BuildContext context) {
-    List<Map<String, dynamic>> formattedProducts = getFormattedProducts();
+    List<Map<String, dynamic>> formattedProducts = [];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

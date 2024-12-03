@@ -57,11 +57,12 @@ class About extends StatelessWidget {
                 "untuk memastikan semua data pengguna dan transaksi dikelola dengan baik.\n\n"
                 "Kami berkomitmen untuk terus menghadirkan inovasi yang mempermudah hidup Anda.",
                 style: GoogleFonts.plusJakartaSans(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: Colors.black87,
                   height: 1.5,
                 ),
+                textAlign: TextAlign.justify,
               ),
               const Spacer(),
               Center(

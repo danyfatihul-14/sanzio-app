@@ -1,12 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:raffaelosanzio/auth/auth_form_validator.dart';
+import 'package:raffaelosanzio/auth/auth_handler.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/button.dart';
 import 'package:raffaelosanzio/widget/textField.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  late TextEditingController _usernameController;
+  late TextEditingController _fullNameController;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
+    _fullNameController = TextEditingController();
+    _emailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _fullNameController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  void _registration() async {
+    String username = _usernameController.text;
+    String fullName = _fullNameController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    String? isValid = AuthFormValidator()
+        .registerValidator(email, password, fullName, username);
+
+    if (isValid != null) {
+      Fluttertoast.showToast(
+        msg: isValid,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    } else {
+      bool isRegistered =
+          await AuthHandler().register(username, fullName, email, password);
+      if (isRegistered) {
+        Fluttertoast.showToast(
+          msg: "Registrasi Berhasil",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        Fluttertoast.showToast(
+          msg: "Registrasi Gagal",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,31 +135,43 @@ class RegisterPage extends StatelessWidget {
                         height: 16.0,
                       ),
                       // Outer label and Gradient Border for Username
-                      const FormFieldCustom(
-                          label: 'Username',
-                          value: 'Enter your username',
-                          icons: Icon(IconsaxPlusLinear.profile_circle)),
+                      FormFieldCustom(
+                        label: 'Username',
+                        value: 'Enter your username',
+                        icons: Icon(IconsaxPlusLinear.profile_circle),
+                        controller: _usernameController,
+                        isPassword: false,
+                      ),
                       const SizedBox(height: 8.0),
 
                       // Outer label and Gradient Border for Fullname
-                      const FormFieldCustom(
-                          label: 'Full Name',
-                          value: 'Enter your Full Name',
-                          icons: Icon(IconsaxPlusLinear.user)),
+                      FormFieldCustom(
+                        label: 'Full Name',
+                        value: 'Enter your Full Name',
+                        icons: Icon(IconsaxPlusLinear.user),
+                        controller: _fullNameController,
+                        isPassword: false,
+                      ),
                       const SizedBox(height: 8.0),
 
                       // Outer label and Gradient Border for Email
-                      const FormFieldCustom(
-                          label: 'Email',
-                          value: 'Enter your Email',
-                          icons: Icon(IconsaxPlusLinear.sms)),
+                      FormFieldCustom(
+                        label: 'Email',
+                        value: 'Enter your Email',
+                        icons: Icon(IconsaxPlusLinear.sms),
+                        controller: _emailController,
+                        isPassword: false,
+                      ),
                       const SizedBox(height: 8.0),
 
                       // Outer label and Gradient Border for Password
-                      const FormFieldCustom(
-                          label: 'Password',
-                          value: 'Enter your password',
-                          icons: Icon(IconsaxPlusLinear.lock_1)),
+                      FormFieldCustom(
+                        label: 'Password',
+                        value: 'Enter your password',
+                        icons: Icon(IconsaxPlusLinear.lock_1),
+                        controller: _passwordController,
+                        isPassword: true,
+                      ),
                       const SizedBox(height: 24.0),
                     ],
                   ),
@@ -89,16 +180,12 @@ class RegisterPage extends StatelessWidget {
             ),
 
             // Sign In Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  CustomButton(
-                    title: 'Create Account',
-                    color: blue600,
-                    pushTo: '/login',
-                  ),
-                  const SizedBox(height: 16.0),
+            CustomButton(
+              title: 'Create Account',
+              color: blue600,
+              pushTo: _registration,
+            ),
+            const SizedBox(height: 16.0),
 
                   // Divider with "Or"
                   Container(
@@ -126,14 +213,13 @@ class RegisterPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16.0),
 
-                  // Create Account Button
-                  CustomOutlineButton(
-                    title: 'Sign In',
-                    color: purple600,
-                    pushTo: '/login',
-                  ),
-                ],
-              ),
+            // Create Account Button
+            CustomOutlineButton(
+              title: 'Sign In',
+              color: purple600,
+              pushTo: () {
+                Navigator.pushReplacementNamed(context, '/login');
+              },
             ),
           ],
         ),
