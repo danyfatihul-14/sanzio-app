@@ -38,6 +38,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       backgroundColor: gray50,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: gray50,
         actions: [
           Container(

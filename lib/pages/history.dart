@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:raffaelosanzio/help/data.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:raffaelosanzio/api/history_api.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/history_list.dart';
 import 'package:raffaelosanzio/widget/on_process_list.dart';
@@ -16,17 +18,30 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  List<Order> _orders = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _fetchHistoryFromHive();
+  }
+
+  Future<void> _fetchHistoryFromHive() async {
+    await HistoryApiHandler().fetchHistory();
+    _isLoading = false;
+    var box = Hive.box('History');
+    List<Order> orders = box.get(1)?.cast<Order>() ?? [];
+    setState(() {
+      _orders = orders;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteMain,
+      backgroundColor: gray50,
       appBar: AppBar(
         backgroundColor: whiteMain,
         automaticallyImplyLeading: false,
@@ -54,17 +69,37 @@ class _HistoryPageState extends State<HistoryPage>
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 16, fontWeight: FontWeight.w600))),
             Tab(
-                child: Text('On Process',
-                    style: GoogleFonts.plusJakartaSans(
-                        fontSize: 16, fontWeight: FontWeight.w600))),
+              child: Text(
+                'On Process',
+                style: GoogleFonts.plusJakartaSans(
+                    fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+            ),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          const HistoryList(status: "Success"),
-          onProcessItems.isEmpty
+          _isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : _orders.isEmpty
+                  ? Center(
+                      child: Text(
+                        "No items in process",
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )
+                  : HistoryList(
+                      orders: _orders,
+                    ),
+          _orders.isEmpty
               ? Center(
                   child: Text(
                     "No items in process",
@@ -75,7 +110,9 @@ class _HistoryPageState extends State<HistoryPage>
                     ),
                   ),
                 )
-              : OnProcessList(items: onProcessItems),
+              : OnProcessList(
+                  orders: _orders,
+                ),
         ],
       ),
     );

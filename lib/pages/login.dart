@@ -1,13 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:raffaelosanzio/auth/auth_form_validator.dart';
+import 'package:raffaelosanzio/auth/auth_handler.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/button.dart';
 import 'package:raffaelosanzio/widget/textField.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late TextEditingController _usernameController;
+  late TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _login() async {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+
+    String? isValid = AuthFormValidator().loginValidator(username, password);
+
+    if (isValid != null) {
+      Fluttertoast.showToast(
+        msg: isValid,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    } else {
+      bool isLogin = await AuthHandler().login(username, password);
+      if (isLogin) {
+        Fluttertoast.showToast(
+          msg: "Login Berhasil",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        Navigator.pushReplacementNamed(context, '/main-home');
+      } else {
+        Fluttertoast.showToast(
+          msg: "Login Gagal",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+    }
+
+    // Navigasi ke halaman utama
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,30 +138,32 @@ class LoginPage extends StatelessWidget {
             ),
 
             // Outer label and Gradient Border for Username
-            const FormFieldCustom(
-                label: 'Username',
-                value: 'Enter your username',
-                icons: Icon(IconsaxPlusLinear.profile_circle)),
+            FormFieldCustom(
+              label: 'Username',
+              value: 'Enter your username',
+              icons: Icon(IconsaxPlusLinear.profile_circle),
+              controller: _usernameController,
+              isPassword: false,
+            ),
             const SizedBox(height: 8.0),
 
             // Outer label and Gradient Border for Password
-            const FormFieldCustom(
-                label: 'Password',
-                value: 'Enter your password',
-                icons: Icon(IconsaxPlusLinear.lock_1)),
+            FormFieldCustom(
+              label: 'Password',
+              value: 'Enter your password',
+              icons: Icon(IconsaxPlusLinear.lock_1),
+              controller: _passwordController,
+              isPassword: true,
+            ),
             const SizedBox(height: 24.0),
 
             // Sign In Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  CustomButton(
-                    title: 'Login',
-                    color: blue600,
-                    pushTo: '/main-home',
-                  ),
-                  const SizedBox(height: 16.0),
+            CustomButton(
+              title: 'Login',
+              color: blue600,
+              pushTo: _login,
+            ),
+            const SizedBox(height: 16.0),
 
                   // Divider with "Or"
                   Container(
@@ -118,14 +191,13 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16.0),
 
-                  // Create Account Button
-                  CustomOutlineButton(
-                    title: 'Create Account',
-                    color: purple600,
-                    pushTo: '/register',
-                  ),
-                ],
-              ),
+            // Create Account Button
+            CustomOutlineButton(
+              title: 'Create Account',
+              color: purple600,
+              pushTo: () {
+                Navigator.pushReplacementNamed(context, '/register');
+              },
             ),
           ],
         ),

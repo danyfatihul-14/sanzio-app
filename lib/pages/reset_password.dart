@@ -72,10 +72,10 @@ class MyResetPassword extends StatelessWidget {
                           style: TextStyle(fontSize: 14),
                         ),
                         SizedBox(height: 7),
-                        FormFieldNoIconCustom(
-                          label: 'Password', 
-                          value: 'Password', 
-                        ),
+                        // FormFieldNoIconCustom(
+                        //   label: 'Password', 
+                        //   value: 'Password', 
+                        // ),
                       ],
                     ),
                   ),
@@ -93,10 +93,10 @@ class MyResetPassword extends StatelessWidget {
                           style: TextStyle(fontSize: 14),
                         ),
                         SizedBox(height: 7),
-                        FormFieldNoIconCustom(
-                          label: 'Confirmation Password', 
-                          value: 'Confirmation Password',
-                        ),
+                        // FormFieldNoIconCustom(
+                        //   label: 'Confirmation Password', 
+                        //   value: 'Confirmation Password',
+                        // ),
                       ],
                     ),
                   ),
@@ -106,7 +106,7 @@ class MyResetPassword extends StatelessWidget {
                 CustomOutlineButton(
                   title: "Create New Password", 
                   color: Color.fromRGBO(79, 114, 189, 1), 
-                  pushTo: '/',
+                  pushTo: (){},
                 ),
               ],
             ),
