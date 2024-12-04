@@ -1,9 +1,11 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/home.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/pages/profile.dart';
+import 'package:raffaelosanzio/widget/takepicture_screen.dart';
 
 class ScanButton extends StatelessWidget {
   const ScanButton({super.key});
@@ -13,7 +15,12 @@ class ScanButton extends StatelessWidget {
     return FloatingActionButton(
       elevation: 5, // Menambah bayangan FAB
       backgroundColor: Colors.transparent,
-      onPressed: () {}, // Tambahkan logika onPressed jika diperlukan
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const TakePictureScreen(camera: CameraDescription(name: '0', lensDirection: CameraLensDirection.back, sensorOrientation: 0))),
+        );
+      },
       child: Container(
         width: 50,
         height: 50,
