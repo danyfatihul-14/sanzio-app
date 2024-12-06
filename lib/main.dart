@@ -31,7 +31,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
   final firstCamera = cameras.first;
-
+  print("Camera Loaded");
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Hive.initFlutter();
@@ -44,7 +44,8 @@ Future<void> main() async {
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(AddressAdapter());
   Hive.registerAdapter(CartHiveAdapter());
-  await Hive.openBox('Product');
+  Hive.registerAdapter(SkinTypeAdapter());
+  await Hive.openBox('Products');
   await Hive.openBox('History');
   await Hive.openBox('User');
   await Hive.openBox('Address');
