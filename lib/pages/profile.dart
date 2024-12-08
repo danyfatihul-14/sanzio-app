@@ -61,7 +61,13 @@ class _MyProfileState extends State<MyProfile> {
     });
   }
 
-  void _logout() async {
+  Future<void> _logout() async {
+    final cartItem = await CartHivehandler().getCart();
+    for (var cart in cartItem) {
+      context
+          .read<CartBloc>()
+          .add(RemoveFromCart(detailProductId: cart.detailProductId));
+    }
     bool isLogout = await AuthHandler().logout();
 
     if (isLogout) {
@@ -74,12 +80,6 @@ class _MyProfileState extends State<MyProfile> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-      final cartItem = await CartHivehandler().getCart();
-      for (var cart in cartItem) {
-        context
-            .read<CartBloc>()
-            .add(RemoveFromCart(detailProductId: cart.detailProductId));
-      }
       Navigator.pushReplacementNamed(context, '/login');
     } else {
       Fluttertoast.showToast(

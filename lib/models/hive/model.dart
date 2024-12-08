@@ -26,6 +26,8 @@ class Product {
   final bool isAvailable;
   @HiveField(10)
   final List<DetailProduct> productDetails;
+  @HiveField(11)
+  final List<SkinType> skin_type;
 
   Product({
     required this.id,
@@ -39,12 +41,16 @@ class Product {
     required this.rating,
     required this.isAvailable,
     required this.productDetails,
+    required this.skin_type,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     var details = json['product_details'] as List;
     List<DetailProduct> detailList =
         details.map((i) => DetailProduct.fromJson(i)).toList();
+    var skinType = json['skin_type'] as List;
+    List<SkinType> skinList =
+        skinType.map((i) => SkinType.fromJson(i)).toList();
 
     return Product(
       id: json['id'] ?? 0,
@@ -58,6 +64,7 @@ class Product {
       rating: json['rating'],
       isAvailable: json['is_available'],
       productDetails: detailList,
+      skin_type: skinList,
     );
   }
 
@@ -75,6 +82,7 @@ class Product {
       'is_available': isAvailable,
       'product_details':
           productDetails.map((detail) => detail.toJson()).toList(),
+      'skin_type': skin_type.map((skin) => skin.toJson()).toList(),
     };
   }
 }
@@ -443,4 +451,49 @@ class CartHive extends HiveObject {
       this.status = 'In Cart',
       this.isSelected = false,
       this.stock = 1});
+}
+
+@HiveType(typeId: 9)
+class SkinType extends HiveObject {
+  @HiveField(0)
+  final int skin_type;
+
+  SkinType({required this.skin_type});
+
+  factory SkinType.fromJson(Map<String, dynamic> json) {
+    return SkinType(skin_type: json['skin_type'] ?? 0);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'skin_type': skin_type,
+    };
+  }
+
+  static String numToHexcode(int num) {
+    switch (num) {
+      case 0:
+        return "f6ede4";
+      case 1:
+        return "f3e7db";
+      case 2:
+        return "f7ead0";
+      case 3:
+        return "eadaba";
+      case 4:
+        return "d7bd96";
+      case 5:
+        return "a07d56";
+      case 6:
+        return "825c43";
+      case 7:
+        return "604134";
+      case 8:
+        return "3a312a";
+      case 9:
+        return "292420";
+      default:
+        return "Unknown";
+    }
+  }
 }

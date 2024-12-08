@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -24,8 +25,13 @@ import 'package:raffaelosanzio/pages/view_Kategori.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/bottom_navbar.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:raffaelosanzio/widget/takepicture_screen.dart';
 
-void main() async {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+  print("Camera Loaded");
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Hive.initFlutter();
@@ -38,17 +44,20 @@ void main() async {
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(AddressAdapter());
   Hive.registerAdapter(CartHiveAdapter());
-  await Hive.openBox('Product');
+  Hive.registerAdapter(SkinTypeAdapter());
+  await Hive.openBox('Products');
   await Hive.openBox('History');
   await Hive.openBox('User');
   await Hive.openBox('Address');
   await Hive.openBox('Cart');
   StorageService().storage;
-  runApp(const MyApp());
+  runApp(MyApp(camera: firstCamera));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final CameraDescription camera;
+
+  const MyApp({super.key, required this.camera});
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +93,14 @@ class MyApp extends StatelessWidget {
           '/profile': (context) => const MyProfile(),
           '/user-info': (context) => const MyInformasiPengguna(),
           '/change-password': (context) => const MyGantiPassword(),
-          '/kebijakan': (context) => Kebijakan(),
-          '/about': (context) => About(),
+          '/kebijakan': (context) => const Kebijakan(),
+          '/about': (context) => const About(),
           '/edit-address': (context) => EditableAddressPage(
                 onSave: (addresses) {
                   print('Alamat disimpan: $addresses');
                 },
               ),
+          '/take-picture': (context) => TakePictureScreen(camera: camera),
           '/profile-camera': (context) => CameraScreen(),
         },
       ),

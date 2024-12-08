@@ -130,4 +130,42 @@ class UserApiHandler {
       return false;
     }
   }
+
+  Future<bool> scanFace(File file) async {
+    if (file.lengthSync() == 0) {
+      print("File is empty!");
+      return false;
+    }
+
+    await AuthHandler().validateToken();
+    final storage = StorageService().storage;
+    final accessToken = await storage.read(key: 'access_token');
+
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/api/predict'),
+    );
+
+    request.headers['Authorization'] = 'Bearer $accessToken';
+    request.headers['Content-Type'] = 'multipart/form-data';
+
+    request.files.add(await http.MultipartFile.fromPath(
+      'file',
+      file.path,
+      contentType:
+          MediaType('image', 'jpeg'), // Adjust the content type as needed
+    ));
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      dynamic data = json.decode(response.toString());
+      print(data);
+      print("Foto Berhasil di Scan");
+      return true;
+    } else {
+      print("Tidak ada wajah yang terdeteksi.");
+      return false;
+    }
+  }
 }

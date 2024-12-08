@@ -28,13 +28,14 @@ class ProductAdapter extends TypeAdapter<Product> {
       rating: fields[8] as double,
       isAvailable: fields[9] as bool,
       productDetails: (fields[10] as List).cast<DetailProduct>(),
+      skin_type: (fields[11] as List).cast<SkinType>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Product obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -56,7 +57,9 @@ class ProductAdapter extends TypeAdapter<Product> {
       ..writeByte(9)
       ..write(obj.isAvailable)
       ..writeByte(10)
-      ..write(obj.productDetails);
+      ..write(obj.productDetails)
+      ..writeByte(11)
+      ..write(obj.skin_type);
   }
 
   @override
@@ -316,13 +319,14 @@ class UserAdapter extends TypeAdapter<User> {
       phone: fields[2] as String?,
       fullname: fields[3] as String?,
       image: fields[4] as String?,
+      gender: fields[5] as Gender?,
     );
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.username)
       ..writeByte(1)
@@ -332,7 +336,9 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(3)
       ..write(obj.fullname)
       ..writeByte(4)
-      ..write(obj.image);
+      ..write(obj.image)
+      ..writeByte(5)
+      ..write(obj.gender);
   }
 
   @override
@@ -440,6 +446,40 @@ class CartHiveAdapter extends TypeAdapter<CartHive> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is CartHiveAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class SkinTypeAdapter extends TypeAdapter<SkinType> {
+  @override
+  final int typeId = 9;
+
+  @override
+  SkinType read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return SkinType(
+      skin_type: fields[0] as int,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, SkinType obj) {
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.skin_type);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SkinTypeAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

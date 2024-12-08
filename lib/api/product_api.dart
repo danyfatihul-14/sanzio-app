@@ -15,8 +15,8 @@ class ProductApiHandler {
       List<dynamic> data = json.decode(response.body);
       List<Product> products =
           data.map((item) => Product.fromJson(item)).toList();
-
-      var box = Hive.box('Product');
+      print(products);
+      var box = Hive.box('Products');
       box.put(1, products);
       box.put(
           2, DateTime.now().add(Duration(minutes: 2)).millisecondsSinceEpoch);
@@ -28,7 +28,7 @@ class ProductApiHandler {
   }
 
   Future<List<Product>> getProducts() async {
-    var box = Hive.box('Product');
+    var box = Hive.box('Products');
     int? expiryTime = box.get(2);
 
     if (expiryTime != null &&
