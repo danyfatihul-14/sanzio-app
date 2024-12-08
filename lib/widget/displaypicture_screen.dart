@@ -1,11 +1,14 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/pages/product_scanning.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
-  final String imagePath;
+  final File imagePath;
 
   const DisplayPictureScreen({super.key, required this.imagePath});
 
@@ -25,17 +28,54 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
     });
   }
 
-  Future<void> _simulateLoading() async {
-    await Future.delayed(const Duration(seconds: 3)); // Simulasi proses loading
-    setState(() {
-      if (mounted) {
-        _isLoading = false;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const ProductScanningPage()),
+  Future<bool> scanFaces(File file) async {
+    try {
+      final response = await UserApiHandler().scanFace(file);
+      if (response) {
+        Fluttertoast.showToast(
+          msg: "Face Scanned Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: whiteMain,
+          fontSize: 16.0,
         );
+        return true;
+      } else {
+        Fluttertoast.showToast(
+          msg: "Face Not Detected",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: whiteMain,
+          fontSize: 16.0,
+        );
+        return false;
       }
-    });
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<void> _simulateLoading() async {
+    final isScanned = await scanFaces(widget.imagePath);
+    if (isScanned) {
+      setState(() {
+        if (mounted) {
+          _isLoading = false;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const ProductScanningPage()),
+          );
+        }
+      });
+    } else {
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -55,7 +95,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
       body: Stack(
         children: [
           Image.file(
-            File(widget.imagePath),
+            File(widget.imagePath.path),
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
