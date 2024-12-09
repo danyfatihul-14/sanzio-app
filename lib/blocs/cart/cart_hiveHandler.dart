@@ -24,11 +24,11 @@ class CartHivehandler {
 
   List<Cart> getCart() {
     var box = Hive.box('Cart');
-    List<CartHive> _carts = box.get(1).cast<CartHive>();
-    if (_carts.isEmpty) {
+    if (box.isEmpty) {
       print("Kosong");
       return [];
     }
+    List<CartHive> _carts = box.get(1);
     print("Isi");
     List<Cart> carts = [];
     for (var item in _carts) {
