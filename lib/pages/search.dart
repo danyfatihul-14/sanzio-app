@@ -21,6 +21,7 @@ class _SearchPageState extends State<SearchPage> {
   bool _isLoading = true;
   List<Product> _products = [];
   List<Product> searchResults = [];
+  TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _SearchPageState extends State<SearchPage> {
     _fetchProductsFromHive();
     _fetchProductsFromHive().then((_) {
       _getSearchResults(widget.query);
+      _searchController.text = widget.query;
     });
   }
 
@@ -97,9 +99,10 @@ class _SearchPageState extends State<SearchPage> {
           ),
           Expanded(
             child: TextField(
+              controller: _searchController,
               textAlign: TextAlign.start,
-              decoration: InputDecoration(
-                hintText: widget.query.isNotEmpty ? widget.query : 'Search',
+              decoration: const InputDecoration(
+                hintText: 'Search',
                 filled: true,
                 fillColor: Colors.transparent,
                 border: InputBorder.none,

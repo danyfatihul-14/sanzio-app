@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _fetchProductsFromHive() async {
     await ProductApiHandler().fetchAndStoreProducts();
     _isLoading = false;
-    var box = Hive.box('Product');
+    var box = Hive.box('Products');
     List<Product> products = box.get(1)?.cast<Product>() ?? [];
     setState(() {
       _products = products;
