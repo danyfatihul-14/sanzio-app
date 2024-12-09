@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
 import 'package:raffaelosanzio/models/cart.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/payment.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -67,16 +68,21 @@ class _DetailProductPageState extends State<DetailProductPage> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 320.0),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(backgroundColor: Colors.grey, radius: 6),
-                      SizedBox(width: 8),
-                      CircleAvatar(backgroundColor: Colors.brown, radius: 6),
-                      SizedBox(width: 8),
-                      CircleAvatar(backgroundColor: Colors.blueGrey, radius: 6),
-                    ],
+                  margin: const EdgeInsets.only(top: 320.0, right: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: product['skin_type'].map<Widget>((details) {
+                      String color =
+                          SkinType.numToHexcode(details['skin_type']);
+                      int hexColor = int.parse('FF$color', radix: 16);
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        child: CircleAvatar(
+                          radius: 8,
+                          backgroundColor: Color(hexColor),
+                        ),
+                      );
+                    }).toList(), // Convert the iterable into a List<Widget>
                   ),
                 ),
                 Positioned(

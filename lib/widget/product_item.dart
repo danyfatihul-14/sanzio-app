@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/detailProduk.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 
@@ -60,14 +61,18 @@ class ProductItem extends StatelessWidget {
                         MediaQuery.of(context).size.width * 0.04, // Dinamis
                     fontWeight: FontWeight.w600),
               ),
-              const Row(
-                children: [
-                  CircleAvatar(radius: 10, backgroundColor: Colors.grey),
-                  SizedBox(width: 4),
-                  CircleAvatar(radius: 10, backgroundColor: Colors.brown),
-                  SizedBox(width: 4),
-                  CircleAvatar(radius: 10, backgroundColor: Colors.black),
-                ],
+              Row(
+                children: product['skin_type'].map<Widget>((details) {
+                  String color = SkinType.numToHexcode(details['skin_type']);
+                  int hexColor = int.parse('FF$color', radix: 16);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                    child: CircleAvatar(
+                      radius: 10,
+                      backgroundColor: Color(hexColor),
+                    ),
+                  );
+                }).toList(), // Convert the iterable into a List<Widget>
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
