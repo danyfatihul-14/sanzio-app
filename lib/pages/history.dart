@@ -99,20 +99,24 @@ class _HistoryPageState extends State<HistoryPage>
                   : HistoryList(
                       orders: _orders,
                     ),
-          _orders.isEmpty
-              ? Center(
-                  child: Text(
-                    "No items in process",
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey,
-                    ),
-                  ),
+          _isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
                 )
-              : OnProcessList(
-                  orders: _orders,
-                ),
+              : _orders.isEmpty
+                  ? Center(
+                      child: Text(
+                        "No items in process",
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )
+                  : OnProcessList(
+                      orders: _orders,
+                    ),
         ],
       ),
     );

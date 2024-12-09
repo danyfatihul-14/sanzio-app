@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/displaypicture_screen.dart';
 
@@ -21,7 +25,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeControllerFuture = _initializeCamera();
+    _initializeControllerFuture = _initializeCamera().then((_) {
+      _showModalGuide();
+    });
   }
 
   Future<void> _initializeCamera() async {
@@ -48,6 +54,35 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     // Dispose of the controller when the widget is disposed.
     _controller.dispose();
     super.dispose();
+  }
+
+  void _showModalGuide() {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 400,
+          color: whiteMain,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  'Contoh Penggunaan yang Benar',
+                  style: GoogleFonts.plusJakartaSans(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: gray600),
+                ),
+                const SizedBox(height: 24),
+                Image.asset('assets/img_scan_guide.jpeg', width: 200),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -91,19 +126,24 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           }
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           try {
             await _initializeControllerFuture;
             final image = await _controller.takePicture();
             if (!context.mounted) return;
-            await Navigator.of(context).push(
+            await Navigator.of(context)
+                .push(
               MaterialPageRoute(
                 builder: (context) => DisplayPictureScreen(
-                  imagePath: image.path,
+                  imagePath: File(image.path),
                 ),
               ),
-            );
+            )
+                .then((_) {
+              _showModalGuide();
+            });
           } catch (e) {
             print(e);
           }
