@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:raffaelosanzio/auth/auth_handler.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
+import 'package:raffaelosanzio/blocs/favorite/favorite_bloc.dart';
 import 'package:raffaelosanzio/pages/about.dart';
 import 'package:raffaelosanzio/pages/editable_address_page.dart';
+import 'package:raffaelosanzio/pages/favorite.dart';
 import 'package:raffaelosanzio/pages/ganti_password.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/history.dart';
@@ -60,8 +62,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CartBloc(),
+    return MultiBlocProvider(
+       providers: [
+        BlocProvider(create: (context) => CartBloc()),
+        BlocProvider(create: (context) => FavoriteBloc()),
+      ],
       child: MaterialApp(
         title: 'Raffaelo Sanzio',
         theme: ThemeData(
@@ -101,6 +106,7 @@ class MyApp extends StatelessWidget {
               ),
           '/take-picture': (context) => TakePictureScreen(camera: camera),
           '/profile-camera': (context) => CameraScreen(),
+          '/favorite': (context) => const FavoritePage(),
         },
       ),
     );

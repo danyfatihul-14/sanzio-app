@@ -65,7 +65,7 @@ class _SearchPageState extends State<SearchPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         child: _isLoading
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : searchResults.isEmpty
                 ? Center(child: Text('No results found for "${widget.query}"'))
                 : GridView.count(

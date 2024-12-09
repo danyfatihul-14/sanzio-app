@@ -4,7 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
+import 'package:raffaelosanzio/blocs/favorite/favorite_bloc.dart';
+import 'package:raffaelosanzio/blocs/favorite/favorite_event.dart';
+import 'package:raffaelosanzio/blocs/favorite/favorite_state.dart';
 import 'package:raffaelosanzio/models/cart.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/payment.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -67,7 +71,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 320.0),
+                  margin: const EdgeInsets.only(top: 320.0),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -107,6 +111,59 @@ class _DetailProductPageState extends State<DetailProductPage> {
                     ),
                   ),
                 ),
+                Positioned(
+                  top: 40,
+                  right: 12,
+                  width: 36,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 8,
+                          spreadRadius: -2,
+                        ),
+                      ],
+                    ),
+                    child: BlocBuilder<FavoriteBloc, FavoriteState>(
+                      builder: (context, state) {
+                        final isFavorite = state is FavoriteUpdated &&
+                            state.favoriteProducts
+                                .any((item) => item.id == product['id']);
+
+                        return IconButton(
+                          icon: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite ? Colors.blue : Colors.grey,
+                            size: 20,
+                          ),
+                          onPressed: () {
+                            // Tambahkan atau hapus dari favorit
+                            context
+                                .read<FavoriteBloc>()
+                                .add(ToggleFavoriteEvent(Product.fromJson(product)));
+
+                            // Tampilkan pesan notifikasi kepada pengguna
+                            Fluttertoast.showToast(
+                              msg: isFavorite
+                                  ? "${product['title']} dihapus dari Favorit"
+                                  : "${product['title']} berhasil ditambahkan ke Favorit",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor:
+                                  isFavorite ? Colors.red : Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
             Container(
@@ -126,8 +183,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       const Spacer(),
                       Row(
                         children: [
-                          Icon(Icons.star, color: Colors.amber, size: 20),
-                          SizedBox(width: 2),
+                          const Icon(Icons.star, color: Colors.amber, size: 20),
+                          const SizedBox(width: 2),
                           Text(
                             ratings.toString(), // Menggunakan ratings dari Map
                             style: const TextStyle(fontSize: 14),
@@ -197,7 +254,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
             const SizedBox(height: 12),
             Container(
               color: whiteMain,
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
