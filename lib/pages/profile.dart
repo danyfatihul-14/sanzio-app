@@ -252,7 +252,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         const CustomOutlineMenuProfile(
                           title: "Favorite",
-                          pushTo: "/",
+                          pushTo: "/favorite",
                         ),
                       ],
                     ),
