@@ -20,7 +20,6 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
-  int _selectedIndex = 0;
   bool _isLoading = true;
   User? _user;
 
@@ -55,18 +54,14 @@ class _MyProfileState extends State<MyProfile> {
     }
   }
 
-  void onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   Future<void> _logout() async {
     final cartItem = await CartHivehandler().getCart();
-    for (var cart in cartItem) {
-      context
-          .read<CartBloc>()
-          .add(RemoveFromCart(detailProductId: cart.detailProductId));
+    if (cartItem.isNotEmpty) {
+      for (var cart in cartItem) {
+        context
+            .read<CartBloc>()
+            .add(RemoveFromCart(detailProductId: cart.detailProductId));
+      }
     }
     bool isLogout = await AuthHandler().logout();
 
