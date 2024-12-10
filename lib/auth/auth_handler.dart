@@ -99,10 +99,12 @@ class AuthHandler {
       var userBox = await Hive.box('User');
       var historyBox = await Hive.box('History');
       var cartBox = await Hive.box('Cart');
+      if (cartBox.isNotEmpty) {
+        await cartBox.clear();
+      }
       // Clear data from Hive boxes
       await userBox.clear();
       await historyBox.clear();
-      await cartBox.clear();
       print('Logout successful');
       return true;
     } else {

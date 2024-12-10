@@ -48,6 +48,7 @@ class OnProcessList extends StatelessWidget {
   }
 
   Widget _buildListData(BuildContext context, List<Order> onProcessList) {
+    onProcessList.sort((a, b) => b.orderDate.compareTo(a.orderDate));
     return ListView.builder(
       padding: const EdgeInsets.all(14.0),
       itemCount:
