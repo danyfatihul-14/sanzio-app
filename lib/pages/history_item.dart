@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/api/address_api.dart';
+import 'package:raffaelosanzio/api/history_api.dart';
 import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
@@ -14,6 +15,7 @@ import 'package:raffaelosanzio/models/order.dart';
 import 'package:raffaelosanzio/pages/editable_address_page.dart';
 import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
+import 'package:raffaelosanzio/widget/button.dart';
 
 class HistoryItemPage extends StatefulWidget {
   final Order orderItem;
@@ -38,6 +40,40 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
     totalItem = widget.orderItem.orderDetails.length;
     amount = widget.orderItem.amount;
     _fetchAddress();
+  }
+
+  Future<void> _finishOrder(int orderId) async {
+    bool isFinished = await HistoryApiHandler().FinishOrder(orderId);
+    if (isFinished) {
+      Navigator.pop(context);
+    } else {
+      Fluttertoast.showToast(
+        msg: "Failed to finish order",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  Future<void> _cancleOrder(int orderId) async {
+    bool isFinished = await HistoryApiHandler().CancleOrder(orderId);
+    if (isFinished) {
+      Navigator.pop(context);
+    } else {
+      Fluttertoast.showToast(
+        msg: "Failed to finish order",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
   }
 
   @override
@@ -78,7 +114,15 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
                   const SizedBox(height: 16),
                   _buildSummarySection(),
                   const SizedBox(height: 16),
-                  _buildPaymentButton(context),
+                  widget.orderItem.finishAt != null
+                      ? const SizedBox()
+                      : Column(
+                          children: [
+                            _buildPaymentButton(context),
+                            const SizedBox(height: 12),
+                            _buildCancleButton(context),
+                          ],
+                        ),
                 ],
               ),
       ),
@@ -345,7 +389,9 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        _finishOrder(widget.orderItem.id);
+      },
       child: Center(
         child: Text(
           widget.orderItem.isPaid ? 'Selesai' : 'Bayar Sekarang',
@@ -354,6 +400,32 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
             fontSize: 16,
             color: Colors.white,
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCancleButton(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () {
+        _cancleOrder(widget.orderItem.id);
+      },
+      style: OutlinedButton.styleFrom(
+        minimumSize: const Size(double.infinity, 50),
+        side: BorderSide(
+          color: purple600, // Border color
+          width: 2.0, // Border width
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0), // Rounded corners
+        ),
+      ),
+      child: Text(
+        "Cancle Order",
+        style: GoogleFonts.plusJakartaSans(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: purple600, // Text color
         ),
       ),
     );

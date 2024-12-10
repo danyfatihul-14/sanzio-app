@@ -29,6 +29,7 @@ class _HistoryPageState extends State<HistoryPage>
   }
 
   Future<void> _fetchHistoryFromHive() async {
+    _orders = [];
     await HistoryApiHandler().fetchHistory();
     _isLoading = false;
     var box = Hive.box('History');
@@ -116,6 +117,7 @@ class _HistoryPageState extends State<HistoryPage>
                     )
                   : OnProcessList(
                       orders: _orders,
+                      then: _fetchHistoryFromHive,
                     ),
         ],
       ),

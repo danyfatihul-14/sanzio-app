@@ -69,4 +69,42 @@ class HistoryApiHandler {
       throw Exception('Failed to load products');
     }
   }
+
+  Future<bool> FinishOrder(int orderId) async {
+    await AuthHandler().validateToken();
+    final storage = StorageService().storage;
+    final accessToken = await storage.read(key: 'access_token');
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/orders/$orderId/compt'),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      print("Gagal");
+      return false;
+    }
+  }
+
+  Future<bool> CancleOrder(int orderId) async {
+    await AuthHandler().validateToken();
+    final storage = StorageService().storage;
+    final accessToken = await storage.read(key: 'access_token');
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/orders/$orderId/cancle'),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      print("Gagal");
+      return false;
+    }
+  }
 }
