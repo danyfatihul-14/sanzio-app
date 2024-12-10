@@ -304,9 +304,12 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSummaryRow('Total Barang', '$totalItem'),
-          _buildSummaryRow('Total Harga', 'Rp $amount'),
+          _buildSummaryRow('Total Harga',
+              'Rp${NumberFormat('#,###', 'id_ID').format(amount)}'),
           const Divider(),
-          _buildSummaryRow('Total Pembayaran', 'Rp $amount', isTotal: true)
+          _buildSummaryRow('Total Pembayaran',
+              'Rp${NumberFormat('#,###', 'id_ID').format(amount)}',
+              isTotal: true)
         ],
       ),
     );
@@ -337,7 +340,6 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
         backgroundColor: const Color.fromARGB(255, 79, 114, 189),
         padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height * 0.02,
-          horizontal: MediaQuery.of(context).size.width * 0.32,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -346,7 +348,7 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
       onPressed: () {},
       child: Center(
         child: Text(
-          'Selesai',
+          widget.orderItem.isPaid ? 'Selesai' : 'Bayar Sekarang',
           style: GoogleFonts.plusJakartaSans(
             fontWeight: FontWeight.bold,
             fontSize: 16,
