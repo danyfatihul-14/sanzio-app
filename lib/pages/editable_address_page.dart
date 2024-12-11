@@ -104,6 +104,29 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
           ),
         ),
         backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
+            decoration: const BoxDecoration(
+              color: Colors.white, // Warna latar belakang lingkaran
+              shape: BoxShape.circle, // Bentuk lingkaran
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 8,
+                  spreadRadius: -2,
+                ),
+              ],
+            ),
+            child: Icon(
+              Icons.arrow_back,
+              color: blue600,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
       ),

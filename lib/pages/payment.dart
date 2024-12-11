@@ -52,7 +52,24 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
       appBar: AppBar(
         backgroundColor: whiteMain,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Container(
+            padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
+            decoration: const BoxDecoration(
+              color: Colors.white, // Warna latar belakang lingkaran
+              shape: BoxShape.circle, // Bentuk lingkaran
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 8,
+                  spreadRadius: -2,
+                ),
+              ],
+            ),
+            child: Icon(
+              Icons.arrow_back,
+              color: blue600,
+            ),
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
