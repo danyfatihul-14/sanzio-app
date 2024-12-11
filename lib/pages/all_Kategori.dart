@@ -22,10 +22,28 @@ class AllCategoriesPage extends StatelessWidget {
       backgroundColor: gray50,
       appBar: AppBar(
         backgroundColor: whiteMain,
-        elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: gray800),
-          onPressed: () => Navigator.of(context).pop(),
+          icon: Container(
+            padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
+            decoration: const BoxDecoration(
+              color: Colors.white, // Warna latar belakang lingkaran
+              shape: BoxShape.circle, // Bentuk lingkaran
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 8,
+                  spreadRadius: -2,
+                ),
+              ],
+            ),
+            child: Icon(
+              Icons.arrow_back,
+              color: blue600,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: Text(
           'All Categories',
