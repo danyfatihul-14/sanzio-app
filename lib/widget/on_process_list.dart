@@ -7,8 +7,9 @@ import 'package:raffaelosanzio/shared/theme.dart';
 
 class OnProcessList extends StatelessWidget {
   final List<Order> orders;
+  final VoidCallback then;
 
-  const OnProcessList({super.key, required this.orders});
+  const OnProcessList({super.key, required this.orders, required this.then});
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +58,15 @@ class OnProcessList extends StatelessWidget {
         final orderItem = onProcessList[index];
         return GestureDetector(
           onTap: () {
-            Navigator.of(context).push(
+            Navigator.of(context)
+                .push(
               MaterialPageRoute(
                 builder: (context) => HistoryItemPage(orderItem: orderItem),
               ),
-            );
+            )
+                .then((_) {
+              then();
+            });
           },
           child: Card(
             color: whiteMain,
