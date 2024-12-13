@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_state.dart';
-import 'package:raffaelosanzio/models/cart.dart';
 import 'package:raffaelosanzio/pages/payment.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/cart_widget.dart';
@@ -26,7 +25,24 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       appBar: AppBar(
         backgroundColor: whiteMain,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Container(
+            padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
+            decoration: const BoxDecoration(
+              color: Colors.white, // Warna latar belakang lingkaran
+              shape: BoxShape.circle, // Bentuk lingkaran
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 8,
+                  spreadRadius: -2,
+                ),
+              ],
+            ),
+            child: Icon(
+              Icons.arrow_back,
+              color: blue600,
+            ),
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -134,7 +150,20 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                     },
                   );
                 }
-                return const Center(child: Text("Cart is Empty"));
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/icon 1.png',
+                        width: 150,
+                        height: 150,
+                      ),
+                      const SizedBox(height: 16),
+                      const Text("Cart is Empty"),
+                    ],
+                  ),
+                );
               },
             ),
           ),

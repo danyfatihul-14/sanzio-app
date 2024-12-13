@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    isLogin();
+    Future.delayed(const Duration(seconds: 3), isLogin);
   }
 
   Future<void> isLogin() async {
@@ -30,10 +30,27 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Splash Screen"),
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background Image
+          Positioned.fill(
+            child: Image.asset(
+              'assets/BG-data.png',
+              fit: BoxFit.cover, // Makes the image cover the entire screen
+            ),
+          ),
+          // Foreground Image
+          Center(
+            child: Image.asset(
+              'assets/type5.png',
+              width: 250,
+              height: 150,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:raffaelosanzio/auth/auth_handler.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/favorite/favorite_bloc.dart';
+import 'package:raffaelosanzio/pages/FYP.dart';
 import 'package:raffaelosanzio/pages/about.dart';
 import 'package:raffaelosanzio/pages/editable_address_page.dart';
 import 'package:raffaelosanzio/pages/favorite.dart';
@@ -101,6 +102,7 @@ class MyApp extends StatelessWidget {
           '/take-picture': (context) => TakePictureScreen(),
           '/profile-camera': (context) => CameraScreen(),
           '/favorite': (context) => const FavoritePage(),
+          '/fyp': (context) => FYPPage(),
         },
       ),
     );

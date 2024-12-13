@@ -22,6 +22,29 @@ class _FavoritePageState extends State<FavoritePage> {
       appBar: AppBar(
         title: const Text('Favorite Products'),
         backgroundColor: whiteMain,
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
+            decoration: const BoxDecoration(
+              color: Colors.white, // Warna latar belakang lingkaran
+              shape: BoxShape.circle, // Bentuk lingkaran
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 8,
+                  spreadRadius: -2,
+                ),
+              ],
+            ),
+            child: Icon(
+              Icons.arrow_back,
+              color: blue600,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         centerTitle: true,
       ),
       body: BlocBuilder<FavoriteBloc, FavoriteState>(
@@ -58,23 +81,15 @@ class _FavoritePageState extends State<FavoritePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 16),
-          Text(
-            "No Products",
-            style: GoogleFonts.plusJakartaSans(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: gray600,
-            ),
+          Image.asset(
+            'assets/icon 2.png',
+            width: 250,
+            height: 250,
           ),
-          const SizedBox(height: 8),
-          Text(
-            "You haven't made any favorite products yet",
-            style: GoogleFonts.plusJakartaSans(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: gray400,
-            ),
+          const SizedBox(height: 16),
+          const Text(
+            "Favorite is Empty",
+            style: TextStyle(fontSize: 16),
           ),
         ],
       ),
