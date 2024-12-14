@@ -1,8 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/api/product_api.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
+import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/product_item.dart';
+
 class FYPPage extends StatefulWidget {
   const FYPPage({super.key});
 
@@ -47,8 +50,18 @@ class _FYPPageState extends State<FYPPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: gray50,
       appBar: AppBar(
-        title: const Text("For You Page"),
+        automaticallyImplyLeading: false,
+        backgroundColor: whiteMain,
+        surfaceTintColor: whiteMain,
+        title: Text(
+          "For You Page",
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
       ),
       body: _isLoading
@@ -61,10 +74,11 @@ class _FYPPageState extends State<FYPPage> {
                   ),
                 )
               : GridView.count(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
                   crossAxisCount: 2,
-                  padding: const EdgeInsets.all(8.0),
-                  mainAxisSpacing: 8.0,
-                  crossAxisSpacing: 8.0,
                   childAspectRatio: MediaQuery.of(context).size.width /
                       (MediaQuery.of(context).size.height * 0.7),
                   children: List.generate(

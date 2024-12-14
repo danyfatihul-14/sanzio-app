@@ -49,6 +49,7 @@ Future<void> main() async {
   await Hive.openBox('User');
   await Hive.openBox('Address');
   await Hive.openBox('Cart');
+  await Hive.openBox('SkinType');
   StorageService().storage;
   runApp(const MyApp());
 }
@@ -96,8 +97,7 @@ class MyApp extends StatelessWidget {
           '/kebijakan': (context) => const Kebijakan(),
           '/about': (context) => const About(),
           '/edit-address': (context) => EditableAddressPage(
-                onSave: (addresses) {
-                },
+                onSave: (addresses) {},
               ),
           '/take-picture': (context) => TakePictureScreen(),
           '/profile-camera': (context) => CameraScreen(),

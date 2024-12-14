@@ -5,6 +5,10 @@ class AuthFormValidator {
       return "Username tidak boleh kosong";
     }
 
+    if (username.length < 8) {
+      return "Username harus memiliki minimal 8 karakter";
+    }
+
     if (fullName.isEmpty) {
       return "Nama lengkap tidak boleh kosong";
     }
@@ -33,6 +37,10 @@ class AuthFormValidator {
       return "Username tidak boleh kosong";
     }
 
+    if (username.length < 8) {
+      return "Username harus memiliki minimal 8 karakter";
+    }
+
     if (password.isEmpty) {
       return "Password tidak boleh kosong";
     }
@@ -48,6 +56,10 @@ class AuthFormValidator {
       String? gender) {
     if (username.isEmpty) {
       return "Username tidak boleh kosong";
+    }
+
+    if (username.length < 8) {
+      return "Username harus memiliki minimal 8 karakter";
     }
 
     if (fullname.isEmpty) {

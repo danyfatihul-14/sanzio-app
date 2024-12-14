@@ -22,6 +22,7 @@ class MyProfile extends StatefulWidget {
 class _MyProfileState extends State<MyProfile> {
   bool _isLoading = true;
   User? _user;
+  int? _skinType;
 
   @override
   void initState() {
@@ -33,8 +34,10 @@ class _MyProfileState extends State<MyProfile> {
     try {
       await UserApiHandler().fetchUser();
       var box = Hive.box('User');
+      var skinTypeBox = Hive.box('SkinType');
       User user = box.get(1);
       setState(() {
+        _skinType = skinTypeBox.get(1);
         _user = user;
         _isLoading = false;
       });
@@ -92,13 +95,22 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
+        ? Scaffold(
+            backgroundColor: gray50,
+            body: const Center(
+              child: CircularProgressIndicator(),
+            ),
           )
         : _buildProfilePage(context);
   }
 
   Widget _buildProfilePage(BuildContext context) {
+    String color;
+    int? hexColor;
+    if (_skinType != null) {
+      color = SkinType.numToHexcode(_skinType!);
+      hexColor = int.parse('FF$color', radix: 16);
+    }
     return Scaffold(
       backgroundColor: gray60,
       body: SingleChildScrollView(
@@ -184,27 +196,38 @@ class _MyProfileState extends State<MyProfile> {
                         const SizedBox(
                           height: 16,
                         ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 14,
-                              height: 14,
-                              decoration: BoxDecoration(
-                                color: const Color.fromRGBO(135, 86, 40, 100),
-                                borderRadius: BorderRadius.circular(12),
+                        _skinType == null
+                            ? Row(
+                                children: [
+                                  Text(
+                                    "Belum ada tipe kulit",
+                                    style: GoogleFonts.plusJakartaSans(
+                                      color: gray400,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  Container(
+                                    width: 14,
+                                    height: 14,
+                                    decoration: BoxDecoration(
+                                      color: Color(hexColor!),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Type ${_skinType! + 1}",
+                                    style: TextStyle(
+                                      color: gray400,
+                                    ),
+                                  )
+                                ],
                               ),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Type 10",
-                              style: TextStyle(
-                                color: gray400,
-                              ),
-                            )
-                          ],
-                        )
                       ],
                     ),
                   )
