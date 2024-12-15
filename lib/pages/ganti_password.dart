@@ -92,14 +92,28 @@ class _MyGantiPasswordState extends State<MyGantiPassword> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Container(
-              width: 20,
-              height: 20,
-              child: Icon(
-                IconsaxPlusBold.arrow_circle_left,
-                color: blue400,
-                size: 36,
+            child: IconButton(
+              icon: Container(
+                padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
+                decoration: const BoxDecoration(
+                  color: Colors.white, // Warna latar belakang lingkaran
+                  shape: BoxShape.circle, // Bentuk lingkaran
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 8,
+                      spreadRadius: -2,
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: blue600,
+                ),
               ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ),
         ),

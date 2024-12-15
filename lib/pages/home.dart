@@ -86,8 +86,10 @@ class _HomePageState extends State<HomePage> {
       child: CarouselSlider(
         items: [
           Image.asset('assets/slidebar1.png', fit: BoxFit.cover),
-          Image.asset('assets/slidebar1.png', fit: BoxFit.cover),
-          Image.asset('assets/slidebar1.png', fit: BoxFit.cover),
+          Image.asset('assets/1.png', fit: BoxFit.cover),
+          Image.asset('assets/2.png', fit: BoxFit.cover),
+          Image.asset('assets/3.png', fit: BoxFit.cover),
+          Image.asset('assets/4.png', fit: BoxFit.cover),
         ],
         options: CarouselOptions(
           height: 180.0,
@@ -110,7 +112,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildDotsIndicator() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(3, (index) {
+      children: List.generate(5, (index) {
         return Container(
           width: 8.0,
           height: 8.0,

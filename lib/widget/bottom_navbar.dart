@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:raffaelosanzio/pages/FYP.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/home.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
@@ -18,7 +19,7 @@ class ScanButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const TakePictureScreen(camera: CameraDescription(name: '0', lensDirection: CameraLensDirection.back, sensorOrientation: 0))),
+          MaterialPageRoute(builder: (context) => TakePictureScreen(camera: CameraDescription(name: '0', lensDirection: CameraLensDirection.back, sensorOrientation: 0))),
         );
       },
       child: Container(
@@ -79,7 +80,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
 
   List<Widget> widgetOptions = <Widget>[
     const HomePage(),
-    const Text('FYP'),
+    FYPPage(),
     const HistoryPage(),
     const MyProfile(),
   ];

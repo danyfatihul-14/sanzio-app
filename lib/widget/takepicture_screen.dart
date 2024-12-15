@@ -10,8 +10,8 @@ import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/displaypicture_screen.dart';
 
 class TakePictureScreen extends StatefulWidget {
-  final CameraDescription camera;
-  const TakePictureScreen({super.key, required this.camera});
+  CameraDescription? camera;
+  TakePictureScreen({super.key, this.camera});
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -132,18 +132,16 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           try {
             await _initializeControllerFuture;
             final image = await _controller.takePicture();
+            final imagePath = image.path.replaceAll('.png', '.jpg');
+            await File(image.path).rename(imagePath);
             if (!context.mounted) return;
-            await Navigator.of(context)
-                .push(
+            await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => DisplayPictureScreen(
-                  imagePath: File(image.path),
+                  imagePath: File(imagePath),
                 ),
               ),
-            )
-                .then((_) {
-              _showModalGuide();
-            });
+            );
           } catch (e) {
             print(e);
           }
