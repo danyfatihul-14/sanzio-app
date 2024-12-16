@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 
 class Kebijakan extends StatelessWidget {
@@ -8,8 +7,7 @@ class Kebijakan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.sizeOf(context).width;
-
+    
     return Scaffold(
       backgroundColor: gray50,
       appBar: AppBar(

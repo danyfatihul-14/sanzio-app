@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/auth/auth_form_validator.dart';
 import 'package:raffaelosanzio/widget/button.dart';
@@ -52,6 +51,7 @@ class _MyGantiPasswordState extends State<MyGantiPassword> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
+        // ignore: use_build_context_synchronously
         Navigator.pop(context);
       } else {
         Fluttertoast.showToast(
@@ -149,7 +149,7 @@ class _MyGantiPasswordState extends State<MyGantiPassword> {
             ),
             const SizedBox(height: 70),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: CustomButton(
                 title: "Simpan",
                 color: blue600,

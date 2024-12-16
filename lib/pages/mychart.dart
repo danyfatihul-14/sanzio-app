@@ -27,17 +27,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         leading: IconButton(
           icon: Container(
             padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
-            decoration: const BoxDecoration(
-              color: Colors.white, // Warna latar belakang lingkaran
-              shape: BoxShape.circle, // Bentuk lingkaran
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 8,
-                  spreadRadius: -2,
-                ),
-              ],
-            ),
             child: Icon(
               Icons.arrow_back,
               color: blue600,
@@ -59,95 +48,303 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       ),
       body: Column(
         children: [
-          // Select All Checkbox
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                BlocBuilder<CartBloc, CartState>(
-                  builder: (context, state) {
-                    bool allSelected = false;
-                    if (state is CartUpdated) {
-                      allSelected = state.cartItems.isNotEmpty
-                          ? state.cartItems
-                                  .every((item) => item.status == 'Selected')
-                              ? true
-                              : false
-                          : false;
-                      return Checkbox(
-                        value: allSelected,
-                        onChanged: (bool? value) {
-                          for (int i = 0; i < state.cartItems.length; i++) {
-                            context
-                                .read<CartBloc>()
-                                .add(ToggleSelectEvent(i, value ?? false));
-                            setState(() {});
-                          }
-                        },
-                      );
-                    }
-                    return Checkbox(
-                      value: allSelected,
-                      onChanged: (bool? value) {
-                        allSelected = false;
-                      },
-                    );
-                  },
-                ),
-                Text(
-                  "Select All",
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: blue600,
-                  ),
-                ),
-              ],
-            ),
-          ),
           Expanded(
             child: BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
                 if (state is CartUpdated && state.cartItems.isNotEmpty) {
-                  return ListView.builder(
-                    itemCount: state.cartItems.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            Expanded(
-                              child: CartItemWidget(
-                                cart: state.cartItems[index],
-                                onIncrement: () {
-                                  context.read<CartBloc>().add(
-                                      UpdateQuantityEvent(index,
-                                          state.cartItems[index].quantity + 1));
-                                  setState(() {});
-                                },
-                                onDecrement: () {
-                                  context.read<CartBloc>().add(
-                                      UpdateQuantityEvent(index,
-                                          state.cartItems[index].quantity - 1));
-                                  setState(() {});
-                                },
-                                onRemove: () {
-                                  context.read<CartBloc>().add(RemoveFromCart(
-                                      detailProductId: state
-                                          .cartItems[index].detailProductId));
-                                  setState(() {});
-                                },
-                                onCheckboxChanged: (bool? value) {
-                                  context.read<CartBloc>().add(
-                                      ToggleSelectEvent(index, value ?? false));
-                                  setState(() {});
-                                },
+                            BlocBuilder<CartBloc, CartState>(
+                              builder: (context, state) {
+                                bool allSelected = false;
+                                if (state is CartUpdated) {
+                                  allSelected = state.cartItems.isNotEmpty
+                                      ? state.cartItems.every((item) =>
+                                              item.status == 'Selected')
+                                          ? true
+                                          : false
+                                      : false;
+                                  return Checkbox(
+                                    value: allSelected,
+                                    onChanged: (bool? value) {
+                                      for (int i = 0;
+                                          i < state.cartItems.length;
+                                          i++) {
+                                        context.read<CartBloc>().add(
+                                            ToggleSelectEvent(
+                                                i, value ?? false));
+                                        setState(() {});
+                                      }
+                                    },
+                                  );
+                                }
+                                return Checkbox(
+                                  value: allSelected,
+                                  onChanged: (bool? value) {
+                                    allSelected = false;
+                                  },
+                                );
+                              },
+                            ),
+                            Text(
+                              "Select All",
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: blue600,
                               ),
                             ),
                           ],
                         ),
-                      );
-                    },
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: state.cartItems.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: CartItemWidget(
+                                      cart: state.cartItems[index],
+                                      onIncrement: () {
+                                        context.read<CartBloc>().add(
+                                            UpdateQuantityEvent(
+                                                index,
+                                                state.cartItems[index]
+                                                        .quantity +
+                                                    1));
+                                        setState(() {});
+                                      },
+                                      onDecrement: () {
+                                        context.read<CartBloc>().add(
+                                            UpdateQuantityEvent(
+                                                index,
+                                                state.cartItems[index]
+                                                        .quantity -
+                                                    1));
+                                        setState(() {});
+                                      },
+                                      onRemove: () {
+                                        context.read<CartBloc>().add(
+                                            RemoveFromCart(
+                                                detailProductId: state
+                                                    .cartItems[index]
+                                                    .detailProductId));
+                                        setState(() {});
+                                      },
+                                      onCheckboxChanged: (bool? value) {
+                                        context.read<CartBloc>().add(
+                                            ToggleSelectEvent(
+                                                index, value ?? false));
+                                        setState(() {});
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      // Container for total items and total price placed at the bottom
+                      Container(
+                        color: whiteMain,
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Total Items",
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                BlocBuilder<CartBloc, CartState>(
+                                  builder: (context, state) {
+                                    if (state is CartUpdated) {
+                                      final selectedItemCount = state.cartItems
+                                          .where((item) =>
+                                              item.status == 'Selected')
+                                          .map((item) => item.quantity)
+                                          .fold(
+                                              0,
+                                              (total, quantity) =>
+                                                  total + quantity);
+
+                                      return Text(
+                                        "$selectedItemCount",
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                        ),
+                                      );
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Total Price",
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                BlocBuilder<CartBloc, CartState>(
+                                  builder: (context, state) {
+                                    if (state is CartUpdated) {
+                                      return Text(
+                                        NumberFormat.currency(
+                                                locale: 'id_ID', symbol: 'Rp ')
+                                            .format(state.totalPrice),
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                        ),
+                                      );
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                const SizedBox(height: 16),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Checkout action
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: blue400,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20, horizontal: 20),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.card_giftcard,
+                                            color: gray800,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            "Voucher",
+                                            style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Text(
+                                        "Gunakan/masukan kode",
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    final cartState =
+                                        context.read<CartBloc>().state;
+
+                                    if (cartState is CartUpdated) {
+                                      final selectedItems = cartState.cartItems
+                                          .where((item) =>
+                                              item.status == 'Selected')
+                                          .toList();
+
+                                      if (selectedItems.isNotEmpty) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PaymentPage(
+                                                selectedCart: selectedItems),
+                                          ),
+                                        );
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Pilih setidaknya 1 Item terlebih dahulu",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.TOP,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      }
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: (context
+                                                .read<CartBloc>()
+                                                .state is CartUpdated &&
+                                            (context.read<CartBloc>().state
+                                                    as CartUpdated)
+                                                .cartItems
+                                                .any((item) =>
+                                                    item.status == 'Selected'))
+                                        ? blue600
+                                        : gray300,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              0.02,
+                                      horizontal:
+                                          MediaQuery.of(context).size.width *
+                                              0.32,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "Checkout",
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   );
                 }
                 return Center(
@@ -165,184 +362,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                   ),
                 );
               },
-            ),
-          ),
-          Container(
-            color: whiteMain,
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Total Items",
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                    ),
-                    BlocBuilder<CartBloc, CartState>(
-                      builder: (context, state) {
-                        if (state is CartUpdated) {
-                          // Hitung jumlah item yang isSelected == true
-                          final selectedItemCount = state.cartItems
-                              .where((item) => item.status == 'Selected')
-                              .map((item) => item.quantity)
-                              .fold(0, (total, quantity) => total + quantity);
-
-                          return Text(
-                            "$selectedItemCount",
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                            ),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Total Price",
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                    BlocBuilder<CartBloc, CartState>(
-                      builder: (context, state) {
-                        if (state is CartUpdated) {
-                          return Text(
-                            NumberFormat.currency(
-                                    locale: 'id_ID', symbol: 'Rp ')
-                                .format(state.totalPrice),
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Checkout action
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: blue400,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.card_giftcard,
-                                color: gray800,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                "Voucher",
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            "Gunakan/masukan kode",
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        final cartState = context.read<CartBloc>().state;
-
-                        if (cartState is CartUpdated) {
-                          // Filter selected items
-                          final selectedItems = cartState.cartItems
-                              .where((item) => item.status == 'Selected')
-                              .toList();
-
-                          if (selectedItems.isNotEmpty) {
-                            // Navigate to PaymentPage with selected items
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    PaymentPage(selectedCart: selectedItems),
-                              ),
-                            );
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Pilih setidaknya 1 Item terlebih dahulu",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.TOP,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                          }
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: (context.read<CartBloc>().state
-                                    is CartUpdated &&
-                                (context.read<CartBloc>().state as CartUpdated)
-                                    .cartItems
-                                    .any((item) => item.status == 'Selected'))
-                            ? blue600
-                            : gray300,
-                        padding: EdgeInsets.symmetric(
-                          vertical: MediaQuery.of(context).size.height * 0.02,
-                          horizontal: MediaQuery.of(context).size.width * 0.32,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                        "Checkout",
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ),
           ),
         ],

@@ -19,7 +19,7 @@ class ScanButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TakePictureScreen(camera: CameraDescription(name: '0', lensDirection: CameraLensDirection.back, sensorOrientation: 0))),
+          MaterialPageRoute(builder: (context) => TakePictureScreen(camera: const CameraDescription(name: '0', lensDirection: CameraLensDirection.back, sensorOrientation: 0))),
         );
       },
       child: Container(
@@ -66,6 +66,7 @@ class CustomBottomNavbar extends StatefulWidget {
   const CustomBottomNavbar({super.key, this.selectedIndex = 0});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CustomBottomNavbarState createState() => _CustomBottomNavbarState();
 }
 
@@ -80,7 +81,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
 
   List<Widget> widgetOptions = <Widget>[
     const HomePage(),
-    FYPPage(),
+    const FYPPage(),
     const HistoryPage(),
     const MyProfile(),
   ];
@@ -105,7 +106,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
               color: Colors.black.withOpacity(0.1), // Shadow color
               spreadRadius: -2,
               blurRadius: 12,
-              offset: Offset(0, -3), // Shadow position
+              offset: const Offset(0, -3), // Shadow position
             ),
           ],
         ),

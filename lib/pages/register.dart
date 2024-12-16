@@ -72,6 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, '/login');
       } else {
         Fluttertoast.showToast(
@@ -138,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       FormFieldCustom(
                         label: 'Username',
                         value: 'Enter your username',
-                        icons: Icon(IconsaxPlusLinear.profile_circle),
+                        icons: const Icon(IconsaxPlusLinear.profile_circle),
                         controller: _usernameController,
                         isPassword: false,
                       ),
@@ -148,7 +149,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       FormFieldCustom(
                         label: 'Full Name',
                         value: 'Enter your Full Name',
-                        icons: Icon(IconsaxPlusLinear.user),
+                        icons: const Icon(IconsaxPlusLinear.user),
                         controller: _fullNameController,
                         isPassword: false,
                       ),
@@ -158,7 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       FormFieldCustom(
                         label: 'Email',
                         value: 'Enter your Email',
-                        icons: Icon(IconsaxPlusLinear.sms),
+                        icons: const Icon(IconsaxPlusLinear.sms),
                         controller: _emailController,
                         isPassword: false,
                       ),
@@ -168,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       FormFieldCustom(
                         label: 'Password',
                         value: 'Enter your password',
-                        icons: Icon(IconsaxPlusLinear.lock_1),
+                        icons: const Icon(IconsaxPlusLinear.lock_1),
                         controller: _passwordController,
                         isPassword: true,
                       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 
 class FormFieldCustom extends StatelessWidget {
@@ -195,6 +194,7 @@ class CustomOutlineInputProfileUser extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class GenderOptionInput extends StatefulWidget {
   String? selectedValue;
   final Function(String) onChanged;
@@ -206,6 +206,7 @@ class GenderOptionInput extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _GenderOptionInputState createState() => _GenderOptionInputState();
 }
 
@@ -237,7 +238,8 @@ class _GenderOptionInputState extends State<GenderOptionInput> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: DropdownButton<String>(
-                  icon: Icon(IconsaxPlusLinear.arrow_down),
+                  icon: const Icon(
+                      Icons.arrow_downward), // Adjusted to standard icon
                   dropdownColor: whiteMain,
                   style: GoogleFonts.plusJakartaSans(
                     color: gray600,

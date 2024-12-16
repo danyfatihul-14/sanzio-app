@@ -84,6 +84,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
         }
       });
     } else {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
     }
   }

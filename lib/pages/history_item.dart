@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -7,15 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:raffaelosanzio/api/address_api.dart';
 import 'package:raffaelosanzio/api/history_api.dart';
 import 'package:raffaelosanzio/api/profile_api.dart';
-import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
-import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
-import 'package:raffaelosanzio/models/cart.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
-import 'package:raffaelosanzio/models/order.dart';
-import 'package:raffaelosanzio/pages/editable_address_page.dart';
-import 'package:raffaelosanzio/pages/success.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
-import 'package:raffaelosanzio/widget/button.dart';
 
 class HistoryItemPage extends StatefulWidget {
   final Order orderItem;
@@ -45,6 +37,7 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
   Future<void> _finishOrder(int orderId) async {
     bool isFinished = await HistoryApiHandler().FinishOrder(orderId);
     if (isFinished) {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
     } else {
       Fluttertoast.showToast(
@@ -62,6 +55,7 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
   Future<void> _cancleOrder(int orderId) async {
     bool isFinished = await HistoryApiHandler().CancleOrder(orderId);
     if (isFinished) {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
     } else {
       Fluttertoast.showToast(
@@ -150,8 +144,7 @@ class _HistoryItemPageState extends State<HistoryItemPage> with RouteAware {
           ),
           const SizedBox(height: 8),
           ...widget.orderItem.orderDetails
-              .map((detail) => _buildItemRowWithImage(detail))
-              .toList(),
+              .map((detail) => _buildItemRowWithImage(detail)),
         ],
       ),
     );

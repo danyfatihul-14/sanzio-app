@@ -31,11 +31,11 @@ class RemoveFromCart extends CartEvent {
 class UpdateQuantityEvent extends CartEvent {
   final int index;
   final int quantity;
-  UpdateQuantityEvent(this.index, this.quantity);
+  const UpdateQuantityEvent(this.index, this.quantity);
 }
 
 class ToggleSelectEvent extends CartEvent {
   final int index;
   final bool isSelected;
-  ToggleSelectEvent(this.index, this.isSelected);
+  const ToggleSelectEvent(this.index, this.isSelected);
 }

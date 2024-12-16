@@ -78,6 +78,7 @@ class _MyProfileState extends State<MyProfile> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacementNamed(context, '/login');
     } else {
       Fluttertoast.showToast(
@@ -159,9 +160,9 @@ class _MyProfileState extends State<MyProfile> {
                           child: ClipOval(
                             child: Image(
                               image: _user!.image == null
-                                  ? const AssetImage("assets/Ellipse 192.png")
+                                  ? const AssetImage("assets/user.png")
                                   : NetworkImage(_user!.image!),
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),

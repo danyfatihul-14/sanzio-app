@@ -1,14 +1,11 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/displaypicture_screen.dart';
 
+// ignore: must_be_immutable
 class TakePictureScreen extends StatefulWidget {
   CameraDescription? camera;
   TakePictureScreen({super.key, this.camera});
@@ -98,22 +95,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         ),
         centerTitle: true,
         backgroundColor: whiteMain,
-        leading: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: SizedBox(
-              width: 20,
-              height: 20,
-              child: Icon(
-                IconsaxPlusBold.arrow_circle_left,
-                color: blue400,
-                size: 36,
-              ),
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
+            child: Icon(
+              Icons.arrow_back,
+              color: blue600,
             ),
           ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: FutureBuilder<void>(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:raffaelosanzio/api/product_api.dart';
 import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
@@ -11,7 +10,9 @@ import 'package:raffaelosanzio/widget/button.dart';
 import 'package:raffaelosanzio/widget/product_item.dart';
 
 class ProductScanningPage extends StatefulWidget {
+  // ignore: non_constant_identifier_names
   final int skin_type;
+  // ignore: non_constant_identifier_names
   const ProductScanningPage({super.key, required this.skin_type});
 
   @override
@@ -102,34 +103,29 @@ class _ProductScanningPageState extends State<ProductScanningPage> {
           ),
         ),
         backgroundColor: whiteMain,
-        leading: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/main-home');
-            },
-            child: SizedBox(
-              width: 20,
-              height: 20,
-              child: Icon(
-                IconsaxPlusBold.arrow_circle_left,
-                color: blue400,
-                size: 36,
-              ),
+        leading: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
+            child: Icon(
+              Icons.arrow_back,
+              color: blue600,
             ),
           ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            decoration: BoxDecoration(
-              color: whiteMain,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Expanded(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              decoration: BoxDecoration(
+                color: whiteMain,
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -160,15 +156,18 @@ class _ProductScanningPageState extends State<ProductScanningPage> {
                           fontSize: 12,
                           fontWeight: FontWeight.normal,
                         ),
+                        softWrap: true,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   )
                 ],
               ),
             ),
-          ),
-          _buildPopularProductsSection(),
-        ],
+            _buildPopularProductsSection(),
+          ],
+        ),
       ),
     );
   }

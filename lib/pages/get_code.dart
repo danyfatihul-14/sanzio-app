@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:raffaelosanzio/pages/profile.dart';
-import 'package:raffaelosanzio/pages/reset_password.dart';
-import 'package:raffaelosanzio/widget/textField.dart';
 
 class MyGetCode extends StatelessWidget {
   const MyGetCode({super.key});
@@ -36,7 +32,7 @@ class MyGetCode extends StatelessWidget {
                   height: 190,
                   child: Image.asset('assets/images/logo.png'),
                 ),
-                Text(
+                const Text(
                   'Get Your Code',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -45,9 +41,9 @@ class MyGetCode extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                const SizedBox(height: 8),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
                   child: Text(
                     'Please check your email for the verification code. Enter the code here to proceed.',
                     textAlign: TextAlign.center,
@@ -58,39 +54,10 @@ class MyGetCode extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 47),
-                // Row with 4 CustomTextFields for code input
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     FormFieldCustom(
-                //       label: '', 
-                //       value: '', 
-                //       icons: Icon(IconsaxPlusLinear.add),
-                //     ),
-                //     SizedBox(width: 12), // Jarak antara kotak
-                //     FormFieldCustom(
-                //       label: '', 
-                //       value: '', 
-                //       icons: Icon(IconsaxPlusLinear.add),
-                //     ),
-                //     SizedBox(width: 12),
-                //     FormFieldCustom(
-                //       label: '', 
-                //       value: '', 
-                //       icons: Icon(IconsaxPlusLinear.add),
-                //     ),
-                //     SizedBox(width: 12),
-                //     FormFieldCustom(
-                //       label: '', 
-                //       value: '', 
-                //       icons: Icon(IconsaxPlusLinear.add),
-                //     ),
-                //   ],
-                // ),
-                SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                const SizedBox(height: 47),
+                const SizedBox(height: 30),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
                   child: Text(
                     'The code within 1 minute, as it will expire after that.',
                     textAlign: TextAlign.center,
@@ -100,18 +67,7 @@ class MyGetCode extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 64),
-                // CustomButton(
-                //   text: 'Send Code', 
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => MyResetPassword(), 
-                //       ),
-                //     );
-                //   }
-                // ), // Memberikan jarak sebelum tombol
+                const SizedBox(height: 64),
               ],
             ),
           ),

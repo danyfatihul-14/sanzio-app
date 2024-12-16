@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:raffaelosanzio/pages/get_code.dart';
-import 'package:raffaelosanzio/pages/profile.dart';
-import 'package:raffaelosanzio/widget/textField.dart';  
 
 class MyForgetPassword extends StatelessWidget {
   const MyForgetPassword({super.key});
@@ -36,7 +32,7 @@ class MyForgetPassword extends StatelessWidget {
                   height: 190,
                   child: Image.asset('assets/images/logo.png'),
                 ),
-                Text(
+                const Text(
                   'Forgot Password',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -45,9 +41,9 @@ class MyForgetPassword extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                const SizedBox(height: 8),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
                   child: Text(
                     'Reset your password. Please proceed with the steps to regain access to your account.',
                     textAlign: TextAlign.center,
@@ -58,13 +54,13 @@ class MyForgetPassword extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 17),
+                const SizedBox(height: 17),
                 // Centered Username TextField
                 Center(
                   child: Container(
                     width: 328,
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -81,42 +77,24 @@ class MyForgetPassword extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 // Centered Email TextField
                 Center(
                   child: Container(
                     width: 328,
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Email',
                           style: TextStyle(fontSize: 14),
                         ),
-                        // SizedBox(height: 7),
-                        // FormFieldCustom(
-                        //   label: 'Email', 
-                        //   value: '', 
-                        //   icons: Icon(IconsaxPlusLinear.message),
-                        // ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: 42), // Memberikan jarak sebelum tombol
-                // Tombol Recover Password yang memanggil halaman GetCode
-                // CustomButton(
-                //   text: 'Recover Password', 
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => MyGetCode(), // Halaman GetCode yang sudah Anda buat
-                //       ),
-                //     );
-                //   }
-                // ),
+                const SizedBox(height: 42),
               ],
             ),
           ),

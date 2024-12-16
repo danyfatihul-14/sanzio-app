@@ -208,7 +208,7 @@ class _MyInformasiPenggunaState extends State<MyInformasiPengguna> {
                           child: ClipOval(
                             child: Image(
                               image: _user!.image == null
-                                  ? const AssetImage("assets/Ellipse 192.png")
+                                  ? const AssetImage("assets/user.png")
                                   : NetworkImage(_user!.image!),
                               fit: BoxFit.fill,
                             ),
@@ -243,28 +243,28 @@ class _MyInformasiPenggunaState extends State<MyInformasiPengguna> {
                   CustomOutlineInputProfileUser(
                     controller: _usernameController,
                     value: "Username",
-                    icons: Icon(IconsaxPlusLinear.profile_circle),
+                    icons: const Icon(IconsaxPlusLinear.profile_circle),
                     isPassword: false,
                   ),
                   const SizedBox(height: 6),
                   CustomOutlineInputProfileUser(
                     controller: _fullNameController,
                     value: "Full Name",
-                    icons: Icon(IconsaxPlusLinear.user),
+                    icons: const Icon(IconsaxPlusLinear.user),
                     isPassword: false,
                   ),
                   const SizedBox(height: 6),
                   CustomOutlineInputProfileUser(
                     controller: _emailController,
                     value: "Email",
-                    icons: Icon(IconsaxPlusLinear.sms),
+                    icons: const Icon(IconsaxPlusLinear.sms),
                     isPassword: false,
                   ),
                   const SizedBox(height: 6),
                   CustomOutlineInputProfileUser(
                     controller: _phoneController,
                     value: "No. Telp",
-                    icons: Icon(IconsaxPlusLinear.call_calling),
+                    icons: const Icon(IconsaxPlusLinear.call_calling),
                     isPassword: false,
                   ),
                   GenderOptionInput(

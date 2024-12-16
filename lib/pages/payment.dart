@@ -124,8 +124,7 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
           ),
           const SizedBox(height: 8),
           ...widget.selectedCart
-              .map((cart) => _buildItemRowWithImage(cart))
-              .toList(),
+              .map((cart) => _buildItemRowWithImage(cart)),
         ],
       ),
     );
@@ -207,6 +206,7 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
             context,
             MaterialPageRoute(
                 builder: (context) => EditableAddressPage(
+                      // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
                       onSave: (String) {},
                     )),
           ).then((value) {
@@ -279,12 +279,12 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
                     context,
                     MaterialPageRoute(
                         builder: (context) => EditableAddressPage(
+                              // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
                               onSave: (String) {},
                             )),
                   ).then((value) {
                     _fetchAddress();
                   });
-                  ;
                 },
                 child: Icon(
                   Icons.edit,
@@ -380,7 +380,7 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSummaryRow('Total Barang', '${totalItem}'),
+          _buildSummaryRow('Total Barang', '$totalItem'),
           _buildSummaryRow('Total Harga', 'Rp $totalAmount'),
           const Divider(),
           _buildSummaryRow('Total Pembayaran', 'Rp $totalAmount',
@@ -440,13 +440,13 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
                     amount: cart.quantity,
                   ))
               .toList();
-          OrderForm _orderForm =
+          OrderForm orderForm =
               OrderForm(addressId: address!.id, detailProducts: orderDetails);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => LoadingToFlipCheck(
-                orderForm: _orderForm,
+                orderForm: orderForm,
               ),
             ),
           );
