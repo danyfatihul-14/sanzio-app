@@ -9,9 +9,13 @@ import 'dart:io';
 import 'package:image/image.dart' as img;
 
 import 'package:raffaelosanzio/api/profile_api.dart';
+import 'package:raffaelosanzio/pages/info_pengguna.dart';
 
 class CameraScreen extends StatefulWidget {
+  const CameraScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _CameraScreenState createState() => _CameraScreenState();
 }
 
@@ -83,7 +87,7 @@ class _CameraScreenState extends State<CameraScreen> {
     try {
       CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: imagePath,
-        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
       );
 
       if (croppedFile != null && croppedFile.path.isNotEmpty) {
@@ -123,6 +127,16 @@ class _CameraScreenState extends State<CameraScreen> {
             backgroundColor: Colors.green,
             textColor: Colors.white,
             fontSize: 16.0,
+          );
+
+          // Use context here for navigation
+          Navigator.pushReplacement(
+            // ignore: use_build_context_synchronously
+            this.context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  const MyInformasiPengguna(), // Your target screen
+            ),
           );
         } else {
           Fluttertoast.showToast(
@@ -200,11 +214,11 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Ambil dan Crop Foto Profil')),
+      appBar: AppBar(title: const Text('Ambil dan Crop Foto Profil')),
       body: Column(
         children: [
           if (!_isCameraInitialized)
-            CircularProgressIndicator()
+            const CircularProgressIndicator()
           else
             Expanded(child: CameraPreview(_controller)),
           Row(
@@ -212,12 +226,12 @@ class _CameraScreenState extends State<CameraScreen> {
             children: [
               ElevatedButton(
                 onPressed: takePicture,
-                child: Text('Ambil Foto'),
+                child: const Text('Ambil Foto'),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               ElevatedButton(
                 onPressed: switchCamera,
-                child: Text('Ganti Kamera'),
+                child: const Text('Ganti Kamera'),
               ),
             ],
           ),

@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
             FormFieldCustom(
               label: 'Username',
               value: 'Enter your username',
-              icons: Icon(IconsaxPlusLinear.profile_circle),
+              icons: const Icon(IconsaxPlusLinear.profile_circle),
               controller: _usernameController,
               isPassword: false,
             ),
@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
             FormFieldCustom(
               label: 'Password',
               value: 'Enter your password',
-              icons: Icon(IconsaxPlusLinear.lock_1),
+              icons: const Icon(IconsaxPlusLinear.lock_1),
               controller: _passwordController,
               isPassword: true,
             ),

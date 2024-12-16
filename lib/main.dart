@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -51,11 +52,13 @@ Future<void> main() async {
   await Hive.openBox('Cart');
   await Hive.openBox('SkinType');
   StorageService().storage;
-  runApp(const MyApp());
+  runApp(const MyApp(camera: CameraDescription(name: 'default', lensDirection: CameraLensDirection.back, sensorOrientation: 0)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final CameraDescription camera;
+
+  const MyApp({super.key, required this.camera});
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +92,8 @@ class MyApp extends StatelessWidget {
               ),
           '/history': (context) => const HistoryPage(),
           '/cart': (context) => const ShoppingCartPage(),
-          '/onboard': (context) => OnboardingScreen(),
-          '/rimcian': (context) => Rincian(),
+          '/onboard': (context) => const OnboardingScreen(),
+          '/rimcian': (context) => const Rincian(),
           '/profile': (context) => const MyProfile(),
           '/user-info': (context) => const MyInformasiPengguna(),
           '/change-password': (context) => const MyGantiPassword(),
@@ -100,9 +103,9 @@ class MyApp extends StatelessWidget {
                 onSave: (addresses) {},
               ),
           '/take-picture': (context) => TakePictureScreen(),
-          '/profile-camera': (context) => CameraScreen(),
+          '/profile-camera': (context) => const CameraScreen(),
           '/favorite': (context) => const FavoritePage(),
-          '/fyp': (context) => FYPPage(),
+          '/fyp': (context) => const FYPPage(),
         },
       ),
     );

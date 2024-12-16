@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:raffaelosanzio/api/product_api.dart';
-import 'package:hive/hive.dart';
-import 'package:http/http.dart';
 import 'package:raffaelosanzio/api/product_api.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/product_item.dart';
 
+// ignore: must_be_immutable
 class SearchPage extends StatefulWidget {
   String query;
 
@@ -21,7 +18,7 @@ class _SearchPageState extends State<SearchPage> {
   bool _isLoading = true;
   List<Product> _products = [];
   List<Product> searchResults = [];
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {

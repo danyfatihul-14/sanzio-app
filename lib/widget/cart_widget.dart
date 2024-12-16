@@ -12,7 +12,7 @@ class CartItemWidget extends StatelessWidget {
   final VoidCallback onRemove;
   final Function(bool?) onCheckboxChanged;
 
-  const CartItemWidget({
+  const CartItemWidget({super.key, 
     required this.cart,
     required this.onIncrement,
     required this.onDecrement,

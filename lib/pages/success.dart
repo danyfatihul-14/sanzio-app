@@ -14,9 +14,9 @@ import 'package:raffaelosanzio/widget/button.dart';
 class LoadingToFlipCheck extends StatefulWidget {
   final OrderForm orderForm;
 
-  const LoadingToFlipCheck({Key? key, required this.orderForm})
-      : super(key: key);
+  const LoadingToFlipCheck({super.key, required this.orderForm});
   @override
+  // ignore: library_private_types_in_public_api
   _LoadingToFlipCheckState createState() => _LoadingToFlipCheckState();
 }
 
@@ -68,6 +68,7 @@ class _LoadingToFlipCheckState extends State<LoadingToFlipCheck>
         // Tunggu 2 detik lalu pindah ke halaman berikutnya
         Future.delayed(const Duration(seconds: 2), () {
           Navigator.pushReplacement(
+            // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(
               builder: (context) => CheckmarkPage(
@@ -80,6 +81,7 @@ class _LoadingToFlipCheckState extends State<LoadingToFlipCheck>
     } catch (e) {
       // Tangani error
       _loadingController.stop();
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Gagal memproses pesanan: $e"),
@@ -134,7 +136,7 @@ class _LoadingToFlipCheckState extends State<LoadingToFlipCheck>
                         ],
                       ),
                     )
-                  : Container(
+                  : SizedBox(
                       key: ValueKey<bool>(_showCheckmark),
                       width: 50,
                       height: 50,
@@ -164,6 +166,7 @@ class CheckmarkPage extends StatefulWidget {
 class _CheckmarkPageState extends State<CheckmarkPage> {
   Address? address;
 
+  @override
   void initState() {
     super.initState();
     _fetchAddress();
@@ -254,7 +257,7 @@ class _CheckmarkPageState extends State<CheckmarkPage> {
                       ),
                       Expanded(
                         child: Text(
-                          "${address?.address ?? 'Alamat tidak ditemukan'}",
+                          address?.address ?? 'Alamat tidak ditemukan',
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -316,7 +319,7 @@ class _CheckmarkPageState extends State<CheckmarkPage> {
                             ),
                           ),
                           Text(
-                            "${DateFormat('dd MMM yyyy').format(widget.order.orderDate)}",
+                            DateFormat('dd MMM yyyy').format(widget.order.orderDate),
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -374,7 +377,7 @@ class _CheckmarkPageState extends State<CheckmarkPage> {
                         ),
                       ),
                       Text(
-                        "${NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0).format(widget.order.amount)}",
+                        NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0).format(widget.order.amount),
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,

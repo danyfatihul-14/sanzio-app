@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:raffaelosanzio/help/data.dart';
 import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/history_item.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
@@ -154,7 +153,7 @@ class HistoryList extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "${DateFormat('dd MMM yyyy').format(orderItem.finishAt!)}",
+                                  DateFormat('dd MMM yyyy').format(orderItem.finishAt!),
                                   style: GoogleFonts.plusJakartaSans(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,

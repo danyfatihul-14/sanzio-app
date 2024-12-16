@@ -10,6 +10,7 @@ class FYPPage extends StatefulWidget {
   const FYPPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _FYPPageState createState() => _FYPPageState();
 }
 

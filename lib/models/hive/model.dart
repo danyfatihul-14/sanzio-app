@@ -27,6 +27,7 @@ class Product {
   @HiveField(10)
   final List<DetailProduct> productDetails;
   @HiveField(11)
+  // ignore: non_constant_identifier_names
   final List<SkinType> skin_type;
 
   Product({
@@ -41,6 +42,7 @@ class Product {
     required this.rating,
     required this.isAvailable,
     required this.productDetails,
+    // ignore: non_constant_identifier_names
     required this.skin_type,
   });
 
@@ -456,8 +458,10 @@ class CartHive extends HiveObject {
 @HiveType(typeId: 9)
 class SkinType extends HiveObject {
   @HiveField(0)
+  // ignore: non_constant_identifier_names
   final int skin_type;
 
+  // ignore: non_constant_identifier_names
   SkinType({required this.skin_type});
 
   factory SkinType.fromJson(Map<String, dynamic> json) {

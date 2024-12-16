@@ -1,24 +1,16 @@
 final List<Map<String, dynamic>> categories = [
-  {"id": 1, "title": "T-Shirt", "image": "assets/T-Shirt.png"},
-  {"id": 2, "title": "Jacket", "image": "assets/Jacket.png"},
-  {"id": 3, "title": "Blouse", "image": "assets/Blouse.png"},
-  {"id": 4, "title": "Dress", "image": "assets/Dress.png"},
-  {"id": 5, "title": "Hoodie", "image": "assets/Hoodie.png"},
-];
-
-final List<Map<String, String>> onProcessItems = [
-  {
-    'name': 'Blue T-Shirt',
-    'price': 'Rp 150.000',
-    'size': 'XL',
-    'date': '19-10-2024',
-    'status': 'Pending',
-  },
-  {
-    'name': 'Green Jacket',
-    'price': 'Rp 250.000',
-    'size': 'M',
-    'date': '18-10-2024',
-    'status': 'Rejected',
-  },
+  {"id": 1, "title": "Blouse", "image": "assets/blouse-beige.png"},
+  {"id": 2, "title": "Shirt", "image": "assets/kemeja-green-dress.png"},
+  {"id": 3, "title": "Bomber", "image": "assets/bomber-sage-green.png"},
+  {"id": 4, "title": "Coat", "image": "assets/coat-black.png"},
+  {"id": 5, "title": "Dress", "image": "assets/dress-khaki-green.png"},
+  {"id": 6, "title": "Hoodie", "image": "assets/hoodie-brown.png"},
+  {"id": 7, "title": "Blazer", "image": "assets/blazer-geige.png"},
+  {"id": 8, "title": "Jacket", "image": "assets/jacket-denim-blue.png"},
+  {"id": 9, "title": "T-Shirt", "image": "assets/kaos-khaki-green.png"},
+  {"id": 10, "title": "Jumpsuit", "image": "assets/jumpsuit-dark-blue.png"},
+  {"id": 11, "title": "Culottes", "image": "assets/kulot-greige.png"},
+  {"id": 12, "title": "Shorts", "image": "assets/shorts-black.png"},
+  {"id": 13, "title": "Skirt", "image": "assets/skirt-denim-blue.png"},
+  {"id": 14, "title": "Sweater", "image": "assets/sweater-pink.png"},
 ];

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:raffaelosanzio/pages/profile.dart';
 import 'package:raffaelosanzio/widget/button.dart';
-import 'package:raffaelosanzio/widget/textField.dart';
 
 class MyResetPassword extends StatelessWidget {
   const MyResetPassword({super.key});
@@ -36,7 +34,7 @@ class MyResetPassword extends StatelessWidget {
                   height: 190,
                   child: Image.asset('assets/images/logo.png'),
                 ),
-                Text(
+                const Text(
                   'Reset Password',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -45,9 +43,9 @@ class MyResetPassword extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                const SizedBox(height: 8),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
                   child: Text(
                     'Set up a new password. Ensure your account remains secure.',
                     textAlign: TextAlign.center,
@@ -58,13 +56,13 @@ class MyResetPassword extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 17),
+                const SizedBox(height: 17),
                 // Centered Username TextField
                 Center(
                   child: Container(
                     width: 328,
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -72,20 +70,16 @@ class MyResetPassword extends StatelessWidget {
                           style: TextStyle(fontSize: 14),
                         ),
                         SizedBox(height: 7),
-                        // FormFieldNoIconCustom(
-                        //   label: 'Password', 
-                        //   value: 'Password', 
-                        // ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Center(
                   child: Container(
                     width: 328,
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -101,11 +95,11 @@ class MyResetPassword extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 42), // Memberikan jarak sebelum tombol
+                const SizedBox(height: 42), // Memberikan jarak sebelum tombol
                 // Tombol Recover Password yang memanggil halaman GetCode
                 CustomOutlineButton(
                   title: "Create New Password", 
-                  color: Color.fromRGBO(79, 114, 189, 1), 
+                  color: const Color.fromRGBO(79, 114, 189, 1), 
                   pushTo: (){},
                 ),
               ],

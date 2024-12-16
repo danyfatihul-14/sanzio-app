@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/pages/history.dart';
-import 'package:raffaelosanzio/pages/success.dart';
 
 class Rincian extends StatelessWidget {
+  const Rincian({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -34,15 +35,15 @@ class Rincian extends StatelessWidget {
             child: Column(
               children: [
                 _buildDeliverySection(),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildAddressSection(context),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildItemsSection(),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildPaymentMethodSection(),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildSummarySection(),
-                SizedBox(height: 100), // Space at the bottom for button
+                const SizedBox(height: 100), // Space at the bottom for button
               ],
             ),
           ),
@@ -65,8 +66,8 @@ class Rincian extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.local_shipping, color: Colors.blue, size: 24),
-              SizedBox(width: 8),
+              const Icon(Icons.local_shipping, color: Colors.blue, size: 24),
+              const SizedBox(width: 8),
               Text(
                 'Info Pengiriman',
                 style: GoogleFonts.plusJakartaSans(
@@ -77,12 +78,12 @@ class Rincian extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'JNT Express : 00000123456',
             style: _infoTextStyle(const Color.fromARGB(255, 148, 148, 148)),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             'Pesanan sedang dikemas',
             style: _infoTextStyle(Colors.black),
@@ -99,8 +100,8 @@ class Rincian extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.location_on, color: Colors.blue),
-              SizedBox(width: 8),
+              const Icon(Icons.location_on, color: Colors.blue),
+              const SizedBox(width: 8),
               Text(
                 'Alamat Pengiriman',
                 style: GoogleFonts.plusJakartaSans(
@@ -111,7 +112,7 @@ class Rincian extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Rafaello Sanzio | 0813XXXXXXX',
             style: GoogleFonts.plusJakartaSans(fontSize: 14),
@@ -120,7 +121,7 @@ class Rincian extends StatelessWidget {
             'Jalan Soekarno Hatta No. 1, Lowokwaru, Kota Malang, Jawa Timur, ID 12345',
             style: GoogleFonts.plusJakartaSans(fontSize: 14),
           ),
-          Divider(),
+          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -144,7 +145,7 @@ class Rincian extends StatelessWidget {
             style: GoogleFonts.plusJakartaSans(
                 fontSize: 12, fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(value, style: GoogleFonts.plusJakartaSans(fontSize: 12)),
         ],
       ),
@@ -158,7 +159,7 @@ class Rincian extends StatelessWidget {
         children: [
           _buildItemRowWithImage('Jacket Bomber', 'S', 'Yellow',
               'assets/Jacket Bomber.png', 150000, 2),
-          Divider(),
+          const Divider(),
           _buildItemRowWithImage('Jacket Bomber', 'S', 'Yellow',
               'assets/Jacket Bomber.png', 150000, 1),
         ],
@@ -181,27 +182,27 @@ class Rincian extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
                 Row(
                   children: [
-                    Text(color, style: TextStyle(fontSize: 12)),
-                    SizedBox(width: 8),
-                    Text(', $size', style: TextStyle(fontSize: 12)),
+                    Text(color, style: const TextStyle(fontSize: 12)),
+                    const SizedBox(width: 8),
+                    Text(', $size', style: const TextStyle(fontSize: 12)),
                   ],
                 ),
-                SizedBox(height: 4),
-                Text('Jumlah: $quantity', style: TextStyle(fontSize: 12)),
+                const SizedBox(height: 4),
+                Text('Jumlah: $quantity', style: const TextStyle(fontSize: 12)),
               ],
             ),
           ),
           Text(
             'Rp ${price.toString()}',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -215,8 +216,8 @@ class Rincian extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.account_balance_wallet, color: Colors.blue),
-              SizedBox(width: 8),
+              const Icon(Icons.account_balance_wallet, color: Colors.blue),
+              const SizedBox(width: 8),
               Text(
                 'Metode Pembayaran',
                 style: GoogleFonts.plusJakartaSans(
@@ -226,11 +227,11 @@ class Rincian extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(
             children: [
-              Icon(Icons.delivery_dining, size: 20),
-              SizedBox(width: 8),
+              const Icon(Icons.delivery_dining, size: 20),
+              const SizedBox(width: 8),
               Text('Cash On Delivery',
                   style: GoogleFonts.plusJakartaSans(fontSize: 14)),
             ],
@@ -248,7 +249,7 @@ class Rincian extends StatelessWidget {
           _buildSummaryRow('Subtotal Pengiriman', 'Rp 12.000'),
           _buildSummaryRow('Total Diskon', 'Rp 5.000'),
           _buildSummaryRow('Voucher Diskon', '- Rp 10.000'),
-          Divider(),
+          const Divider(),
           _buildSummaryRow('Total Pembayaran', 'Rp 447.000', isTotal: true),
         ],
       ),
@@ -293,7 +294,7 @@ class Rincian extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HistoryPage()),
+            MaterialPageRoute(builder: (context) => const HistoryPage()),
           );
         },
         child: Text(
@@ -310,7 +311,7 @@ class Rincian extends StatelessWidget {
 
   Widget _buildCard({required Widget child}) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),

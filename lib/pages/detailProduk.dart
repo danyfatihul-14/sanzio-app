@@ -19,6 +19,7 @@ class DetailProductPage extends StatefulWidget {
   const DetailProductPage({super.key, required this.product});
 
   @override
+  // ignore: library_private_types_in_public_api
   _DetailProductPageState createState() => _DetailProductPageState();
 }
 
@@ -216,7 +217,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
             const SizedBox(height: 12),
             Container(
               color: whiteMain,
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
