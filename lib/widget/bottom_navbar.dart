@@ -19,7 +19,7 @@ class ScanButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const TakePictureScreen(camera: CameraDescription(name: '0', lensDirection: CameraLensDirection.back, sensorOrientation: 0))),
+          MaterialPageRoute(builder: (context) => TakePictureScreen(camera: CameraDescription(name: '0', lensDirection: CameraLensDirection.back, sensorOrientation: 0))),
         );
       },
       child: Container(

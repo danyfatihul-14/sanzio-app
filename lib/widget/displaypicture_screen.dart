@@ -28,10 +28,10 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
     });
   }
 
-  Future<bool> scanFaces(File file) async {
+  Future<int> scanFaces(File file) async {
     try {
       final response = await UserApiHandler().scanFace(file);
-      if (response) {
+      if (response != false) {
         Fluttertoast.showToast(
           msg: "Face Scanned Successfully",
           toastLength: Toast.LENGTH_SHORT,
@@ -41,7 +41,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           textColor: whiteMain,
           fontSize: 16.0,
         );
-        return true;
+        return response;
       } else {
         Fluttertoast.showToast(
           msg: "Face Not Detected",
@@ -52,24 +52,34 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           textColor: whiteMain,
           fontSize: 16.0,
         );
-        return false;
+        return -1;
       }
     } catch (e) {
-      print(e);
-      return false;
+      Fluttertoast.showToast(
+        msg: "Error Scanning Face: $e",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: whiteMain,
+        fontSize: 16.0,
+      );
+      return -1;
     }
   }
 
   Future<void> _simulateLoading() async {
-    final isScanned = await scanFaces(widget.imagePath);
-    if (isScanned) {
+    int? isScanned = await scanFaces(widget.imagePath);
+    if (isScanned >= 0) {
       setState(() {
         if (mounted) {
           _isLoading = false;
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => const ProductScanningPage()),
+                builder: (context) => ProductScanningPage(
+                      skin_type: isScanned,
+                    )),
           );
         }
       });

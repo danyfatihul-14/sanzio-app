@@ -131,7 +131,7 @@ class UserApiHandler {
     }
   }
 
-  Future<bool> scanFace(File file) async {
+  Future<dynamic> scanFace(File file) async {
     if (file.lengthSync() == 0) {
       print("File is empty!");
       return false;
@@ -159,10 +159,10 @@ class UserApiHandler {
     final response = await request.send();
 
     if (response.statusCode == 200) {
-      dynamic data = json.decode(response.toString());
+      dynamic data = json.decode(await response.stream.bytesToString());
       print(data);
       print("Foto Berhasil di Scan");
-      return true;
+      return data['skin_type'];
     } else {
       print("Tidak ada wajah yang terdeteksi.");
       return false;

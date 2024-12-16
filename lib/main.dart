@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -32,9 +31,6 @@ import 'package:raffaelosanzio/widget/takepicture_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final cameras = await availableCameras();
-  final firstCamera = cameras.first;
-  print("Camera Loaded");
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Hive.initFlutter();
@@ -53,19 +49,18 @@ Future<void> main() async {
   await Hive.openBox('User');
   await Hive.openBox('Address');
   await Hive.openBox('Cart');
+  await Hive.openBox('SkinType');
   StorageService().storage;
-  runApp(MyApp(camera: firstCamera));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final CameraDescription camera;
-
-  const MyApp({super.key, required this.camera});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-       providers: [
+      providers: [
         BlocProvider(create: (context) => CartBloc()),
         BlocProvider(create: (context) => FavoriteBloc()),
       ],
@@ -102,11 +97,9 @@ class MyApp extends StatelessWidget {
           '/kebijakan': (context) => const Kebijakan(),
           '/about': (context) => const About(),
           '/edit-address': (context) => EditableAddressPage(
-                onSave: (addresses) {
-                  print('Alamat disimpan: $addresses');
-                },
+                onSave: (addresses) {},
               ),
-          '/take-picture': (context) => TakePictureScreen(camera: camera),
+          '/take-picture': (context) => TakePictureScreen(),
           '/profile-camera': (context) => CameraScreen(),
           '/favorite': (context) => const FavoritePage(),
           '/fyp': (context) => FYPPage(),
