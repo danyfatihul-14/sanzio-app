@@ -20,7 +20,14 @@ class _FavoritePageState extends State<FavoritePage> {
     return Scaffold(
       backgroundColor: gray50,
       appBar: AppBar(
-        title: const Text('Favorite Products'),
+        title: Text(
+          'Favorite Products',
+          style: GoogleFonts.plusJakartaSans(
+            fontWeight: FontWeight.w600,
+            color: gray600,
+            fontSize: 18,
+          ),
+        ),
         backgroundColor: whiteMain,
         leading: IconButton(
           icon: Container(
