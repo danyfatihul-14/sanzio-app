@@ -43,7 +43,8 @@ class AddressApiHandler {
     var box = Hive.box('Address');
     List<Address> _addresses = box.get(1)?.cast<Address>() ?? [];
 
-    if (_addresses.isNotEmpty && index - 1 < _addresses.length) {
+    if (_addresses.isNotEmpty) {
+      final mod_address = _addresses.where((item) => item.id == index).first;
       print("Checkpoin 1");
       await AuthHandler().validateToken();
       final storage = StorageService().storage;
@@ -57,7 +58,7 @@ class AddressApiHandler {
         },
         body: jsonEncode({
           'address': address,
-          'is_default': _addresses[index - 1].isDefault,
+          'is_default': mod_address.isDefault,
         }),
       );
       print("Checkpoin 3");
@@ -78,7 +79,8 @@ class AddressApiHandler {
     var box = Hive.box('Address');
     List<Address> _addresses = box.get(1)?.cast<Address>() ?? [];
 
-    if (_addresses.isNotEmpty && index - 1 < _addresses.length) {
+    if (_addresses.isNotEmpty) {
+      final mod_address = _addresses.where((item) => item.id == index).first;
       print("Checkpoin 1");
       await AuthHandler().validateToken();
       final storage = StorageService().storage;
@@ -91,8 +93,8 @@ class AddressApiHandler {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          'address': _addresses[index - 1].address,
-          'is_default': !_addresses[index - 1].isDefault,
+          'address': mod_address.address,
+          'is_default': mod_address.isDefault,
         }),
       );
       print("Checkpoin 3");

@@ -75,7 +75,7 @@ class _EditableAddressPageState extends State<EditableAddressPage> {
       //   _addresses[index].isDefault = true;
       //   _addresses[index].save();
       isUpdated ? _getAddresses() : print("Failed");
-      mainAddress = _addresses[index];
+      mainAddress = _addresses.where((item) => item.id == index).first;
       //   print(mainAddress!.isDefault);
       // }
       // print("Checkpoint 3");
