@@ -123,8 +123,7 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
             ),
           ),
           const SizedBox(height: 8),
-          ...widget.selectedCart
-              .map((cart) => _buildItemRowWithImage(cart)),
+          ...widget.selectedCart.map((cart) => _buildItemRowWithImage(cart)),
         ],
       ),
     );
@@ -295,7 +294,7 @@ class _PaymentPageState extends State<PaymentPage> with RouteAware {
           ),
           const SizedBox(height: 8),
           Text(
-            "${user!.fullname} | 0813XXXXXXX",
+            "${user!.fullname} | 08956372635",
             style: GoogleFonts.plusJakartaSans(
               fontSize: 14,
               fontWeight: FontWeight.w400,

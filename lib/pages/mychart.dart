@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:raffaelosanzio/api/profile_api.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_bloc.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_event.dart';
 import 'package:raffaelosanzio/blocs/cart/cart_state.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/payment.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/widget/cart_widget.dart';
@@ -18,6 +20,22 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
+  User? user;
+
+  Future<void> getUser() async {
+    final box = await UserApiHandler().getUser();
+    setState(() {
+      user = box;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

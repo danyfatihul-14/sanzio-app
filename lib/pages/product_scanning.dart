@@ -94,6 +94,7 @@ class _ProductScanningPageState extends State<ProductScanningPage> {
     return Scaffold(
       backgroundColor: gray50,
       appBar: AppBar(
+        surfaceTintColor: whiteMain,
         centerTitle: true,
         title: Text(
           "Product Scanning",
@@ -173,12 +174,20 @@ class _ProductScanningPageState extends State<ProductScanningPage> {
   }
 
   Widget _buildPopularProductsSection() {
-    List<Product> data = _products
-        .where((element) =>
-            element.skin_type
-                .any((skinType) => skinType.skin_type == widget.skin_type) &&
-            User.jsonToGender(element.gender) == _user!.gender)
-        .toList();
+    List<Product> data = [];
+    if (_user?.gender != null) {
+      data = _products
+          .where((element) =>
+              element.skin_type
+                  .any((skinType) => skinType.skin_type == widget.skin_type) &&
+              User.jsonToGender(element.gender) == _user!.gender)
+          .toList();
+    } else {
+      data = _products
+          .where((element) => element.skin_type
+              .any((skinType) => skinType.skin_type == widget.skin_type))
+          .toList();
+    }
     List<Map<String, dynamic>> formattedProducts =
         data.map((product) => product.toJson()).toList();
     return Container(
