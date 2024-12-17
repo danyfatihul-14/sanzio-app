@@ -1,6 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:raffaelosanzio/api/profile_api.dart';
+import 'package:raffaelosanzio/models/hive/model.dart';
 import 'package:raffaelosanzio/pages/FYP.dart';
 import 'package:raffaelosanzio/pages/history.dart';
 import 'package:raffaelosanzio/pages/home.dart';
@@ -8,9 +11,14 @@ import 'package:raffaelosanzio/shared/theme.dart';
 import 'package:raffaelosanzio/pages/profile.dart';
 import 'package:raffaelosanzio/widget/takepicture_screen.dart';
 
-class ScanButton extends StatelessWidget {
+class ScanButton extends StatefulWidget {
   const ScanButton({super.key});
 
+  @override
+  State<ScanButton> createState() => _ScanButtonState();
+}
+
+class _ScanButtonState extends State<ScanButton> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -19,7 +27,12 @@ class ScanButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TakePictureScreen(camera: const CameraDescription(name: '0', lensDirection: CameraLensDirection.back, sensorOrientation: 0))),
+          MaterialPageRoute(
+              builder: (context) => TakePictureScreen(
+                  camera: const CameraDescription(
+                      name: '0',
+                      lensDirection: CameraLensDirection.back,
+                      sensorOrientation: 0))),
         );
       },
       child: Container(

@@ -20,6 +20,7 @@ class AllCategoriesPage extends StatelessWidget {
       backgroundColor: gray50,
       appBar: AppBar(
         backgroundColor: whiteMain,
+        surfaceTintColor: whiteMain,
         leading: IconButton(
           icon: Container(
             padding: const EdgeInsets.all(8.0), // Ukuran lingkaran
@@ -44,7 +45,7 @@ class AllCategoriesPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

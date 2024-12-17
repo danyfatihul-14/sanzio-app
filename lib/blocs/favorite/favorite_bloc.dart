@@ -8,12 +8,20 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
   FavoriteBloc() : super(FavoriteInitial()) {
     on<ToggleFavoriteEvent>((event, emit) {
-      if (_favoriteProducts.contains(event.product)) {
-        _favoriteProducts.remove(event.product);
+      if (_favoriteProducts.isNotEmpty) {
+        final existingFavorite = _favoriteProducts
+            .where((item) => item.id == event.product.id)
+            .isNotEmpty;
+
+        if (existingFavorite) {
+          _favoriteProducts.remove(event.product);
+        } else {
+          _favoriteProducts.add(event.product);
+        }
       } else {
         _favoriteProducts.add(event.product);
       }
-      emit(FavoriteUpdated(List.from(_favoriteProducts)));
+      emit(FavoriteUpdated(_favoriteProducts));
     });
   }
 }

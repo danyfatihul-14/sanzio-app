@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:raffaelosanzio/blocs/favorite/favorite_bloc.dart';
 import 'package:raffaelosanzio/blocs/favorite/favorite_state.dart';
 import 'package:raffaelosanzio/shared/theme.dart';
@@ -19,7 +20,14 @@ class _FavoritePageState extends State<FavoritePage> {
     return Scaffold(
       backgroundColor: gray50,
       appBar: AppBar(
-        title: const Text('Favorite Products'),
+        title: Text(
+          'Favorite Products',
+          style: GoogleFonts.plusJakartaSans(
+            fontWeight: FontWeight.w600,
+            color: gray600,
+            fontSize: 18,
+          ),
+        ),
         backgroundColor: whiteMain,
         leading: IconButton(
           icon: Container(
